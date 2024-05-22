@@ -1,0 +1,75 @@
+{layout="layouts/_main_html_layout"}
+
+<section id="header">
+	<div class="page_header_wrapper bg-dkblue">
+		<div class="container">
+			<div class="row align-items-center" style="height:200px;">
+				<div class="col-md-12">
+					<h1 class="text-white display-3">{layout:title}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<p>Member group id: {layout:membergroupid}</p>
+{if layout:membergroupid == "9"}
+	<div class="section-wrapper rounded-0 bg-lightgrey">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+
+				{layout:details}
+
+			</div>
+		</div>
+	</div>
+	</div>
+
+{if:else}
+<div class="section-wrapper rounded-0 bg-lightgrey">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+
+				{layout:details}
+
+			</div>
+			<div class="col-md-9">
+
+			{if logged_in_group_id == "5"}
+				<div class="card" style="display:block;margin-bottom:36px;">
+					<div class="card-body">
+						<p class="lead" style="margin:0px;">Sales Rep: {layout:sales_rep} {exp:visitor:details member_id=" {layout:sales_rep_id} "> Email: {visitor:email} {/exp:visitor:details}</p>
+					</div>
+				</div>
+			{/if}
+			{if logged_in_group_id == "8"}
+					<p class="text-right"><a href="https://dev.keltecinc.com/en/accounts/member-list/{layout:sales_rep_id}" class="btn btn-outline-primary rounded-0">Back to Account List</a></p>
+			{/if}	
+			{if logged_in_group_id == "9"}
+				<p class="text-right"><a href="https://dev.keltecinc.com/en/accounts/member-list" class="btn btn-outline-primary rounded-0">Back to Account List</a></p>
+			{/if}
+			
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-sales-tab" data-toggle="tab" href="#nav-sales" role="tab" aria-controls="nav-sales" aria-selected="true">Sales Orders</a>
+						<a class="nav-item nav-link" id="nav-contacts-tab" data-toggle="tab" href="#nav-contacts" role="tab" aria-controls="nav-contacts" aria-selected="false">Contacts</a>
+						<a class="nav-item nav-link" id="nav-ship-tab" data-toggle="tab" href="#nav-ship" role="tab" aria-controls="nav-ship" aria-selected="false">Ship To</a>
+						<a class="nav-item nav-link" id="nav-contract-tab" data-toggle="tab" href="#nav-contract" role="tab" aria-controls="nav-contract" aria-selected="false">Contract Pricing</a>
+					</div>
+				</nav>
+					<div class="tab-content tabframe bg-white" id="nav-tabContent">
+						<div class="tab-pane tab-content-padding fade show active" id="nav-sales" role="tabpanel" aria-labelledby="nav-home-tab">{layout:sales}</div>
+						<div class="tab-pane tab-content-padding fade" id="nav-contacts" role="tabpanel" aria-labelledby="nav-profile-tab">{layout:contacts}</div>
+						<div class="tab-pane tab-content-padding fade" id="nav-ship" role="tabpanel" aria-labelledby="nav-contact-tab">{layout:shipto}</div>
+						<div class="tab-pane tab-content-padding fade" id="nav-contract" role="tabpanel" aria-labelledby="nav-contact-tab">{layout:contract_pricing}</div>
+					</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>
+{/if}

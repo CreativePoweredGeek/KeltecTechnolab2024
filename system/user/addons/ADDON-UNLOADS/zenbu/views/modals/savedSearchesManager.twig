@@ -1,0 +1,13 @@
+{% extends "modals/index.twig" %}
+
+{% set modalName = 'savedSearchesManager' %}
+
+{% set modalTitle = 'Manage Saved Searches'|t %}
+
+{% set modalContent %}
+<div class="col-group">
+    <div class="col w-16">
+        <saved-searches-manager></saved-searches-manager>
+    </div>
+</div>
+{% endset %}

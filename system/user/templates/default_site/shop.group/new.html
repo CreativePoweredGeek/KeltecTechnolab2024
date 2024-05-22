@@ -1,0 +1,68 @@
+{layout="shop/_new_shop_template"}
+{layout:set name="template"}shop{/layout:set}
+{exp:channel:entries channel="shop" url_title="purchase-keltec-products" disable="categories|category_fields|member_data" cache="yes" refresh="30"}
+	{layout:set name="title"}{{language_code}_title}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{par_edit_this}
+	{if feature_photo}
+		<img src="{feature_photo}" class="img-fluid feature-product" alt="{{language_code}_title}">
+	{/if}
+	{if {language_code}_rich_text_block}
+		{{language_code}_rich_text_block}
+	{/if}
+{/exp:channel:entries}
+
+{layout:set name="topCopy"}
+		<p class="lead pt-5">With over
+		 	<strong>18,000 products</strong> matching to over <strong>33,000 OEM numbers</strong>, we give you multiple ways of searching our massive database. Search by Original Equipment Manufacturer, OEM#, KELTEC Item# or product type.</p>
+		<p>Use the tools below to start searching Today.</p>
+
+{/layout:set}
+
+{layout:set name="tableContents"}
+{exp:query sql="SELECT DISTINCT title AS item FROM exp_channel_titles WHERE channel_id = '27' AND author_id = '{logged_in_member_id}' LIMIT 15"}
+	{exp:channel:entries channel="products" url_title="{item:url_slug}" disable="categories|category_fields|member_data|pagination"}
+		<tr>
+			<td>{title}</td>
+			<td>{exp:kt_tools:cleandescription}{description}{/exp:kt_tools:cleandescription}</td>
+			<td>{weight}</td>
+			<td>{if logged_in}
+					${exp:kt_pricing:evaluate_price
+						customerID="{exp:stash:get name='customer_number' process='inline'}"
+						KTproduct="{title}"
+						pPrice="{price}"
+						pClass="{class}"
+						pMAXdiscount="{max_product_discount}" parse="inward"
+					} / <span class="small text-muted">{price}</span>
+
+				{if:else}Login for Pricing{/if}</td>
+				{if logged_in}
+					{exp:cartthrob:add_to_cart_form
+						entry_id="{entry_id}"
+						allow_user_price="yes"
+						return="{current_url}"
+						prefix=""}
+			<td>{par_inventory_drop}</td>
+			<td>
+
+						<input type="hidden" name="price" value="{par_custom_price}">
+					<input type="hidden" name="item_options[purchased_price]" value="{par_custom_price}" />
+					<input type="hidden" name="item_options[customer_number]" value="{exp:stash:get name='customer_number'}" />
+					<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='no'}" />
+					<div class="input-group">
+					<input type="number" name="quantity" class="form-control form-control-sm" maxlength="3" size="3" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2" style="max-width:85px">
+					<div class="input-group-append">
+					 	<button class="btn btn-primary rounding-0 btn-sm" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> </button>
+					</div>
+					</div>
+			</td>
+			{/exp:cartthrob:add_to_cart_form}
+				{/if}
+
+		</tr>
+	{/exp:channel:entries}
+
+{/exp:query}
+{/layout:set}

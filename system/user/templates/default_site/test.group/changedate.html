@@ -1,0 +1,18 @@
+<select id="first-choice">
+  <option>Please Select</option>
+  <option value="MAIN">Ohio</option>
+  <option value="NC">North Carolina</option>
+  <option value="TX">Texas</option>
+  <option value="CA">California</option>
+</select>
+<input type="hidden" value="{entry_id}" id="entry_id" name="entry_id" >
+<input type=”text” id="second-choice">
+
+
+
+<script>
+	$("#first-choice").change(function() {
+  		//$("#second-choice").load("getter.php?choice=" + $("#first-choice").val());
+        $("#second-choice").load("scripts/shipdate2/" + $("#entry_id").val() + "/" + $("#first-choice").val());
+	});
+</script>

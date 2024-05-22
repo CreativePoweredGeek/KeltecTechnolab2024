@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg bg-dark bg-dkblue text-white fixed-top keltec" data-bs-theme="dark">
+  <a class="navbar-brand" href="tel:+13304253100">+1 (330) 425-3100</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto me-auto">
+      {exp:structure:nav_advanced show_depth="4"}
+      {if root:has_children} 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle{if segment_1 == '{root:url_title}'} bg-ltblue{/if} border-top border-1" href="{root:page_url}" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {root:title}
+        </a>
+        <ul class="dropdown-menu rounded-0">
+          <li><a class="dropdown-item py-3{if segment_2 == '{root:url_title}'} active{/if}" href="{root:page_url}">{root:title}</a></li>
+            {root:children}
+                <li><a class="dropdown-item" href="{child:page_url}">{child:title}</a></li>
+            {/root:children}
+        </ul>
+    </li>
+      
+      {if:else}
+      
+      <li class="nav-item">
+          <a href="{if root:title == 'Home'}{site_url}{if:else}{root:page_url}{/if}" class="nav-link{if segment_1 == '{root:url_title}'} bg-ltblue{/if}">{if root:title == "Home"}Home{if:else}{root:title}{/if}</a>
+        </li> 
+      {/if}
+      {/exp:structure:nav_advanced}
+      {if logged_in} 
+        <li class="nav-item">
+          <a href="{site_url}shop" class="nav-link">Shop</a>
+        </li>
+        {if:else}  
+        <li class="nav-item">
+          <a href="{site_url}search" class="nav-link">Search</a>
+        </li>
+        {/if}
+    </ul>
+    <ul class="navbar-nav ml-auto">
+	
+        {if logged_in}
+          {!-- {if logged_in_group_id != 13 || logged_in_group_id != 12} --}
+          {if logged_in_group_id != 13}
+            <li class="nav-item">
+              <a class="nav-link search" data-bs-toggle="collapse" href="#collapseSummary" role="button" aria-expanded="false" aria-controls="collapseSummary">
+                <i class="fas fa-shopping-cart"></i> {exp:cartthrob:total_items_count}
+              </a>
+            </li>
+          {/if}
+          {if '{exp:cookie:get name="custno"}' != ""}
+            <li class="nav-item dropdown bg-success">
+          {if:else}
+            <li class="nav-item dropdown bg-brightblue">
+          {/if}
+		  		<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		  			{screen_name}
+	        </a>
+				    <ul class="dropdown-menu dropdown-menu-end">
+		          {if logged_in_group_id == 5}
+		            <li><a class="dropdown-item" href="{path='accounts/dashboard'}"><i class="fas fa-user-circle"></i> Dashboard</a></li>
+		            <li><a class="dropdown-item" href="{path='accounts/orders'}"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                <li><a href="{site_url}payments" class="dropdown-item"><i class="far fa-credit-card"></i> Pay Open Invoices</a></li>
+					{!--   <a class="dropdown-item" href="{path='accounts/returns'}"><i class="fas fa-user-circle"></i> Returns</a> --}
+          {if:elseif logged_in_group_id == 12}
+
+          {if:elseif logged_in_group_id == 13}
+          <li><a class="dropdown-item" href="{path='accounts/dashboard'}"><i class="fas fa-user-circle"></i> Dashboard</a></li>
+          <li><a class="dropdown-item" href="{path='accounts/orders'}"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+              {if:else}
+				  {!-- {if logged_in_group_id != 5 || logged_in_group_id != 12} --}
+				  	<li><a class="dropdown-item" href="{path='accounts/csr-customer-orders'}"><i class="fas fa-shopping-cart"></i> Customer Orders</a></li>
+				  	<li><a class="dropdown-item" href="{path='customers'}"><i class="fas fa-users"></i> Customer List</a></li>
+
+				  	<li><a class="dropdown-item" href="{path='accounts/returns'}"><i class="fas fa-undo-alt"></i> Returns</a></li>
+				  	<li><a class="dropdown-item" href="https://docs.google.com/presentation/d/1-Gl2HPq9OfSodYShQtCuo3Mw3QycwH-m5cJj9D6UYrg/edit?usp=sharing"
+					  	target="_blank"><i class="fas fa-book"></i> Site User Guide</a></li>
+				   {/if}
+	            {if logged_in_group_id == 1 OR logged_in_group_id == 8 OR logged_in_group_id == 9}
+	                <li> <a class="dropdown-item" href="{site_url}admin.php" target="_blank"><i class="fas fa-tachometer-alt"></i> Site Control Panel</a></li>
+                  <li><a class="dropdown-item" href="{site_url}managers/logged-in-customers" target="_blank"><i class="fas fa-tachometer-alt"></i> Online Customers</a></li>
+	             {/if}
+
+
+               <li><hr class="dropdown-divider"></li>
+           <li><a class="dropdown-item" href="{path='accounts/logout-user'}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </li>
+      {if:else}
+
+          <li class="nav-item bg-brightblue">
+            <a class="nav-link standout" href="{path='accounts/login'}">{member_login_en}</a>
+          </li>
+      {/if}
+    </ul>
+  </div>
+</nav>

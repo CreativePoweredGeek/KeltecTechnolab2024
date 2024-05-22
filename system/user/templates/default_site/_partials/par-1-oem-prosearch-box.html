@@ -1,0 +1,28 @@
+<div class="card border-dark bg-light">
+    <div class="card-header bg-dkblue text-white">
+        Brand/OEM Search
+    </div>
+    <div class="card-body">
+        {exp:pro_search:form 
+            required="keywords"
+            collection="oem_lookup" 
+            result_page="shop/kt-results-oem"
+        }
+        <fieldset>
+            <div class="input-group input-group-lg">
+            <input type="search" name="keywords" placeholder="Enter Brand Name or Part #" class="form-control" value="">
+
+                <div class="input-group-append">
+                    <button class="btn btn-primary rounded-0" type="submit" value="submit" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            {if pro_search_keywords_missing}<em>Keywords are required</em>{/if}
+        </fieldset>
+        {/exp:pro_search:form}
+        <div class="alert alert-success mb-0 mt-3" role="alert">
+            You may now enter OEM numbers OR Brand Names into this field.
+        </div>
+    </div>
+</div>

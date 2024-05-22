@@ -1,0 +1,121 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+{% set product = exp.channel.entries({entry_id:segment_3, limit:1}).0 %}
+{{ product.title }}
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:product.title ~ " - Product Detail", entry_id:product.entry_id } %}
+
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+{!-- since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements--}
+<div class="container">
+    {!-- twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows --}
+    <div class="row">
+
+        {!-- twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up --}
+        <div class="span3">
+            <div class="bs-docs-sidenav">
+                {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+                {% include('ee::default_site.' ~template_group~ '._also_purchased') with{entry_id:product.entry_id} %}
+            </div>
+        </div>
+
+        <div class="span9">
+            <section id="product-info">
+                <div class="row">
+                    <div class="span6">
+                        <h1>{{ product.title}}</h1>
+                        {% if product.product_sku != '' %}#{{ product.product_sku }}{% endif %}
+                        {{ product.product_description }}
+                        {% if product.product_original_price != '' and product.product_original_price > product.product_price %}
+                        <h4>{{ product.product_price }} <small><strong>Sale Price</strong> <i class="icon-tags"></i></small></h4>
+                        <div class="alert alert-info">
+                            <del><small>Regular Price: <strong>{{ product.product_original_price }}</strong></small></del>
+                        </div>
+                        {% else %}
+                        <h4>{{ product.product_price }} <small><strong>Regular Price</strong></small></h4>
+                        {% endif %}
+                        {% if product.no_tax !="Yes"%}<p>Price including tax <strong>{{ product.plus_tax }}</strong></p>{% endif %}
+
+                        {!-- using twitter bootstrap here to lay out the form niceley... hence the form-horizontal class set here --}
+                        {% set add_to_cart_form = exp.cartthrob.add_to_cart_form({
+                            class:'form-horizontal',
+                            entry_id:product.entry_id,
+                            no_tax:product.no_tax,
+                            no_shipping:product.no_shipping,
+                            return: template_group ~ "/view_cart" })
+                        %}
+
+                        {{ add_to_cart_form.form_open | raw }}
+
+                        {% for option in exp.cartthrob.item_options({entry_id:product.entry_id}) %}
+                            {% if option.dynamic %}
+                                <div class="control-group">
+                                    <label class="control-label" for="{{ option.option_field }}">{{ option.option_label }}</label>
+                                    <div class="controls">
+                                        {{ option.input }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                {% if option.options_exist %}
+                                <div class="control-group">
+                                    <label class="control-label" for="{{ option.option_field }}">{{ option.option_label }}</label>
+                                    <div class="controls">
+                                        <select class="input-medium" name="item_options[{{ option.option_field }}]">
+                                            {% for item in option.options %}
+                                            <option value="{{ item.option_value }}">
+                                                {{ item.option_name }} {% if item.price != '' and item.price != 0 %} +${{ item.price }}{% endif %}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="control-group">
+                            {% if "{{ product.product_inventory }}" == "0" %}
+                            <p><strong>This item is out of stock</strong></p>
+                            {% else %}
+                            <label for="product_quantity" class="control-label">Quantity</label>
+                            <div class="controls">
+                                <input type="text" id="product_quantity" class="input-medium"  placeholder='1' name="quantity" size="8"  />
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="control-group">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                        {{ add_to_cart_form.form_close | raw }}
+                    </div>
+
+                    <div class="span3">
+                        <ul class="thumbnails">
+                            <li class="span3">
+                                <div class="thumbnail">
+                                    {% if product_detail_image %}
+                                    <img src="{product_detail_image}" />
+                                    {% else %}
+                                    <img src="{theme_folder_url}../user/cartthrob/store_themes/basic_white/images/main_pic.jpg" />
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

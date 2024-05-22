@@ -1,0 +1,19 @@
+{exp:channel:entries channel="products" url_title="{embed:prod}" dynamic="no" disable="categories|category_fields|member_data|pagination" }
+   {if no_results}
+   		{embed="embeds/get_price_by_as" as="{embed:as}"}
+   {/if}
+
+   {exp:kt_pricing:evaluate_price
+	customerID="{exp:cookie:get name='custno'}"
+	KTproduct="{title}"
+	pPrice="{price}"
+	pClass="{class}"
+	pMAXdiscount="{max_product_discount}" parse="inward"
+}
+
+
+
+
+
+ {!-- {price}--}
+{/exp:channel:entries}

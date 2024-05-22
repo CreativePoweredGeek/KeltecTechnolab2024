@@ -1,0 +1,32 @@
+{#
+//    ----------------------------------------
+//      Livelook
+//    ----------------------------------------
+#}
+{% set livelookUrl = display_settings.fields[loop.index].settings.livelookUrl is defined ? display_settings.fields[loop.index].settings.livelookUrl|replace({
+	'{entry_id}': entry.entry_id,
+	'{title}': entry.title,
+	'{title}': entry.title,
+	'{url_title}': entry.url_title,
+}) : false %}
+
+{% if livelookUrl %}
+	<ul class="toolbar">
+		{# <li><a rel="modal-e_{{entry_id}}_livelook" class="m-link" href="" target="_blank"><i class="fa fa-eye"></i></a></li> #}
+		<li><a rel="modal-e_{{entry_id}}_livelook" class="m-link iframe-modal" href="{{url(livelookUrl)}}" data-url="{{url(livelookUrl)}}"><i class="fa fa-eye"></i></a></li>
+	</ul>
+
+	<div class="modal-wrap modal-e_{{entry_id}}_livelook">
+		<div class="modal">
+			<div class="col-group">
+				<div class="col w-16">
+					<a class="m-close" href="#"></a>
+					<div class="box" style="height: 100%">
+						{# An iframe will be built here #}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endif %}

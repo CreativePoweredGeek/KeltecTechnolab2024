@@ -1,0 +1,13 @@
+
+{exp:kt_pricing:evaluate_price 
+	customerID="BH01" 
+	KTproduct="KRAD-125" 
+	pPrice="1509.00" 
+	pClass="CUSTOMER" 
+	pMAXdiscount="" parse="inward"
+}
+
+{exp:query sql="SELECT * FROM exp_cartthrob_order_items WHERE order_id = 136355"}
+<p>	{title} - {extra}</p>
+
+{/exp:query}

@@ -1,0 +1,20 @@
+<?php
+$rootfolder = 'keltecinc';
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/DBFunctions.php');
+
+//PROCESS HTML POST
+$ccardno = trim(html_entity_decode($_GET['ccardno']));
+//END POST PROCESSING
+
+//VALIDATIONS
+if (empty($ccardno) || !is_numeric($ccardno)){
+  echo "ERROR: Card Number is invalid.";
+  return;
+}
+
+$result = ExecutePost('FindCard',$_GET);
+
+print_r($result);
+
+
+?>

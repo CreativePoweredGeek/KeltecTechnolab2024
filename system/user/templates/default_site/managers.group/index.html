@@ -1,0 +1,18 @@
+{layout="layouts/_csr_main_header"}
+{layout:set name="css"}{/layout:set}
+{layout:set name="js"}{/layout:set}
+{layout:set name="pageTitle"}Welcome back {screen_name}{/layout:set}
+
+{par_user_stash_variables}
+			<div class="container-fluid p-5 mb-5 pt-0">
+			    <div class="row padding-two-percent">
+			        <div class="col-md-4 mx-auto align-self-center">
+						<p class="text-center">Select a place to start.</p>
+						<p><a href="{site_url}managers/orders" class="btn btn-outline-primary btn-block my-2">Customer Orders</a></p>
+						<p><a href="{site_url}managers/customers" class="btn btn-outline-primary btn-block my-2">Customer List</a></p>
+						<p><a href="{site_url}{language_code}/filter-cross-reference-guide" class="btn btn-outline-primary btn-block my-2">Filter Cross Reference</a></p>
+						<p><a href="{site_url}admin.php" class="btn btn-outline-primary btn-block my-2">CMS Control Panel</a></p>
+
+			        </div>
+			    </div>
+			</div>

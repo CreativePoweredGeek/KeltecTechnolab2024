@@ -1,0 +1,71 @@
+<?php
+// This file is for updating the Prices on the
+// Products table in bulk. it will loop through the .csv file
+// and echo product to screen that are not found &
+// update the rest & then modify the edit date for easier identification.
+// Comment out the exit() at the top to use.
+
+exit();
+$fileName = '../uploads/price_batch_import.csv';
+$date =
+$count = 0;
+if(file_exists($fileName))
+{
+		// Find File
+		$file = fopen($fileName,'r');
+
+			while(!feof($file))
+			{
+				//Loop through each line
+				$name = fgets($file);
+
+				if(!empty($name)) {
+					$count++;
+					$line = explode(',', $name, 2);
+					$product = trim($line[0]);
+					$price = trim($line[1], '"');
+
+					// Get the product's entry ID from exp_channel_titles
+					$sql="SELECT entry_id FROM exp_channel_titles WHERE title = ? AND channel_id = ?";
+					$result = ee()->db->query($sql, array($product, 37));
+
+
+					if($result->num_rows() == 0) {
+						// If no entry is found, send to the screen
+						echo $product.'<br>';
+					} else {
+
+						// Update the Price and then update the Edit Date
+						$row = $result->row();
+						$date = strtotime("now");
+						$table='exp_channel_data_field_3';
+						ee()->db->update(
+							$table,
+								array(
+									'field_id_3'  => $price
+								),
+								array(
+									'entry_id' => $row->entry_id
+								)
+						);
+						ee()->db->update(
+							'exp_channel_titles',
+								array(
+									'edit_date' => $date
+								),
+								array(
+									'entry_id' => $row->entry_id
+								)
+						);
+
+						//echo $date.'<br>';
+						// mysqli_free_result($result);
+
+
+					}
+				}
+			}
+}
+		echo '<p>Update Complete</p>';
+
+?>

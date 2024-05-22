@@ -1,0 +1,111 @@
+{layout="layouts/_contact_page_w_sidebar"}
+
+{exp:channel:entries channel="contact" url_title="thank-you"}
+	{layout:set name="title"}{{language_code}_title}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+	{par_edit_this}
+
+{{language_code}_rich_text_block}
+
+
+
+{/exp:channel:entries}
+
+		{if logged_out}
+			<div class="py-3">{par_filter_cross_reference}</div>
+			<div class="row">
+				<div class="py-3 col-md-6">{embed="embeds/search_by_oem" searchpage="search"}</div>
+				<div class="py-3 col-md-6">{embed="embeds/shop-search-options" searchpage="search"}</div>
+			</div>
+
+
+		{/if}
+
+
+	{layout:set name="sidebar"}
+		<iframe src="https://www.google.com/maps/d/embed?mid=1tUiQpBLgb86yedhYeUhU7YGwYk_FQxiH" width="100%" height="800"></iframe>
+	{/layout:set}
+
+	{layout:set name="lowerregion-a"}
+		<div class="col-md-12 mb-4 border-bottom"><h3>KELTEC Technolab North America</h3></div>
+		{exp:channel:entries channel="locations" disable="categories" dynamic="no" search:country="usa" sort="asc"}
+
+			<div class="col-md-3">
+				<div class="card rounded-0{if sticky == 'y'} bg-feature{/if}" style="margin-bottom:24px;background-color: #efefef;min-height:345px;">
+					{par_edit_this}
+				  {if location_photo}
+				  	<img src="{location_photo}" class="card-img-top" alt="Photo of {title}">
+				  {/if}
+				  <div class="card-body">
+				  	<address>
+					    <p class="card-text">
+						    <b>{title}</b><br>
+						    {address1}<br>
+						    {city}, {state} {postal}<br>
+						    {country}<br>
+
+							{if location_phone}
+								<strong>Phone:</strong> <a href="tel:{exp:low_replace find="-|(|)|SPACE|." replace="" multiple="yes"}{location_phone}{/exp:low_replace}">{location_phone}</a><br>
+							{/if}
+							{if location_fax}
+								<strong>Fax:</strong> {location_fax}<br>
+							{/if}
+						</p>
+						 <p class="card-text">
+							 {location_type}
+						 </p>
+						 {if google_maps_url}
+								<p class="card-text"><a href="{google_maps_url}" target="_blank"><i class="fas fa-map-marked-alt"></i> Map</a></p>
+						{/if}
+				  	</address>
+				  </div>
+				</div>
+			</div>
+		{/exp:channel:entries}
+	{/layout:set}
+	{layout:set name="lowerregion-b"}
+		<div class="col-md-12 mb-4 border-bottom"><h3>KELTEC Technolab South America</h3></div>
+		{exp:channel:entries channel="locations" disable="categories" dynamic="no" search:country="NOT usa" sticky='y'}
+
+			<div class="col-md-3 ">
+				<div class="card rounded-0{if sticky == 'y'} bg-feature{/if}" style="margin-bottom:24px;background-color: #efefef;min-height:345px;">
+					{par_edit_this}
+				  {if location_photo}
+				  	<img src="{location_photo}" class="card-img-top" alt="Photo of {title}">
+				  {/if}
+				  <div class="card-body">
+				  	<address>
+					    <p class="card-text">
+						    <b>{title}</b><br>
+						    {address1}<br>
+						    {city}, {state} {postal}<br>
+						    {country}<br>
+
+							{if location_phone}
+								<!--<strong>Phone:</strong> <a href="tel:{exp:low_replace find="-|(|)|SPACE|." replace="" multiple="yes"}{location_phone}{/exp:low_replace}">{location_phone}</a><br>-->
+								<strong>Phone:</strong> {location_phone}<br>
+							{/if}
+							{if location_fax}
+								<strong>Fax:</strong> {location_fax}<br>
+							{/if}
+
+						</p>
+						{if google_maps_url}
+							<p class="card-text"><a href="{google_maps_url}" target="_blank"><i class="fas fa-map-marked-alt"></i> Map</a></p>
+						{/if}
+						 <p class="card-text">
+							 {location_type}
+						 </p>
+				  	</address>
+				  </div>
+				</div>
+			</div>
+		{/exp:channel:entries}
+	{/layout:set}
+
+
+

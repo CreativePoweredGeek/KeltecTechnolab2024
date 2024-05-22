@@ -1,0 +1,5 @@
+<select name="shipping_method" class="form-control" id="shipping_method" required>
+{exp:channel:entries channel="shipping_options" disable="categories|category_fields|pagination|trackbacks" dynamic="no" sort="asc"}
+	<option value="{ship_code}" {if default == "1"}selected{/if}>{title}</option>
+{/exp:channel:entries}
+</select>

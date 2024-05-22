@@ -1,0 +1,61 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:"View Cart" } %}
+
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+	{# since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements #}
+	<div class="container">
+		{# twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows #}
+		<div class="row">
+
+			{# twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up #}
+			<div class="span3">
+				<div class="bs-docs-sidenav">
+                    {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+                    {% set cart_items = exp.cartthrob.cart_items_info({limit:"1", order_by:"entry_id", sort:"desc"})  %}
+                    {% for entry in cart_items %}
+                        {% include('ee::default_site.' ~template_group~ '._also_purchased') with {entry_id:entry.entry_id} %}
+                    {% endfor %}
+				</div>
+			</div>
+			<div class="span9">
+				<section id="account">
+					{% for order in exp.channel.entries({channel:"orders", limit:30, author_id:global.member_id, status:"Payment Complete"}) %}
+						{% for item in exp.cartthrob.order_items({ order_id:order.entry_id }) %}
+							<div class="product">
+								<h3>{{ item.title }}</h3>
+								{% if item.product_thumbnail %}
+								<a href="{path='{template_group}/product_detail/{item:entry_id}'}">
+									<img src="{item:product_thumbnail}" />
+								</a>
+								{% endif %}
+								<p>
+									Purchase Price: {{ item.price }} (w/ tax: {{ item.price_plus_tax }})
+								<br /><a href="{{ exp.path(template_group ~ '/product_detail/' ~ item.entry_id) }}">Review &raquo;</a>
+                                    {% set invoice_string = exp.cartthrob.view_encrypted_string({string:order.entry_id}) %}
+								<br /><a href="{{ exp.path(template_group ~ '/invoice/' ~ invoice_string) }}">View invoice &raquo; </a></p>
+								{% if item.product_download_url %}
+                                    {% set download_form = exp.cartthrob.download_file_form({field:"product_download_url", entry_id:item.entry_id}) %}
+									{{ download_form.form_open }}
+										<input type="submit" value="Download Now!" />
+                                    {{ download_form.form_close }}
+                                {% endif %}
+
+								{% if purchased_license_number %}
+									<p>License number: {{ order.purchased_license_number }}</p>
+                                {% endif %}
+							</div>
+						{% endfor %}
+					{% endfor %}
+				</section>
+				</div>
+		</div>
+	</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

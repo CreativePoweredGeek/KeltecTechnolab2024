@@ -1,0 +1,65 @@
+{!-- IN-SERVICE 04/10/23 --}
+{exp:channel:entries channel="products" url_title="{embed:url_title}" dynamic="no" disable="category|member_data|pagination|trackbacks"}
+
+{if no_results}
+{!--<tr>
+
+
+	<td style="vertical-align:middle">{embed:url_title} -- </td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle">Please contact your Keltec CSR for assistance. <strong>+1 (330) 425-3100</strong></td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle"></td>
+	<td style="vertical-align:middle"></td>
+</tr>--}
+{/if}
+
+
+<tr>
+	<td style="vertical-align:middle"><a href="{site_url}products/item/{url_title}">{title}</a></td>
+
+		<td style="vertical-align:middle">{embed:asnum}</td>
+		<td style="vertical-align:middle">{embed:oemnum}</td>
+		<td style="vertical-align:middle">{embed:oemname}</td>
+		<td style="vertical-align:middle">{description}  {if class == 'DR'}{par_krad_po}{/if}</td>
+		<td style="vertical-align:middle">{weight}</td>
+		<td style="vertical-align:middle">
+			{if logged_in}
+				<strong>${par_custom_price}</strong>
+			{if:else}Login for Pricing{/if}
+		</td>
+		{exp:cartthrob:add_to_cart_form
+			entry_id="{entry_id}"
+			allow_user_price="yes"
+			return="{current_url}"
+			prefix=""}
+			<td style="vertical-align:middle">
+				<div class="input-group">
+					<!--<input type="hidden" id="entry_id" value="{entry_id}" />-->
+					{par_inventory_drop}
+					<!--<p class="newShipdate">select a warehouse</p>-->
+				</div>
+			</td>
+			<td style="vertical-align:middle">
+				<input type="hidden" name="price" value="{par_custom_price}">
+				<input type="hidden" name="item_options[label_description]" value="{description}" />
+				<input type="hidden" name="item_options[purchased_price]" value="{par_custom_price}" />
+				<input type="hidden" name="item_options[customer_number]" value="{exp:stash:get name='customer_number'}" />
+				<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='n'}" />
+				<div class="input-group">
+					{if logged_in_group_id != 13}
+						<input type="number" name="quantity" class="form-control" maxlength="3" size="3" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2" style="width:100px;">
+						<div class="input-group-append">
+							<button class="btn btn-primary rounding-0" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> </button>
+						</div>
+					{/if}
+				</div>
+			</td>
+		{/exp:cartthrob:add_to_cart_form}
+</tr>
+
+
+{/exp:channel:entries}

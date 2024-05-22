@@ -1,0 +1,80 @@
+<fieldset class="tbl-search right">
+
+
+    <div class="filters zenbu-actions-nav">
+        {% if hook_zenbu_add_nav_content is not empty %}
+            <ul>
+                {{hook_zenbu_add_nav_content|default('')}}
+            </ul>
+        {% endif %}
+        <ul id="zenbu-actions">
+            <li>
+                <a class="has-sub" href="#" title="{{'Saved Searches'|t}}"><i class="fa fa-bookmark"></i> <span>{{'Saved Searches'|t}}</span></a>
+                <div class="sub-menu" style="display: none;">
+                    <ul>
+                        <li class="save-search"><a href="#" class="m-link" rel="modal-saveSearch"><i class="fa fa-lg fa-floppy-o"></i> <strong>{{ 'Save this search'|t }}</strong></a></li>
+                        <li v-for="search in saved_searches"><a href="#" @click="fetch_filters(search.id)">@{ search.label }</a></li>
+                        <li class="saved-searches-manager" v-if="total_saved_searches > 0"><a href="#" class="m-link" rel="modal-savedSearchesManager"><i class="fa fa-lg fa-book"></i> <strong>{{ 'Manage Saved Searches'|t }}</strong></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="has-sub" href="#" title="{{'Settings'|t}}"><i class="fa fa-cogs"></i> <span>{{'Settings'|t}}</span></a>
+                <div class="sub-menu" style="display: none;">
+                    <ul>
+						{% if permissions.can_access_settings is defined %}
+                            <li><a href="#" class="m-link" rel="modal-displaySettings" @click="prepareDisplaySettingsModelContent">Display Settings</a></li>
+						{% endif %}
+						{% if permissions.can_admin is defined %}
+                            <li><a href="{{cpUrl('publish/create/' ~ id)}}" class="m-link" rel="modal-permissions">Permissions</a></li>
+						{% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="has-sub" href="">{{'create_new'|t}}</a>
+                <div class="sub-menu" style="display: none;">
+                    <ul>
+                        {% for id, channel_title in channel_dropdown_options %}
+                        <li><a href="{{cpUrl('publish/create/' ~ id)}}">{{channel_title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</fieldset>
+
+
+<form action="{{ action_url }}" id="zenbu-search">
+    <div class="tbl-ctrls">
+        <h1>{{'Search Entries'|t}}</h1>
+    </div>
+
+    <div class="zenbu-filters">
+
+        <div class="col-group">
+            <div class="col w-4">
+                <select2 class="channel_id" v-model="channel_id" placeholder="{{'All Channels'|t}}" minimum-results-for-search="7" v-cloak>
+                    <option value="all">All Channels</option>
+                    {% for id, channel_title in channel_dropdown_options %}
+                        <option value="{{id}}">{{channel_title}}</option>
+                    {% endfor %}
+                </select2>
+            </div>
+            <div class="col w-4">
+                <select2 class="limit" v-model="limit" v-cloak>
+                    {% for limit in limit_dropdown_options %}
+                        <option value="{{limit}}">{{limit}} {{'results'|t}}</option>
+                    {% endfor %}
+                </select2>
+            </div>
+			<div class="col w-8" v-if="debug_mode" v-cloak>
+				channel_id: @{channel_id}, limit: @{limit}, order_by: @{order_by}, sort: @{sort}
+			</div>
+        </div>
+
+        <filter-row v-for="row, index in rows" :key="index" :row-index="index" :row-data="row" :options1="options1"></filter-row>
+
+    </div>
+</form>

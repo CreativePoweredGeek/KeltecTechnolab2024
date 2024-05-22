@@ -1,0 +1,20 @@
+<tr>
+
+	<td class="">
+		<span class="defaultBold"><a href="{path:profile}">{customer_number}</a></span>
+	</td>
+	<td class="">{company}</td>
+	<td class="">{first_name} {last_name}</td>
+
+	<td class="">
+		{if accept_email}
+			<a href="#" {email_console}><img src="{path:image_url}icon_email.gif" width="56" height="14" 						alt="{lang:email_console}" title="{lang:email_console}" border="0" /></a>
+		{/if}
+	</td>
+	<td class="">{city}, {state}</td>
+	<!--<td class="">{join_date  format="%m/%d/%Y"}</td>-->
+
+	<td class="">{last_visit  format="%m/%d/%Y"}</td>
+	<td class=""><a href="{site_url}accounts/dashboard/{member_id}/{username}">View</a></td>
+	
+</tr>

@@ -1,0 +1,7 @@
+
+	<select class="form-control" name="item_options[requested_warehouse]">
+		<option value="MAIN" {if '{exp:stash:get name="warehouse"}' == "MAIN"}selected{/if}>OH - {inventory_main:number_format decimals='0'} units {exp:kt_tools:getInTransit prdct="{embed:product}" whse="MAIN"} </option>
+		<option value="NC" {if '{exp:stash:get name="warehouse"}' == "NC"}selected{/if}>NC - {inventory_nc:number_format decimals='0'} units {exp:kt_tools:getInTransit prdct="{embed:product}" whse="NC"}</option></option>
+		<option value="TX" {if '{exp:stash:get name="warehouse"}' == "TX"}selected{/if}>TX - {inventory_tx:number_format decimals='0'} units {exp:kt_tools:getInTransit prdct="{embed:product}" whse="TX"}</option></option>
+		<option value="CA" {if '{exp:stash:get name="warehouse"}' == "CA"}selected{/if}>CA - {inventory_ca:number_format decimals='0'} units {exp:kt_tools:getInTransit prdct="{embed:product}" whse="CA"}</option></option>
+	</select>

@@ -1,0 +1,33 @@
+{layout="layouts/_main_html_layout"}
+
+<section id="header">
+	<div class="page_header_wrapper bg-dkblue">
+		<div class="container">
+			<div class="row align-items-center" style="height:200px;">
+				<div class="col-md-12">
+					<h1 class="text-white display-3">{layout:title}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="section-wrapper rounded-0 bg-lightgrey">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				{if logged_in_group_id == "8"}
+					<p class="text-right"><a href="https://dev.keltecinc.com/en/accounts/member-list/{layout:sales_rep_id}" class="btn btn-outline-primary rounded-0">Back to Account List</a></p>
+				{/if}	
+				{if logged_in_group_id == "9"}
+					<p class="text-right"><a href="https://dev.keltecinc.com/en/accounts/member-list" class="btn btn-outline-primary rounded-0">Back to Account List</a></p>
+				{/if}
+			</div>
+			<div class="col-md-4 offset-md-4">
+
+				{layout:details}
+
+			</div>
+		</div>
+	</div>
+</div>

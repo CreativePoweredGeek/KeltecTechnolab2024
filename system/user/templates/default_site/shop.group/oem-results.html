@@ -1,0 +1,51 @@
+{layout="layouts/_shop_layout"}
+{layout:set name="template"}shop{/layout:set}
+{layout:set name="title"}Search Results{/layout:set}
+{layout:set name="page_title"}Search Results{/layout:set}
+{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+
+{layout:set name="productslist"}
+<div class="alert alert-success" role="alert">
+  Your Search for <b>{exp:search:keywords}</b> returned the following result(s).
+</div>
+
+<table class="table table-striped table-sm" style="font-size: .85rem;">
+<thead class="bg-dkblue text-white">
+		<tr>
+
+			<th>KELTEC<br>Part</th>
+			<th>Air Supply<br>Part</th>
+			<th>OEM</th>
+			<th>OEM Name</th>
+			<th>Description</th>
+			<th>Weight</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+
+{exp:search:search_results sort="desc" results="10" paginate="bottom"}
+	{embed="embeds/product_row_for_oem_search_r2" url_title="{pg_keltec_number:url_slug}" oemnum="{pg_oem_number}" oemname="{pg_oem_name}" asnum="{pg_air_supply_number}"}
+	{if count == total_results}
+		</tbody></table>
+	{/if}
+
+
+	{paginate}
+	<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+{/paginate}
+
+{/exp:search:search_results}
+
+
+
+<p><hr></p>
+	<!--<p class="small">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>-->
+
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from.<br> ** If there is no available inventory at your preferred warehouse, you can select that it ship from another.<br>
+	** If you see a number in parenthesis &mdash; for example: 0 NC <strong>(3)</strong> &mdash; that quantity is on its way to the warehouse and will be available to ship once it arrives.</p>
+
+{/layout:set}
+

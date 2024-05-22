@@ -1,0 +1,63 @@
+{layout="layouts/_shop_layout"}
+{preload_replace:language_code="en"}
+{layout:set name="template"}search{/layout:set}
+{layout:set name="title"}Search Results{/layout:set}
+{layout:set name="page_title"}Search Results{/layout:set}
+{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+
+{layout:set name="productslist"}
+<div class="alert alert-success" role="alert">
+  Your Search of <b>{exp:search:keywords}</b> returned <b>{exp:search:total_results}</b> results.
+</div>
+
+<table class="table table-striped">
+<thead class="bg-dkblue text-white">
+		<tr>
+			<th>#</th>
+			<th>Item</th>
+			<th>Description</th>
+
+
+		{if logged_in_group_id == "13"}
+			<th>Price</th>
+		{/if}
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+
+{exp:search:search_results}
+
+{preload_replace:priceNew="{embed='embeds/customPrice_new' title='{title}' price_code='{exp:stash:price_code}' customer='{exp:stash:customer_number}' price='{price}' price3='{price_3}' class='{class}' max_product_discount='{max_product_discount}' parse='inline'}"}
+
+{if price != '0'}
+{exp:search_hilite}
+	<tr>
+		<td style="vertical-align:middle">{absolute_count}.</td>
+		<td style="vertical-align:middle">{title} {if photo !=""} <i class="far fa-image"></i>{/if}</td>
+		<td style="vertical-align:middle">{description}
+
+	{if logged_in_group_id == "13"}
+			<th>{priceNew}</th>
+		{/if}
+		<td style="vertical-align:middle"><a href="{path='{language_code}/products/item/{url_title}'}" class="btn btn-outline-primary rounded-0 btn-sm">Details</a></td>
+
+	</tr>
+	{/exp:search_hilite}
+	{/if}
+	{if count == total_results}
+		</tbody>
+	</table>
+
+	<p><hr></p>
+	<p class="small">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>
+
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from. If there is no available inventory at your preferred warehouse, you can select that it ship from another.</p>
+
+	{/if}
+	{par_paginate}
+
+
+{/exp:search:search_results}
+
+{/layout:set}

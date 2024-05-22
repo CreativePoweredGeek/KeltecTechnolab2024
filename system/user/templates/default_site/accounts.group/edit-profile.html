@@ -1,0 +1,103 @@
+{layout="layouts/_dashboard_layout_one_col"}
+{par_user_stash_variables}
+{layout:set name="rightButton"}
+	{if segment_3 !=""}
+        <a href="{path='{language_code}/accounts/dashboard/{segment_3}'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {if:else}
+         <a href="{path='{language_code}/accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {/if}
+{/layout:set}
+{if segment_3 != ""}
+	{exp:member:custom_profile_data member_id="{segment_3}"}
+{if:else}
+	{exp:member:custom_profile_data}
+{/if}
+		{layout:set name="companyID"}{customer_number}{/layout:set}
+		{layout:set name="companyName"}{company}{/layout:set}
+		{layout:set name="title"}Edit Profile{/layout:set}
+		{layout:set name="page_title"}{first_name} {last_name}{/layout:set}
+		{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+		{layout:set name="seo_canonical"}{current_url}{/layout:set}
+		{layout:set name="sales_rep"}{sales_rep}{item:label}{/sales_rep}{/layout:set}
+		{layout:set name="sales_rep_id"}{sales_rep}{item:value}{/sales_rep}{/layout:set}
+		{layout:set name="membergroupid"}{member_group_id}{/layout:set}
+
+	{/exp:member:custom_profile_data}
+
+
+{if segment_4 == "success"}
+    <div class="col-12">
+        <div class="alert alert-success" role="alert">
+            Update Successful! <a href="{path='{language_code}/accounts/dashboard'}">Return to Profile</a>
+        </div>
+    </div>
+{/if}
+<div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+
+
+{exp:smart_members:edit
+	{if "{segment_3}" != ""}member_id="{segment_3}" {/if}
+	allowed_admin_groups="1|8|9"
+	error_reporting="inline"
+	wrap_errors="<span class='error-inline'>|</span>"
+	return = "{language_code}/accounts/dashboard"
+	on_submit="edit_profile()"
+}
+
+       {if segment_3 != ""}{segment_3}{/if}
+        <div class="form-group">
+            <label for="member_firstname">First Name:</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{first_name}" aria-describedby="" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+            <label for="member_lastname">Last Name:</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{last_name}" aria-describedby="" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+            <label for="member_company">*Company Name:</label>
+            <input type="text" class="form-control" id="company" name="company" value="{company}" aria-describedby="" placeholder="" required>
+        </div>
+
+    <div class="form-group">
+            <label for="member_address">*Address:</label>
+            <input type="text" class="form-control" id="address" name="address" value="{address}" aria-describedby="" placeholder="" required>
+        </div>
+        <div class="form-group">
+            <label for="member_city">*City:</label>
+            <input type="text" class="form-control" id="city" name="city" value="{city}" aria-describedby="" placeholder="" required>
+        </div>
+        <div class="form-group">
+            <label for="member_state">*State/Province:</label>
+            {exp:reegion_select:states_provinces name="state" class="form-control" selected="{state}" required="yes" type="alpha2"}
+        </div>
+        <div class="form-group">
+            <label for="member_postal">*Postal:</label>
+            <input type="text" class="form-control" id="postal" name="postal" value="{postal}" aria-describedby="" placeholder="" required>
+        </div>
+         <div class="form-group">
+            <label for="member_state">*Country:</label>
+            {exp:cartthrob:country_select name="country" class="border border-secondary rounded-0 form-control" selected="{country}"}
+        </div>
+         <div class="form-group">
+            <label for="member_phone_1">Phone 1:</label>
+            <input type="text" class="form-control" id="phone_1" name="phone_1" value="{phone_1}" aria-describedby="" placeholder="">
+        </div>
+     <div class="form-group">
+            <label for="member_phone_2">Phone 2:</label>
+            <input type="text" class="form-control" id="phone_2" name="phone_2" value="{phone_2}" aria-describedby="" placeholder="">
+        </div>
+     <div class="form-group">
+            <label for="member_fax">Fax:</label>
+            <input type="text" class="form-control" id="fax" name="fax" value="{fax}" aria-describedby="" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="member_fax">Website:</label>
+            <input type="text" class="form-control" id="website" name="website" value="{website}" aria-describedby="" placeholder="">
+        </div>
+		<input type="hidden" name="last_edit_date" id="last_edit_date" value="{current_time format='%m/%d/%Y'}">
+		<input type="hidden" name="update_customer" id="update_customer" value="1">
+        <button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+{/exp:smart_members:edit}
+</div>

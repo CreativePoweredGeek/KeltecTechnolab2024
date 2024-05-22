@@ -1,0 +1,115 @@
+{layout="layouts/_cart_layout"}
+
+{layout:set name="title"}Shopping Cart{/layout:set}
+
+
+<div class="col-12">
+	<p>This is an overview of your shopping cart. Currently, Shipping - Carrier, Ship to and from - are un-configured so values depicted are not intended to be correct.<p>
+		{if logged_out}
+			<div class="alert alert-warning" role="alert">
+				<h5>You must be logged in to place an order.</h5>
+				If you are a current KELTEC Technolab customer, please <a href="#" data-toggle="modal" data-target="#memberLogin">login</a> to complete your order. If you are not currently a KELTEC Technolab customer, please call (000) 000-0000 to speak with a Customer Sales Representative (CSR) and setup an account. You can then return to this page once logged in and complete your order.
+				 
+			</div>
+				
+			{/if}
+	{if segment_3 == "order_complete"}
+		<div class="alert alert-success" role="alert">
+		Order Complete.
+		</div>
+	{/if}
+	{!-- cart_items_info outputs information about your current cart, including products in the cart, weight, and prices. --}
+	{exp:cartthrob:cart_items_info}
+		{if no_results}
+		    <h3 class="text-center">There is nothing in your cart</h3>
+			<div class="col-12 col-sm-8 col-md-6 mr-auto ml-auto">
+				{par_search_from_orderform}
+			</div>
+		{/if}
+		{!-- outputting data that's only applicable for the first item. --}
+		{if first_row}
+			{!-- update_cart_form allows you to edit the information of one or more items in the cart at the same time as well as save customer information, and shipping options. --}
+    		<table class="table table-striped table-hover">
+		<thead class="thead-dark">
+			<th>#</th>
+			<th>Product</th>
+			<th>Description</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th></th>
+			
+		</thead>
+		<tbody>
+
+			{exp:cartthrob:update_cart_form return="cart/view-cart" }
+ 		{/if}
+			
+			
+			<p>
+				{if item_options:product_color  } Color: {item_options:product_color}{/if} 
+				{if item_options:product_size  } Size: {item_options:product_size}{/if}
+				{if item_options:product_options}{item_options:product_options:label}{/if}
+			</p>
+			<tr>
+				<td>{count}</td>
+				<td><strong>{title}</strong></td>
+				<td>{description}</td>
+				<td>{if logged_in}{item_price}{/if}{if logged_out}Login to see Prices{/if}</td>
+				
+
+			{!-- The following will generate a item_options select boxes. With the parameter row_id="true" 
+				the select boxes will automatically add the all-important row_id to the output. The final select box will look
+				something like this: 
+				<select name="item_options[1][product_size]">
+				--}
+{!--
+			{item_options:select:product_size row_id="{row_id}"}
+			{item_options:select:product_color row_id="{row_id}"}
+--}
+
+			{!-- you can reference products by entry_id and row_id. If you sell configurable 
+				items (like t-shirts with multiple sizes) you should use row_id to edit and 
+				delete items, otherwise, all items with that entry id
+				are affected, regardless of configuration --}
+				<td><input type="text" name="quantity[{row_id}]" size="2" value="{quantity}" /></td>
+			{!-- This deletes one item (row_id) at a time--}
+				<td class="text-right"><input type="checkbox" name="delete[{row_id}]"> Delete this item</td>
+			{!-- outputting data that's only applicable for the last item. --}
+			
+		{if last_row}
+			{!-- a clear_cart input can be used to remove all items in the cart --}
+	    	
+			</tr></tbody></table>
+		</div>
+			<div class="col-md-12 text-right">
+				<input type="submit" class="btn btn-primary text-right rounded-0 btn-lg" value="Update Cart" /><br>
+				{!--<input type="submit" class="btn btn-outline-primary text-right rounded-0 btn-sm" onclick = "getConfirmation();" name="clear_cart" value="Empty Cart" />--}
+	    	</div>
+			 {exp:cartthrob:get_shipping_options}
+			<div class="col-md-3">
+				<div class="card bg-light">
+					<div class="card-body">
+						<h5 class="card-title">Order Summary</h5>
+    					<h6 class="card-subtitle mb-2 text-muted">Accurate shipping & tax are not reflected.</h6>
+						<table class="table">
+							<tr><td>Subtotal:</td><td class="text-right">{exp:cartthrob:cart_subtotal}</td></tr>
+							<tr><td>Est. Tax:</td><td class="text-right">{exp:cartthrob:cart_tax}</td></tr>
+							<tr><td>Est. Shipping:</td><td class="text-right">{exp:cartthrob:cart_shipping}</td></tr>
+							<tr><td><b>Est. Total</b></td><td class="text-right"><b>{exp:cartthrob:cart_total}</b></td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			{/exp:cartthrob:update_cart_form}
+
+		{/if}
+	{/exp:cartthrob:cart_items_info}
+</div>
+
+			{if logged_in}
+				<div class="col-md-6">
+					{!-- CHECKOUT --}
+					{par_checkout_form_en}
+				</div>
+			{/if}

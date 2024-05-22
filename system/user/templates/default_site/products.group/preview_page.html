@@ -1,0 +1,146 @@
+{layout="layouts/_page_w_sidebar"}
+
+{exp:channel:entries channel="product_segment_pages" status="closed|open" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+	{layout:set name="title"}{{language_code}_title} | {products_{language_code}}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+	{par_edit_this}
+	{if feature_photo}
+		<img src="{feature_photo}" class="img-fluid feature-product" alt="{{language_code}_title}">
+	{/if}
+	{if {language_code}_rich_text_block}
+		{{language_code}_rich_text_block}
+	{/if}
+
+	{page_content}
+
+				{if page_content:first && !{page_content:first name="section_divider"}}
+					<div class="section">
+						<div class="row">
+				{/if}
+				{page_content:section_divider}
+					{if page_content:count != 1}
+							</div>
+						</div>
+					{/if}
+
+					{content}
+						<div class="section-divider {content:additional_css}">
+							<div class="row">
+					{/content}
+				{/page_content:section_divider}
+				{page_content:headline}
+					{content}
+						<{content:element} class="col-12 text-{content:align_text}">{content:{language_code}_headline}</{content:element}>
+					{/content}
+				{/page_content:headline}
+				{page_content:rich_text_area}
+					{content}
+						<div class="col-md-{content:column}">{content:{language_code}_text}</div>
+					{/content}
+				{/page_content:rich_text_area}
+				{page_content:image}
+					{content}
+						<div class="col-md-{content:column}">
+
+					<div class="holder">
+					<img src="{content:image}" alt="{content:{language_code}_alt_text}" class="image">
+					<div class="overlay">
+						<div class="text">{content:{language_code}_alt_text}</div>
+					</div>
+					</div>
+
+<!--<img src="{content:image}" class="img-fluid" alt="{content:{language_code}_alt_text}" title="{content:{language_code}_alt_text}">-->
+							</div>
+					{/content}
+				{/page_content:image}
+				{page_content:call_to_action_button}
+					{content}
+						<div class="col-sm-4 offset-sm-4 button-v-space">
+							<a href="{site_url}{language_code}/{content:button_link}" class="btn btn-primary btn-lg btn-block rounded-0">{content:{language_code}_button_text}</a>
+						</div>
+					{/content}
+				{/page_content:call_to_action_button}
+				{page_content:file_download}
+					{content}
+						<div class="col-sm-4 offset-sm-4 button-v-space">
+							<a href="{content:file}" class="btn btn-outline-primary btn-lg btn-block rounded-0" target="_blank"><i class="fas fa-cloud-download-alt"></i> {content:{language_code}_button_text}</a>
+						</div>
+					{/content}
+				{/page_content:file_download}
+
+				{if page_content:last && !{page_content:last name = "section_divider"}}</div></div>{/if}
+			{/page_content}
+
+
+			{if related_products != ""}
+
+
+				<h4 class="mx-3">Some of our most popular Products</h4>
+				<table class="table table-striped mx-3">
+					<thead class="bg-dkblue text-white">
+						<tr>
+							<th>KELTEC#</th>
+							<!--<th>AS#</th>-->
+
+							<th>Description</th>
+							<!--<th>List Price</th>-->
+							<th></th>
+						</tr>
+
+					</thead>
+					<tbody>
+
+				{related_products}
+					<tr>
+						<td>{related_products:title}</td>
+						{!--<td>{exp:kt_tools:get_as_no keltec_no="{related_products:title}"}</td>--}
+
+						<td>{related_products:description}</td>
+						{!--<td>{related_products:price}</td>--}
+						<td><a href="{path='{language_code}/products/item/{related_products:url_title}'}" class="">Details</a></td>
+					</tr>
+
+				{/related_products}
+					</tbody>
+				</table>
+
+			{/if}
+
+{/exp:channel:entries}
+	{layout:set name="sidebar"}
+	<div class="row">
+		<div class="col mb-4">
+		{exp:channel:entries channel="product_segment_pages" dynamic="no" entry_id = "not 13547" sort="asc" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+			{if url_title != segment_2}
+
+			<div class="col-4" style="padding:0px;float:left;">
+				<a href="{route='products/page' language_code='{language_code}' url_title='{url_title}'}">
+					<div class="cell m-1">
+				        <img class="img-fluid" src="{if preview_image}{preview_image:sq}{if:else}{site_url}assets/images/general/_sq/default.jpg{/if}">
+				          	<div class="overlay-text">
+						  		<div class="children">
+					          	<h5>{if {language_code}_title}{{language_code}_title}{if:else}{title}{/if} </h5>
+							</div>
+					      </div>
+					</div>
+				</a>
+	     	</div>
+			{/if}
+		{/exp:channel:entries}
+	</div></div>
+		{par_filter_cross_reference}
+		{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+			<div class="pt-5">
+				{if {language_code}_title != ""}<h3 class="text-uppercase">{{language_code}_title}</h3>{/if}
+				<p class="">{{language_code}_basic_text}</p>
+			</div>
+		{/exp:channel:entries}
+
+{/layout:set}
+
+
+

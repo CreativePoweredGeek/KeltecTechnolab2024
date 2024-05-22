@@ -1,0 +1,58 @@
+{exp:channel:form channel="customer_shipping_addresses" class="col-md-8" return="store/checkout/ENTRY_ID"}
+<div class="form-group">
+    <label for="title">Customer:</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="" required>
+</div>
+<input type="hidden" name="url_title" id="url_title" value="{exp:kcd_random}" maxlength="75" size="50">
+<input type="hidden" name="customer_number" id="customer_number"
+value="{exp:stash:get name='customer_number'}">
+<div class="form-group">
+    <label for="cs_address_1">Address 1:</label>
+    <input type="text" class="form-control" id="cs_address_1" name="cs_address_1" placeholder="" required>
+</div>
+<div class="form-group">
+    <label for="cs_address_2">Address 2:</label>
+    <input type="text" class="form-control" id="cs_address_2" name="cs_address_2" placeholder="">
+</div>
+<div class="form-group">
+    <label for="cs_city">City:</label>
+    <input type="text" class="form-control" id="cs_city" name="cs_city" placeholder="" required>
+</div>
+<div class="form-group">
+    <label for="cs_state">State:</label>
+    {!--{exp:cartthrob:state_select name="cs_state" class="form-control"}--}
+    {exp:reegion_select:states_provinces name="cs_state" class="form-control" selected="" required="yes" type="alpha2"}
+</div>
+
+<div class="form-group">
+    <label for="cs_zip">Postal:</label>
+    <input type="text" class="form-control" id="cs_zip" name="cs_zip" placeholder="" required>
+</div>
+<div class="form-group">
+    <label for="cs_country">Country:</label>
+   {!-- {exp:cartthrob:country_select name="cs_country" selected="USA" class="form-control"} --}
+      {exp:reegion_select:countries name="cs_country" class="form-control" selected="USA" type="alpha3"}
+</div>
+<div class="form-group">
+    <label for="cs_phone">Phone:</label>
+    <input type="text" class="form-control" id="cs_phone" name="cs_phone" placeholder="" required>
+</div>
+<div class="form-group">
+    <label for="cs_email">Email:</label>
+    <input type="email" class="form-control" id="cs_email" name="cs_email" placeholder="" required>
+</div>
+<div class="form-group">
+    <label for="cs_contact_name">Contact:</label>
+   <div class="row">
+        <div class="col">
+            <input type="text" class="form-control" id="contact_first_name" name="contact_first_name" placeholder="First Name" required>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" id="contact_last_name" name="contact_last_name" placeholder="Last Name" required>
+        </div>
+    </div>
+</div>
+<button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+
+
+{/exp:channel:form}

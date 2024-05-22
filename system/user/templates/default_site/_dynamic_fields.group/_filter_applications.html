@@ -1,0 +1,10 @@
+{exp:channel:entries
+	channel="application_types" 
+	disable="categories|category_fields|pagination|trackbacks"
+	dynamic="no" 
+}
+{if count == 1} [ {/if}
+	{"value" : "{entry_id}", "label" : "{title}"} {if count != total_results},{/if}
+{if count == total_results} ] {/if}
+
+{/exp:channel:entries} 

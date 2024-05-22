@@ -1,0 +1,7 @@
+{exp:kt_pricing:evaluate_price
+	customerID="{exp:cookie:get name='custno'}"
+	KTproduct="{embed:title}"
+	pPrice="{embed:price}"
+	pClass="{embed:class}"
+	pMAXdiscount="{embed:max_product_discount}" parse="inward"
+}

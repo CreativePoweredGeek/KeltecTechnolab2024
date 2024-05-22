@@ -1,0 +1,62 @@
+{% set customer = exp.cartthrob.customer_info() %}
+
+first_name           	    {{ customer.first_name }}
+<br />last_name            	{{ customer.last_name }}
+<br />address              	{{ customer.address }}
+<br />address2             	{{ customer.address2 }}
+<br />city                 	{{ customer.city }}
+<br />state                	{{ customer.state }}
+<br />zip                  	{{ customer.zip }}
+<br />company              	{{ customer.company }}
+<br />country              	{{ customer.country }}
+<br />country_code         	{{ customer.country_code }}
+<br />region               	{{ customer.region }}
+<br />phone                	{{ customer.phone }}
+<br />email_address        	{{ customer.email_address }}
+<br />shipping_first_name  	{{ customer.shipping_first_name }}
+<br />shipping_last_name   	{{ customer.shipping_last_name }}
+<br />shipping_phone        {{ customer.shipping_phone }}
+<br />shipping_address     	{{ customer.shipping_address }}
+<br />shipping_address2    	{{ customer.shipping_address2 }}
+<br />shipping_city        	{{ customer.shipping_city }}
+<br />shipping_state       	{{ customer.shipping_state }}
+<br />shipping_zip         	{{ customer.shipping_zip }}
+<br />shipping_company     	{{ customer.shipping_company }}
+<br />shipping_country     	{{ customer.shipping_country }}
+<br />shipping_country_code	{{ customer.shipping_country_code }}
+<br />shipping_company     	{{ customer.shipping_company }}
+<br />ip_address           	{{ customer.ip_address }}
+<br />weight_unit          	{{ customer.weight_unit }}
+<br />language             	{{ customer.language }}
+<br />use_billing_info     	{{ customer.use_billing_info }}
+<br />description          	{{ customer.description }}
+<br />card_type            	{{ customer.card_type }}
+<br />expiration_month     	{{ customer.expiration_month }}
+<br />expiration_year      	{{ customer.expiration_year }}
+<br />po_number            	{{ customer.po_number }}
+<br />card_code            	{{ customer.card_code }}
+<br />CVV2                 	{{ customer.CVV2 }}
+<br />issue_number         	{{ customer.issue_number }}
+<br />transaction_type     	{{ customer.transaction_type }}
+<br />bank_account_number  	{{ customer.bank_account_number }}
+<br />check_type           	{{ customer.check_type }}
+<br />account_type         	{{ customer.account_type }}
+<br />routing_number       	{{ customer.routing_number }}
+<br />begin_month          	{{ customer.begin_month }}
+<br />begin_year           	{{ customer.begin_year }}
+<br />bday_month           	{{ customer.bday_month }}
+<br />bday_day             	{{ customer.bday_day }}
+<br />bday_year            	{{ customer.bday_year }}
+<br />currency_code        	{{ customer.currency_code }}
+<br />shipping_option      	{{ customer.shipping_option }}
+<br />success_return       	{{ customer.success_return }}
+<br />cancel_return        	{{ customer.cancel_return }}
+<br />username             	{{ customer.username }}
+<br />screen_name          	{{ customer.screen_name }}
+
+
+<br /><br />you need to save this data first using save_customer_info_form 	{custom_data:your_data_field_name}
+
+<br />Outputs saved customer info
+<br />NOTE: example requires that some customer data be available see save_customer_info_form
+<br />http://cartthrob.com/docs/tags_detail/customer_info/

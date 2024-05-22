@@ -1,0 +1,20 @@
+{% set cart_form = exp.cartthrob.multi_add_to_cart_form({return:"store/single_page_checkout"}) %}
+{{ cart_form.form_open | raw }}
+{% for product in exp.channel.entries({channel:"products", limit:5}) %}
+
+    Product Name: {{ product.title }} {{ product.product_price }} <br />
+    <input type="hidden" name="entry_id[{{ loop.index0 }}]" value="{{ product.entry_id }}" />
+    Note: <input type="text" name="item_options[{{ loop.index0 }}][notes]"  /><br />
+    Quantity: <input type="text" name="quantity[{{ loop.index0 }}]"  /><br />
+
+	{% if loop.index == loop.length %}
+        <br />
+		<input type="submit" name="submit_button" value="add to cart" />
+	{% endif %}
+    <br />
+{% endfor %}
+{{ cart_form.form_close | raw }}
+
+<br />Outputs a form that allows you to add multiple items to the cart at the same time.
+<br />NOTE: example requires "products" channel.
+<br />http://cartthrob.com/docs/tags_detail/multi_add_to_cart_form/

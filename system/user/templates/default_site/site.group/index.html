@@ -1,0 +1,66 @@
+{layout="layouts/_homepage_w_sidebar"}
+{preload_replace:language_code="en"}
+{if '{exp:ip_geolocator:country_code}' == 'RU'}{redirect="404"}{/if}
+
+{exp:channel:entries channel="homepage" url_title="home" disable="categories|member_data|pagination" limit="1" cache="yes" refresh="60"}
+{layout:set name="title"}{{language_code}_title}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+		<div class="item-wrapper" style="margin-bottom:48px;">
+			<div class="main-head-wrap">
+				<div class="row">
+					<div class="col-md-8 offset-md-3">
+						<h2></h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{par_fluid_setup}
+{layout:set name="carousel"}
+	{top_carousel}
+		{if '{top_carousel:url_title}' == 'aicd'}
+			{!--<div class="carousel-item{if top_carousel:count == 1} active{/if}"  data-interval="7000">
+	    	<img src="{top_carousel:carousel_image}" class="d-block w-100" alt="...">
+			<div class="kt-carousel-caption">
+				<div class="align-items-top" style="margin-top:100px;">
+						<!--<p class="col-md-6 offset-md-3">
+						<img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10 brand-logo" alt=""style="margin-bottom:12px;">
+					</p>
+				<h5 class="lead-head text-dkblue d-none d-sm-block align-self-end">{top_carousel:{language_code}_title}</h5>-->
+	      		</div>
+	    	</div>
+		</div>--}
+		{if:else}
+		<div class="carousel-item{if top_carousel:count == 1} active{/if}"  data-interval="7000">
+	    	<img src="{top_carousel:carousel_image}" class="d-block w-100" alt="...">
+			<div class="kt-carousel-caption">
+				<div class=" align-items-center">
+					<p class="col-md-6 offset-md-3">
+						<img src="{site_url}assets/images/keltec-technolab-color.png" class="col-12 col-md-10 brand-logo" alt=""style="margin-bottom:12px;">
+					</p>
+					<h5 class="lead-head text-dkblue d-none d-sm-block">{top_carousel:{language_code}_title}</h5>
+					<p class="lead text-center d-none d-sm-block">
+						<a href="{site_url}products" class="btn btn-outline-primary btn-lg rounded-0">{products_{language_code}}</a>
+					</p>
+	      		</div>
+	    	</div>
+		</div>
+		{/if}
+	{/top_carousel}
+{/layout:set}
+{/exp:channel:entries}
+
+{layout:set name="sidebar"}
+	{par_filter_cross_reference}
+		<div class="sidebar-item-divider">
+			<!-- Disclaimer-->
+			{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="60"}
+				{if {language_code}_title != ""}<h3 class="text-uppercase">{{language_code}_title}</h3>{/if}
+					<p class="">{{language_code}_basic_text}</p>
+					<p>{exp:ip_geolocator:country_code}</p>
+			{/exp:channel:entries}
+		</div>
+{/layout:set}

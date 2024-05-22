@@ -1,0 +1,24 @@
+{#
+//    ----------------------------------------
+//      Author
+//    ----------------------------------------
+#}
+{% if author.member_id is not defined %}
+	<i class="fa fa-exclamation-triangle" title="Author not found. Please check your database data."></i>
+{% else %}
+	{% if settings.link_to_profile is defined and settings.link_to_profile == 'true' %}
+		<a href="{{ cpUrl('/members/profile&id=') ~ author.member_id }}">
+	{% endif %}
+
+		{% if settings.display_style is defined and settings.display_style == 'username' %}
+			{{ author.username }}
+		{% elseif settings.display_style is defined and settings.display_style == 'member_id' %}
+			{{ author.member_id }}
+		{% else %}
+			{{ author.screen_name }}
+		{% endif %}
+
+	{% if settings.link_to_profile is defined and settings.link_to_profile == 'y' %}
+		</a>
+	{% endif %}
+{% endif %}

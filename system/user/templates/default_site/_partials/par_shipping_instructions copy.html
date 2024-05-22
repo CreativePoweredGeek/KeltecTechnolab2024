@@ -1,0 +1,65 @@
+<h3 class="mt-0">Shipping Instructions</h3>
+
+<div class="container">
+	<div class="row">
+		
+
+		<div class="form-group col-md-6">
+			<input type="hidden" name="customer_pay_code" value="{exp:member:custom_profile_data}{pay_code}{/exp:member:custom_profile_data}">
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="customer_shipping_instruction" id="customer_shipping_instruction" value="complete" checked>
+				<label class="form-check-label" for="exampleRadios1">
+					Ship Complete
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="customer_shipping_instruction" id="customer_shipping_instruction" value="partial">
+				<label class="form-check-label" for="exampleRadios2">
+					Ship Partial
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+{!-- Customer COLLECT #s --}
+<div class="row">
+	{if segment_4 == "ups"}
+	<div class="form-group col-md-6">
+		<label for="customer_ups_collect">Customer UPS Collect #</label>
+		<input type="text" class="border border-secondary rounded-0 form-control" id="order_ups_collect_number" name="order_ups_collect_number" 
+		value="{exp:member:custom_profile_data}{ups_collect_number}{/exp:member:custom_profile_data}" placeholder="">
+	</div>
+	{/if}
+	{if segment_4 == "fedex"}
+	<div class="form-group col-md-6">
+		<label for="customer_fedex_collect">Customer FedEx Collect #</label>
+		<input type="text" class="border border-secondary rounded-0 form-control" id="order_fedex_collect_number" name="order_fedex_collect_number" 
+		value="{exp:member:custom_profile_data}{fedex_collect_number}{/exp:member:custom_profile_data}" placeholder="">
+	</div>
+	{/if}
+
+	<div class="form-group col-md-6">
+		<label for="customer_ups_collect">Preferred Carrier</label>
+		<input type="text" class="border border-secondary rounded-0 form-control" id="order_preferred_carrier" name="order_preferred_carrier" 
+		value="{exp:member:custom_profile_data}{preferred_carrier}{/exp:member:custom_profile_data}" placeholder="">
+	</div>
+
+	<div class="form-group col-md-6">
+		<label for="customer_ups_collect">Additional Shipping Notes:</label>
+		<textarea class="border border-secondary rounded-0 form-control" id="other_shipping_notes" name="other_shipping_notes" rows="3">
+		{exp:member:custom_profile_data}{general_shipping_notes}{/exp:member:custom_profile_data}
+		</textarea>
+	</div>
+	<div class="form-group col-md-6">
+		<label for="customer_po">Customer PO Number</label>
+			<input type="text" class="border border-secondary rounded-0 form-control" id="customer_po" name="customer_po" value="" placeholder="">
+	</div>
+	
+	
+	<div class="form-group col-md-6">
+		<label for="customer_po">Requested Ship Date</label>
+			<input type="date" id="start" name="req_ship_date" id="req_ship_date" class="border border-secondary rounded-0 form-control" 
+				value=""
+				min="2019-01-01" max="2024-12-31">
+	</div>
+</div>

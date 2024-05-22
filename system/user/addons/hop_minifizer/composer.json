@@ -1,0 +1,14 @@
+{
+    "name": "hopstudios/hop_minifizer",
+    "description": "Minimize, combine and cache your CSS, JS and HTML",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Hop Studios",
+            "email": "tech@hopstudios.com"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.235"
+    }
+}

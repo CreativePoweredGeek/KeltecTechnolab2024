@@ -1,0 +1,30 @@
+<?php
+
+//Load functions and connect to DB
+require_once('/home/keltecinc/public_html/system/user/functions/RDIFunctions/DBFunctions.php');
+require_once('/home/keltecinc/public_html/system/user/functions/RDIFunctions/VAMFunctions.php');
+require_once("/home/keltecinc/public_html/system/user/functions/RDIFunctions/HTMLFunctions.php");
+
+//$username = ee()->session->userdata('username'); 
+//if (empty($username))
+//  die('Login failed. Access Denied.');
+
+$cinvno = $_GET['cinvno'];
+$type = (isset($_GET['ctype'])?$_GET['ctype']:'');
+
+if (trim($cinvno) == '') 
+  die("SO or Invoice # not provided.");
+
+$content = DownloadPDF('DownloadPDF', Array('cinvno' => $cinvno, 'type' => $type));
+
+// send the right headers
+header('Content-type: application/pdf');
+header('Content-Disposition: inline; filename="' . trim($type).trim($cinvno).'.pdf' . '"');
+header('Content-Transfer-Encoding: binary');
+header('Content-Length: ' . strlen($content));
+header('Accept-Ranges: bytes');
+
+echo $content;
+die();
+
+?>

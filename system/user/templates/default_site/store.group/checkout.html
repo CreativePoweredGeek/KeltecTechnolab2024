@@ -1,0 +1,178 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+{preload_replace:csr="ED"}
+{embed="{template_group}/_new_header" title="Checkout" template_group="{template_group}" template="{template}" pagetitle="Checkout"}
+
+
+{par_order_manifest}
+
+
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-12">
+			{if logged_in}
+					<section id="checkout-section">
+					{if "{exp:cartthrob:total_items_count}" > 0}
+	 					
+	 					
+	  					
+						
+						{!-- see  http://cartthrob.com/docs/tags/global_form_settings/index.html#inline-errors --}
+						
+						{exp:cartthrob:checkout_form 
+							error_handling="inline" 
+							required="first_name" 
+							gateway="ct_offline_payments" 
+							return="{template_group}/order_info"}
+
+								
+ 
+								{!-- the next part handles inline errors. the error_handling=inline parameter is set
+									so standard error messages will not be shown
+									 --}
+								{if errors_exist}
+								<div class="control-group">
+									{!-- not a fan of inline JS, but the if_errors conditional works only inside the checkout form 
+										so if you want to use JS, you'll need to use inline JS.
+										--}
+									
+									{errors}
+										{if first_error}
+										<div class="alert alert-error">
+										<strong>Alert</strong> There are <span class="badge badge-warning">{error:total_results}</span> error(s). Please correct the errors listed below
+										</div>
+										{/if}
+											<p>
+												{if field_error}<span class="label label-important">{field}</span>{/if} 
+												{if global_error}<span class="label label-important">Error</span>{/if} 
+												{error}
+											</p>
+ 									{/errors}
+									
+								</div>
+								{/if}
+							
+							{!--{if {exp:cartthrob:view_setting allow_gateway_selection="yes"}}
+							<div class="control-group form-group">
+							 		<label for="gateway" class="control-label">Select a payment method</label>
+								    <div class="controls">
+										{exp:cartthrob:gateway_select class="form-control" id="gateway" selected="ct_online_payments"}
+									</div>
+			 					</div>
+							{/if}--}
+							<div class="row">
+								<div class="col-md-8">
+									<div id="checkout_form_gateway_fields">
+										{gateway_fields}
+									</div>
+								</div>
+								<div class="col-md-4">
+									
+									
+
+
+									<h3 class="mt-0">Shipping Instructions</h3>
+
+
+
+									<div class="mb-4 pb-4 border-bottom">
+										<p class="mb-2">*This order should be shipped:</p>
+									<div class="form-check form-check-inline">
+									  <input class="form-check-input" type="radio" name="order_shipping_instruction" id="order_shipping_instruction" value="complete" checked>
+									  <label class="form-check-label" for="order_shipping_instruction">Complete</label>
+									</div>
+									<div class="form-check form-check-inline">
+									  <input class="form-check-input" type="radio" name="order_shipping_instruction" id="order_shipping_instruction2" value="partial">
+									  <label class="form-check-label" for="order_shipping_instruction2">Partial</label>
+									</div>
+									</div>
+									
+									<div class="custom-control custom-switch mb-4 border-bottom">
+									  <input type="checkbox" class="custom-control-input" name="ImageVar1" id="ImageVar1">
+									  <label class="custom-control-label" for="ImageVar1">Click here to Dropship</label>
+									</div>
+									
+									<div class="form-group">
+										<label for="customer_ups_collect">*ShipVia</label>
+										{embed="embeds/shipping_method_select"}
+									</div>
+									
+									<div class="form-group">
+										<label for="customer_ups_collect">*F.O.B.</label>
+										{embed="embeds/shipping_fob_select_list"}
+									</div>
+									
+									{!-- Customer COLLECT #s --}
+									
+									{exp:member:custom_profile_data}
+									<div class="form-group">
+										<label for="customer_fedex_collect">Customer FedEx Collect #</label>
+										<input type="text" class="border border-secondary rounded-0 form-control ship" maxlength="40" id="order_fedex_collect_number" name="order_fedex_collect_number"
+										value="{fedex_collect_number}" placeholder="">
+									</div>
+									<div class="form-group">
+										<label for="customer_ups_collect">Customer UPS Collect #</label>
+										<input type="text" class="border border-secondary rounded-0 form-control ship" maxlength="40" id="order_ups_collect_number" name="order_ups_collect_number"
+										value="{ups_collect_number}" placeholder="">
+									</div>
+									
+									<input type="hidden" name="customer_pay_code" value="{pay_code}">
+									
+									
+									
+									
+									
+									<div class="form-group">
+										<label for="customer_ups_collect" class="mb-0">Additional Shipping Notes:</label>
+										<small id="emailHelp" class="form-text text-muted">Please enter preferred carrier or specific shipping instructions here</small>
+										<textarea class="border border-secondary rounded-0 form-control" id="other_shipping_notes" name="other_shipping_notes" rows="8">
+									{if '{fedex_collect_number}' !=""}FEDEX Collect: {fedex_collect_number}<br>{/if}{if '{ups_collect_number}' !=""}UPS Collect: <br>{ups_collect_number}{/if}{general_shipping_notes::attr_safe}
+									{/exp:member:custom_profile_data}
+									-----------
+									{exp:channel:entries channel="misc_content" entry_id="136234"}{en_basic_text}{/exp:channel:entries}
+									
+										</textarea>
+									
+									
+									</div>
+									
+									
+									<div class="form-group">
+										<label for="customer_po">*Customer PO Number</label>
+										<input type="text" class="border border-secondary rounded-0 form-control" id="customer_po" maxlength="20" name="customer_po" value="" placeholder="" required>
+										<div id="uname_response" ></div>
+									</div>
+									
+									
+								</div>
+							</div>
+							<div class="control-group">
+	 						    <div class="form-actions py-4">
+								{!-- do not add a name attribute to your submit button if you want it to work with stripe payment gateway --}
+								    <input type="submit" id="checkout_complete" class="btn btn-success"  value="Complete Checkout" />
+								</div>
+		 					</div>
+
+	 					{/exp:cartthrob:checkout_form}
+	 			{if:else}	
+	 					<h1>Checkout</h1>
+						 <p>You have no items in your cart. </p>
+						<a href="{path={template_group}}" class="btn btn-primary btn-small">Continue shopping.</a> 
+				{/if}
+					</section>
+				{/if}
+				{if logged_out}
+					<div class="alert alert-warning" role="alert">
+						<h5>You must be logged in to place an order.</h5>
+						If you are a current KELTEC Technolab customer, please <a href="#" data-toggle="modal" data-target="#memberLogin">login</a> to complete your order. If you are not currently a KELTEC Technolab customer, please call (000) 000-0000 to speak with a Customer Sales Representative (CSR) and setup an account. You can then return to this page once logged in and complete your order.
+						
+					</div>
+
+
+				{/if}
+				</div>
+		</div>
+	</div>
+
+ 	{embed="{template_group}/_footer" template="{template}" template_group="{template_group}"}

@@ -1,0 +1,38 @@
+<pre>
+{% set items = exp.cartthrob.cart_items_info %}
+{% if items|length == 0 %}There's nothing in your cart{% endif %}
+
+    {% for item in items %}
+    {{ item.entry_id }}
+    {{ item.title }}
+    {{ item.url_title }}
+    {{ item.quantity }}
+    {{ item.row_id }}
+    {{ item.item_price }}
+    {{ item.item_subtotal }}
+    {{ item.item_shipping }}
+    {{ item.item_weight }}
+    {{ item.total_items }}
+    {{ item.total_unique_items }}
+    {{ item.cart_total }}
+    {{ item.cart_subtotal }}
+    {{ item.cart_tax }}
+    {{ item.cart_shipping }}
+    {{ item.cart_tax_name }}
+    {{ item.cart_discount }}
+    {{ item.cart_count }}
+    {{ exp.path('/product/detail/'~ item.entry_id) }}
+    {{ exp.path('/cart/delete_from_cart/'~ item.row_id) }}
+
+        {{ item.item_options }}
+    {% for option in item.item_options %}fdsa
+        dump(option)
+        {% endfor %}
+    {{ item.item_options.your_option.option_name }}
+    {{ item.item_options.your_option.price }}
+    {% endfor %}
+<pre>
+
+<br />Outputs information about items in the cart
+<br />NOTE: example requires items in cart
+<br />http://cartthrob.com/docs/tags_detail/cart_items_info/

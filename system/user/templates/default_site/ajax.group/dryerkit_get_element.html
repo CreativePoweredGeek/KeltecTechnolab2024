@@ -1,0 +1,8 @@
+<div class="card-body bg-light text-dark">The Following Kit(s) fit your Dryer:
+    <ul>
+        {exp:query sql="SELECT elementkit FROM kt_dryer_kits WHERE serialnumber = '{segment_3}'"}
+            <li>{elementkit}</li>
+            {if no_results} Sorry, no sports heroes here! {/if}
+        {/exp:query}
+    </ul> 
+</div>

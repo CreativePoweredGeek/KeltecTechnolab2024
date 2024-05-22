@@ -1,0 +1,110 @@
+{layout="layouts/_order_main"}
+{layout:set name="css"}
+<link href="{site_url}assets/vendors/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+{/layout:set}
+{layout:set name="js"}
+<script src="{site_url}assets/vendors/datatables/jquery.dataTables.min.js"</script>
+<script src="{site_url}assets/vendors/datatables/dataTables.bootstrap4.min.js"</script>
+<script>
+	$(document).ready(function() {
+    $('#orders').DataTable( {
+	   "order": [[ 1, "desc" ]],
+	   "lengthChange": false
+    });
+} );
+</script>
+{/layout:set}
+{layout:set name="pageTitle"}Orders for {exp:kt_tools:get_company_name_fr_un username="{segment_3}"}{/layout:set}
+
+{if logged_in_group_id !="5"}
+	{layout:set name="rightButton"}{/layout:set}
+{if:else}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+	{/layout:set}
+{/if}
+{exp:channel:entries channel="orders" status="Order Placed" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="count_placed"}{count}{/layout:set}
+{/exp:channel:entries}
+{exp:channel:entries channel="orders" status="Sales Order Issued" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="so_placed"}{count}{/layout:set}
+{/exp:channel:entries}
+{exp:channel:entries channel="orders" status="shipped" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="shipped"}{count}{/layout:set}
+{/exp:channel:entries}
+
+	<table id="orders" class="table table-striped table-hover" style="width:100%">
+		<thead class="thead-dark">
+			<tr>
+				
+				<th>SO#</th>
+				<th>Order Date</th>
+				<th>Status</th>
+				<th>Subtotal</th>
+				
+				<th>Shipping</th>
+				{!--<th>Total</th>--}
+				<th>Ship Via</th>
+				<th>Tracking</th>
+				<th>Est. Ship Date</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		{if segment_3 !=""}	
+			{exp:channel:entries channel="orders" search:customer_number="={segment_3}" status="not open|close" parse="inward"} 
+		{if:else}
+			{exp:channel:entries channel="orders" search:customer_number="={exp:stash:get name='customer_number'}" status="not open|close" parse="inward"}   
+		{/if}
+				{if no_results}
+				<tr><td colspan="6">No Orders Yet</td><td></td><td></td><td></td><td></td><td></td></tr>
+				
+				{/if}
+				
+				<tr>
+					
+					<td>{if so_number !=""}{so_number}{if:else}--{/if}</td>
+					<td>{entry_date format="%n/%d/%Y"}</td>
+					<td><span class="badge badge-pill 
+					{if status == 'shipped'}badge-success{if:else}badge-secondary{/if}">{status}</span></td>
+					<td>{order_subtotal}</td>
+					
+					<td>{order_shipping_instruction:label}</td>
+					
+					{!--<td>{order_total}</td>--}
+					<td>{shipping_method}</td>
+					<td>
+						{exp:keltec_shipping:tracking_links shipvia="{shipping_method}" tracking="{order_tracking_number}"}
+					</td>
+					<td>
+						{embed="embeds/expected_ship" order_id="{entry_id}"}
+						
+						
+					</td>
+					<td>
+						<a target="_blank" class="btn btn-outline-primary rounded-0 btn-sm" href="{path=store/invoice}/{exp:cartthrob:view_encrypted_string string='{entry_id}'}">Invoice</a>
+						<a href="{path='accounts/order-detail/{entry_id}'}" class="btn btn-outline-primary rounded-0 btn-sm">View</a>
+						{par_edit_this_link}
+					</td>
+				</tr>
+				
+{/exp:channel:entries} 
+		</tbody>
+		<tfoot class="thead-dark">
+		<tr>
+			
+			<th>SO#</th>
+				<th>Order Date</th>
+				<th>Status</th>
+				<th>Subtotal</th>
+				
+				<th>Shipping</th>
+				{!--<th>Total</th>--}
+				<th>Ship Via</th>
+				<th>Tracking</th>
+				<th>Est. Ship Date</th>
+				<th></th>
+		</tr>
+		</tfoot>
+	</table>

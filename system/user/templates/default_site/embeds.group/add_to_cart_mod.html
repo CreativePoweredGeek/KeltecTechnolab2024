@@ -1,0 +1,28 @@
+{exp:channel:entries 
+	
+	channel="customer_contract_pricing" 
+	search:customer_number="{embed:customer_number}"
+	search:keltec_number="{embed:keltec_number}"
+}
+	{if no_results}
+		
+		{exp:cartthrob:add_to_cart_form 
+			entry_id="{embed:entry_id}" 
+			price="{embed:price}"  
+			return="{embed:return}"}
+	{/if}
+		{exp:cartthrob:add_to_cart_form 
+			entry_id="{embed:entry_id}" 
+			price="{price}"  
+			return="{embed:return}"}
+{/exp:channel:entries}
+
+					
+		<div class="input-group">
+			<input type="number" name="quantity" class="form-control" maxlength="2" size="2" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2">
+			<div class="input-group-append">
+				<button class="btn btn-primary rounding-0" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> {add_{language_code}}</button>
+			</div>
+							</div>
+{/exp:cartthrob:add_to_cart_form}
+

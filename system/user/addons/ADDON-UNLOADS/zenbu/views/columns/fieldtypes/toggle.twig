@@ -1,0 +1,19 @@
+{% spaceless %}
+<span class="nowrap
+{% if settings.use_colored_labels == 'true' %}
+	status-tag
+	{% if value == 1%}
+		st-open
+	{% else %}
+		st-closed
+	{% endif %}
+{% endif %}
+">
+{% if settings.display_style == 'on_off' %}
+	{{ value == 1 ? 'ON' : 'OFF' }}
+{% endif %}
+{% if settings.display_style == 'yes_no' %}
+	{{ value == 1 ? 'Yes' : 'No' }}
+{% endif %}
+</span>
+{% endspaceless %}

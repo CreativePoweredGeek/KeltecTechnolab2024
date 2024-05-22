@@ -1,0 +1,85 @@
+{layout="layouts/_cart_layout"}
+
+{layout:set name="title"}Shopping Cart{/layout:set}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {exp:cartthrob:cart_items_info}
+                <div class="card bg-light">
+					<div class="card-body">
+						<h5 class="card-title">Order Summary</h5>
+    					<h6 class="card-subtitle mb-2 text-muted">Accurate shipping & tax are not reflected.</h6>
+						<table class="table">
+							<tr><td>Subtotal:</td><td class="text-right">
+								{if logged_in}{exp:cartthrob:cart_subtotal}{if:else}Login for Pricing{/if}
+							</td></tr>
+							{if logged_in}<tr><td>Est. Tax:</td><td class="text-right">{exp:cartthrob:cart_tax}</td></tr>
+							<tr><td>Est. Shipping:</td><td class="text-right">{exp:cartthrob:cart_shipping}</td></tr>
+							<tr><td><b>Est. Total</b></td><td class="text-right"><b>{exp:cartthrob:cart_total}</b></td></tr>
+							{/if}
+						</table>
+					</div>
+				</div>
+         
+                <h5>Ship order to:</h5>
+                <legend>Shipping</legend>
+{exp:cartthrob:update_cart_form return=""}
+{exp:cartthrob:customer_info}
+<div class="form-group">
+    <label for="shipping_first_name" class="control-label">Shipping First Name</label>
+    <input type="text" class="form-control" name="shipping_first_name" value="{customer_first_name}" id="shipping_first_name"  />
+ </div>
+
+ <div class="form-group">
+    <label for="shipping_last_name" class="control-label">Shipping Last Name</label>
+    <input type="text" class="form-control" name="shipping_last_name" value="{customer_last_name}" id="shipping_last_name"  />
+ </div>
+
+<div class="form-group">
+    <label for="shipping_address" class="control-label">Shipping Address</label>
+    <input type="text" class="form-control" name="shipping_address" value="{customer_address}" id="shipping_address"  />
+ </div>
+<div class="form-group">
+    <label for="shipping_address2" class="control-label">Shipping Address 2</label>
+    <input type="text" class="form-control" name="shipping_address2" value="{customer_address2}" id="shipping_address2"  />
+ </div>
+
+<div class="form-group">
+    <label for="shipping_city" class="control-label">Shipping City</label>
+    <input type="text" class="form-control" name="shipping_city" value="{customer_city}" id="shipping_city"  />
+ </div>
+
+
+<div class="form-group">
+	<label for="shipping_state" class="control-label">Shipping State</label>
+    {exp:reegion_select:states selected="{customer_state}" name="shipping_state" class="form-control"}
+ </div>
+
+<div class="form-group">
+    <label for="shipping_zip" class="control-label">Shipping ZIP</label>
+    <input type="text" class="form-control" name="shipping_zip" value="{customer_zip}" id="shipping_zip"  />
+ </div>
+
+<div class="form-group">
+	<label for="shipping_country" class="control-label">Shipping Country</label>
+    {exp:cartthrob:country_select name="country_code" selected="USA"} 
+   
+ </div>
+
+<div class="form-group">
+    <label for="shipping_company" class="control-label">Shipping Company</label>
+    <input type="text" class="form-control" name="shipping_company" value="{customer_company}" id="shipping_company"  />
+ </div>
+ {/exp:cartthrob:customer_info}
+{/exp:cartthrob:update_cart_form}
+        
+        
+        
+            {/exp:cartthrob:cart_items_info}
+        </div>
+        <div class="col-md-6">
+            
+        </div>
+    </div>
+</div>

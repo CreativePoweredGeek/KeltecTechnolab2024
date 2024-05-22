@@ -1,0 +1,27 @@
+<label for="serialNum" class="form-label sr-only">Serial Number</label>
+    <select class="form-control" name="serialNum" id="serialNum" aria-label="Serial Number">
+        <option selected>Select your Serial Number</option>
+        {exp:query sql="SELECT serialnumber FROM kt_dryer_kits WHERE model = '{segment_3}'"}
+            <option value="{serialnumber}">{serialnumber}</option>
+        {/exp:query}
+    </select>
+
+
+<script>
+
+    $("#serialNum").change(function(){
+                      
+        var dr_serial = $(this).val().trim();
+           if(dr_serial != ''){
+            jQuery.ajax({
+               url: "/ajax/dryerkit_get_element/" + dr_serial,
+               type: "get",
+               success: function(html){
+                  $('#elementkit').html(html);
+               }
+            });
+           }else{
+             $("#elementkit").html("");
+           }
+      });
+</script>

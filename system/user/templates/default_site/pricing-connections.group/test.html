@@ -1,0 +1,14 @@
+{!--This emails a .csv file containg all keltec products, list price and inventory numbers to customers that request it.--}
+{exp:mx_email_from_template
+        to='me@somedomain.com'
+        from='weborders@someemail'
+        subject='Product Export {current_time format="%D, %F %d, %Y"}'
+}
+	{csv:file}
+                product,list_price,in_main,in_nc,in_tx,in_ca,weight,class
+                {exp:channel:entries channel="products" status="open" disable="categories|member_data|pagination" limit="16000"}
+                        {title},{price},{inventory_main},{inventory_nc},{inventory_tx},{inventory_ca},{weight},{class},{exp:keltec:catbyclass class='{class}'}
+                {/exp:channel:entries}
+	{/csv:file}
+{/exp:mx_email_from_template}
+Finished {current_time format="%D, %F %d, %Y - %g:%i:%s"}

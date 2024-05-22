@@ -1,0 +1,23 @@
+<style>
+    table, th, td {
+        border: 1px solid black;
+      }
+      th, td {
+        padding: 15px;
+      }
+</style>
+
+
+
+
+<table>
+<tr><th></th><th>Member ID</th><th></th><th>SessionStart</th><th>LastActivity</th></tr>
+{exp:query sql="SELECT * FROM exp_sessions WHERE member_id = '13' ORDER BY 'sess_start' DESC"}
+<tr>
+    <td>{count}.</td>
+    <td>{member_id}</td>
+<td>{exp:member:custom_profile_data member_id="{member_id}"}{username}{/exp:member:custom_profile_data}</td>
+<td>{sess_start format="%D, %F %d, %Y - %g:%i:%s"}</td>
+<td>{last_activity format="%D, %F %d, %Y - %g:%i:%s"}</td></tr>
+{/exp:query}
+</table>

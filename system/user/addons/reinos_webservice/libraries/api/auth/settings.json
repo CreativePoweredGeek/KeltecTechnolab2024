@@ -1,0 +1,39 @@
+{
+    "name" : "auth",
+    "label": "Authenticate user",
+    "auth": false,
+    "public": true,
+    "enabled": true,
+    "version" : "8.0.3",
+    "methods": [
+        {
+            "method": "authenticate_username",
+            "name": "Authenticate by username",
+			"soap": [
+				{
+					"name": "data",
+					"type": "tns:ObjectList"
+				},
+				{
+					"name": "id",
+					"type": "xsd:string"
+				}
+			]
+        },
+        {
+            "method": "authenticate",
+            "name": "Authenticate",
+            "soap": [
+                {
+                    "name": "data",
+                    "type": "tns:ObjectList"
+                },
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        }
+
+    ]
+}

@@ -1,0 +1,34 @@
+{layout="layouts/_dashboard_single_full_col"}
+{par_user_stash_variables}
+{layout:set name="css"}
+    <link href="{path='css/_ee_channel_form_css'}" type="text/css" rel="stylesheet" media="screen">
+{/layout:set}
+{layout:set name="rightButton"}
+        <a href="{path='accounts/returns'}" class="btn btn-primary rounded-0">Returns</a>  <a href="{path='accounts/dashboard'}" class="btn btn-outline-primary rounded-0">Dashboard</a> 
+{/layout:set}
+
+{if segment_3 != ""}
+	{exp:member:custom_profile_data member_id="{segment_3}"}
+{if:else}
+	{exp:member:custom_profile_data}
+{/if}
+    {layout:set name="companyName"}{title}{/layout:set}
+{/exp:member:custom_profile_data}
+
+{if segment_3 == "success"}
+    <div class="alert alert-success" role="alert">
+    Your return request has been submitted. 
+    </div>
+{/if}
+{exp:channel:entries channel="misc_content" url_title="keltec-product-return-guidelines"}
+    {layout:set name="companyName"}{title}{/layout:set}
+    {layout:set name="pageTitle"}Create a new Return{/layout:set}
+        <div class="row">
+            <div class="col-md-5" style="padding-top:48px;">
+                {{language_code}_basic_text}
+            </div>
+            <div class="col-md-7">
+                {embed="embeds/rma_form"}
+            </div>
+        </div>
+    {/exp:channel:entries}

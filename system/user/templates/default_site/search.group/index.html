@@ -1,0 +1,38 @@
+{layout="layouts/_shop_layout"}
+{preload_replace:language_code="en"}
+{layout:set name="template"}search{/layout:set}
+{exp:channel:entries channel="global_content" url_title="main" dynamic="no" disable="categories|category_fields|member_data|pagination|relationships" cache="yes" refresh="60"}
+  	{par_global_content_lo_vars}
+{/exp:channel:entries}
+{exp:channel:entries channel="site_pages" url_title="{last_segment}" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="60"}
+	{layout:set name="title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+	{layout:set name="page_title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+	{layout:set name="seo_description"}{seo_page_description}{seo_page_description:{language_code}}{/seo_page_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+	{if feature_photo}
+		<img src="{feature_photo}" class="img-fluid feature-product" alt="{{language_code}_title}">
+	{/if}
+	{if {language_code}_rich_text_block}
+		{{language_code}_rich_text_block}
+	{/if}
+
+	
+	{/exp:channel:entries}
+
+	{layout:set name="copy"}
+ 		<div class="col mb-5">
+	 		
+	 		<p class="lead">With over 
+		 		<strong>15,000 products</strong> matching to over <strong>33,000 OEM numbers</strong>, we give you multiple ways of searching our massive database. Search by Original Equipment Manufacturer, OEM#, KELTEC Item# or product type. When logged in, all pricing reflects your custom pricing as well as your discounts. The price you see is what you pay.</p>
+			<p>Use the tools below to start searching Today.</p>
+ 		</div>
+		{/layout:set}
+	
+	{layout:set name="productslist"}
+
+	
+	
+	
+		
+	{/layout:set}

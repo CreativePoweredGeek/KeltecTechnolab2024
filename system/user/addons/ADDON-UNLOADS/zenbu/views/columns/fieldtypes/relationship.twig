@@ -1,0 +1,18 @@
+{% spaceless %}
+	{% if children %}
+		{% for entry in children  %}
+			{% if loop.first %}
+				<ul>
+
+			{% endif %}
+
+				<li><a href="{{ cpEditEntryUrl(entry) }}">{% if settings is not empty and settings.show_id == 'true' %}[{{ entry.entry_id }}] {% endif %}{{ entry.title }}</a></li>
+
+			{% if loop.last %}
+				</ul>
+			{% endif %}
+		{% endfor %}
+	{% else%}
+
+	{% endif %}
+{% endspaceless %}

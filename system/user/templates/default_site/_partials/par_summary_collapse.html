@@ -1,0 +1,82 @@
+{if logged_in}
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="collapse" id="collapseSummary">
+				<div class="card card-body mt-3">
+{!--
+					<div class="alert alert-warning p-2 p-md-5" role="alert">
+					  {exp:channel:entries channel="misc_content" url_title="multiple-warehouse-orders" disable="categories|category_fields|member_data|pagination"}
+					  	{{language_code}_basic_text}
+					  {/exp:channel:entries}
+					</div>
+--}
+
+			{exp:cartthrob:update_cart_form return="store/view-cart"}
+			<table class="table table-striped table-sm border-0">
+	            <thead class="bg-dkblue text-white">
+		            <tr>
+			            <th>#</th>
+			            <th>Product</th>
+			            <th>Label Description</th>
+			            <th>Warehouse</th>
+			            <th>Expected Ship Date</th>
+			            <th>Price ea.</th>
+			            <th>Qty.</th>
+			            <th>Subtotal</th>
+		            </tr>
+	            </thead> 
+	            <tbody>
+		            {exp:cartthrob:cart_items_info}
+
+					   <tr>
+						   	<td>{count}</td>
+						   	<td><strong>{title}</strong></td>
+						   	<td>
+							   	{if '{item_options:label_description}' !=""}
+			                    	<input type="text" readonly class="form-control-plaintext" name="item_options[{row_id}][label_description]" value="{item_options:label_description}">
+			                   {if:else}
+			                   		<input type="text" readonly class="form-control-plaintext" name="item_options[{row_id}][label_description]" value="{description:attr_safe}">
+			                   {/if}
+
+
+						   	</td>
+						   	<td>{if '{item_options:requested_warehouse}' == "MAIN"}OH{if:else}{item_options:requested_warehouse}{/if}</td>
+							<td class="">{exp:keltec_shipping:estimated_date_alt warehouse='{item_options:requested_warehouse}' entry_id = '{entry_id}' display='yes'}
+							<input type="hidden" name="item_options[{row_id}][expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{item_options:requested_warehouse}' entry_id = '{entry_id}' display='no'}">
+							</td>
+							<td>{price}</td>
+						    <td>{quantity}</td>
+						   	<td>{item_subtotal}</td>
+					   </tr>
+					{/exp:cartthrob:cart_items_info}
+		            <tr>
+			             <td></td><td></td> <td></td><td></td> <td></td><td></td>
+			            <td>
+				            <strong>Subtotal</strong>
+			            </td>
+			            <td>
+							<strong>{exp:cartthrob:cart_subtotal}</strong>
+						</td>
+		            </tr>
+	            </tbody>
+	         </table>
+			 <div class="row">
+                <div class="col-8">
+				</div>
+				<div class="col-4 text-right">
+                    <input type="submit" class="btn btn-primary rounded-0" value="Continue to Checkout" />
+                </div>
+			</div>
+			{/exp:cartthrob:update_cart_form}
+				</div>
+				<p class="text-center" style="">
+					<button class="btn btn-primary rounded-circle" type="button" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary">
+						<i class="fas fa-times"></i>
+					</button>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+{/if}

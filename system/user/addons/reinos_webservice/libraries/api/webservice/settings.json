@@ -1,0 +1,54 @@
+{
+    "name" : "webservice",
+    "label": "Create webservice members",
+    "auth": true,
+    "public": false,
+    "enabled": true,
+    "version" : "8.0.3",
+    "methods": [
+        {
+            "method": "create_webservice_member",
+            "name": "Create a new webservice member",
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "read_webservice_member",
+            "name": "Read a webservice member",
+            "soap": [
+                {
+                    "name": "data",
+                    "type": "tns:ObjectList"
+                },
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "update_webservice_member",
+            "name": "Update a webservice member",
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "delete_webservice_member",
+            "name": "Delete a webservice member",
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        }
+    ]
+}

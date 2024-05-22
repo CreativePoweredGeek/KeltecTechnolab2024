@@ -1,0 +1,70 @@
+{layout="_layouts/_new_product_detail_layout"}
+{par_user_stash_variables}
+{if logged_in}
+{layout:set name="customer_number"}{exp:cookie:get name='custno'}{/layout:set}
+{layout:set name="customer_price_code"}{exp:kt_tools:get_member_field_value fieldid='17'}{/layout:set}
+{layout:set name=""}{/layout:set}
+{/if}
+
+
+{exp:channel:entries channel="products" url_title="{segment_3}" limit="1" disable="categories|category_fields|member_data|pagination"}
+	{layout:set name="title"}{title} | Products{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+	{preload_replace:shipdate='{exp:keltec_shipping:estimated_date_alt warehouse="{exp:stash:warehouse}" entry_id = "{entry_id}" display="y"}'}
+	{layout:ste name="entry_id"}{entry_id}{/layout:set}
+	{layout:set name="product"}{title}{/layout:set}
+	{layout:set name="description"}{exp:kt_tools:cleandescription}{description}{/exp:kt_tools:cleandescription}{/layout:set}
+	{layout:set name="class"}{class}{/layout:set}
+	{layout:set name="inventory_oh"}{if inventory_main <= in_transit_qty_main}0{if:elseif inventory_main > in_transit_qty_main}{exp:keltec:inventoryLessIntransit val1="{inventory_main}" val2="{in_transit_qty_main}"}{if:else}{inventory_main}{/if}{/layout:set}
+	{layout:set name="inventory_nc"}{if inventory_nc <= in_transit_qty_nc}0{if:elseif inventory_main > in_transit_qty_main}{exp:keltec:inventoryLessIntransit val1="{inventory_nc}" val2="{in_transit_qty_nc}"}{if:else}{inventory_nc}{/if}{/layout:set}
+	{layout:set name="inventory_tx"}{if inventory_tx <= in_transit_qty_tx}0{if:elseif inventory_main > in_transit_qty_main}{exp:keltec:inventoryLessIntransit val1="{inventory_tx}" val2="{in_transit_qty_tx}"}{if:else}{inventory_tx}{/if}{/layout:set}
+	{layout:set name="inventory_ca"}{if inventory_ca <= in_transit_qty_ca}0{if:elseif inventory_main > in_transit_qty_main}{exp:keltec:inventoryLessIntransit val1="{inventory_ca}" val2="{in_transit_qty_ca}"}{if:else}{inventory_ca}{/if}{/layout:set}
+	{layout:set name=""}{/layout_set}
+	{if photo !=""}
+		{layout:set name="photo"}{photo}{/layout:set}
+		{layout:set name="photo_alt"}A photo of the Keltec {title} {description}{/layout:set}
+	{if:else}
+		{layout:set name="photo"}{site_url}assets/product_images/{class}.jpg{/layout:set}
+		{layout:set name="photo_alt"}A representative image of the Keltec {title} {description}{/layout:set}
+	{/if}
+	{layout:set name="product_weight"}{if weight !=""}{weight} lbs.{if:else}Not available{/if}{/layout:set}
+	{layout:set name="product_height"}{if height !=""}{height}{if:else}Not available{/if}{/layout:set}
+	{layout:set name="product_width"}{if width !=""}{width}{if:else}Not available{/if}{/layout:set}
+	{layout:set name="price"}{price}{/layout:set}
+	{layout:set name="price_code_3"}{price_3}{/layout:set}
+	{layout:set name="max_product_discount"}{max_product_discount}{/layout:set}
+	{layout:set name="expected_ship"}{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='no'}{/layout:set}
+	{layout:set name="discoutedPrice"}
+	{embed='embeds/customPrice_new' title='{title}' price_code='{exp:stash:price_code}' customer='{exp:stash:customer_number}' price='{price}' price3='{price_3}' class='{class}' max_product_discount='{max_product_discount}' parse='inline'}
+	{/layout:set}
+	{layout:set name="associated_products"}
+	<div class="row">
+	{associated_products}
+			<div class="col-2 col-md-4 col-lg-3 h-100">
+				<a href="{site_url}products/item-new/{associated_products:url_title}">
+					<div class="card h-100">
+						<div class="card-body">
+							{if associated_products:photo !=""} 
+							<img src="{associated_products:photo}" class="img-fluid border border-secondary">
+							{if:else} 
+							<img src="{site_url}assets/product_images/{class}.jpg" class="img-fluid">
+							{/if}
+							<p class="mt-3 card-text mb-0" style="line-height:1rem;"><strong style="font-size:1rem">{associated_products:title}</strong></p>
+							<p class="card-text" style="font-size:.8rem;line-height:1rem;">{associated_products:description}</span></p>
+						</div>
+					</div>
+				</a>
+			</div>
+		{/associated_products}
+	</div>	
+	{/layout:set}
+
+	{/exp:channel:entries}
+
+{layout:set name='oem_list'}
+{exp:channel:entries channel="oem_lookup" disable="" search:pg_keltec_number="={last_segment}" dynamic="no" orderby="pg_oem_name" sort="asc"}
+<tr><td>{count}</td><td>{pg_oem_name}</td><td>{pg_oem_number}</td><td>{pg_keltec_number}</td><td>{pg_item_description}</td></tr>
+{/exp:channel:entries}
+{/layout:set}

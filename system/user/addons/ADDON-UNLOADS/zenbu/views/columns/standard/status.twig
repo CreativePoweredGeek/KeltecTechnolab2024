@@ -1,0 +1,14 @@
+{#
+//    ----------------------------------------
+//      Status
+//    ----------------------------------------
+#}
+{% if status.status_id is not defined %}
+	<i class="fa fa-exclamation-triangle" title="Status ID not properly set. Please check your database data."></i>
+{% else %}
+	{% if status.status|lower in ['spam', 'error', 'closed', 'banned', 'open', 'draft', 'pending', 'info', 'note', 'warning', 'locked', 'unlocked', 'enable', 'disable', 'status'] %}
+		<span class="nowrap status-tag st-{{status.status|lower}}">{{status.status|capitalize|t}}</span>
+	{% else %}
+		<span class="nowrap status-tag st-{{status.status|lower}}" style="border-color: #{{status.highlight}}; background-color: #{{status.highlight}}; color: #{{status.font_color}}">{{status.status|capitalize|t}}</span>
+	{% endif %}
+{% endif %}

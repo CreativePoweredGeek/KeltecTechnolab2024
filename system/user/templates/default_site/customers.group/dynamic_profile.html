@@ -1,0 +1,29 @@
+<table class="table">
+
+{exp:member:custom_profile_data member_id="{segment_3}"}
+    <table class="table table-sm table-striped">
+        <tr><th width="25%">Company:</th><td width="75%"> {company}</td></tr>
+        <tr><th>Customer Number:</th><td> {customer_number}</td></tr>
+        <tr><th>Contact:</th><td> {first_name} {last_name} {email}</td></tr>
+        <tr><th>Billing Address:</th><td> {address}<br>
+                {city}, {state} {postal}</td></tr>
+        <tr><th>Country:</th><td> {country}</td></tr>
+        <tr><td>Phone 1:</td><td> {phone_1}</td></tr>
+        <tr><th>Phone 2:</th><td>{phone_2}</td></tr>
+        <tr><th>Website:</th><td> {website}</td></tr>
+        <tr><th>Preferred Carrier:</th><td> {preferred_carrier}</td></tr>
+        <tr><th>Preferred Warehouse:</th><td> {preferred_warehouse}</td></tr>
+        <tr><th>UPS Collect:</th><td> {ups_collect_number}</td></tr>
+        <tr><th>FedEx Collect:</th><td> {fedex_collect_number}</td></tr>
+        <tr><th>Price Code:</th><td> {price_code}</td></tr>
+        <tr><th>Pay Code:</th><td> {pay_code}</td></tr>
+        <tr><th>Credit Limit:</th><td> {credit_limit}</td></tr>
+        <tr><th>CSR:</th><td>{assigned_csr}</td></tr>
+        <tr><th>General Shipping Notes:</th><td>{general_shipping_notes}
+
+
+
+{/exp:member:custom_profile_data}
+
+
+</table>

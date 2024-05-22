@@ -1,0 +1,42 @@
+{layout="layouts/_main_html_layout"}
+{if logged_in}
+<div class="w-100 bg-dkblue py-5 mb-5">
+	<div class="container">
+    <div class="row">
+		<div class="col-12">
+        <h1 class="text-white">Sales - {segment_4}/{segment_3}</h3>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-12">
+
+<table class="table table-stripped table-hover">
+    <tr>
+    	<th></th>
+        <th>SO#</th>
+    	<th>Customer</th>
+        <th>Order Total</th>
+        <th>Time</th>
+     </tr>
+ 
+{exp:channel:entries channel="orders" status="not open" year="{segment_3}" month="{segment_4}" day="{segment_5}"}
+<tr>
+<td>{count}</td>
+<td>{so_number}</td>
+<td>{customer_number}</td>
+<td>{order_total}</td>
+<td>{entry_date format="%g:%i:%s"}</td>
+</tr>
+
+
+{/exp:channel:entries}
+
+
+</table>
+</div>
+</div>
+</div>
+{/if}

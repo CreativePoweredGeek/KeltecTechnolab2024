@@ -1,0 +1,9 @@
+{exp:kt_pricing:evaluate_price
+	customerID="{exp:stash:get name='customer_number' process='inline'}"
+	KTproduct="{title}"
+	pPrice="{price_3}"
+	pClass="{class}"
+    pc="{customerPriceCode}"
+    p3="{price_3}"
+	pMAXdiscount="{max_product_discount}" parse="inward"
+}

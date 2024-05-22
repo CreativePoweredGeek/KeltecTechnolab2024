@@ -1,0 +1,53 @@
+{exp:channel:entries channel="products" url_title="{embed:keltec_number}" disable="categories|category_fields|member_data|pagination"}
+
+<tr>
+	<td style="vertical-align:middle">{title}
+		{if photo !=""} <i class="far fa-image"></i>{/if}
+
+	</td>
+	<td style="vertical-align:middle">{description}</td>
+
+
+	<td style="vertical-align:middle">
+			{if logged_in}
+				{par_custom_price}
+			{if:else}
+				Login for Pricing
+			{/if}
+	</td>
+		<td style="vertical-align:middle"><a href="{path='{language_code}/products/item/{url_title}'}" class="btn btn-outline-primary rounded-0 btn-sm">Details</a></td>
+
+
+			{if logged_in && logged_in_group_id == '13'}
+				{exp:cartthrob:add_to_cart_form
+					entry_id="{entry_id}"
+					allow_user_price="yes"
+					return="{current_url}"
+					prefix=""}
+					<td style="vertical-align:middle">
+					<div class="input-group">
+						{par_inventory_drop}
+					</div>
+					</td>
+					<td style="vertical-align:middle">
+						<input type="hidden" name="price" value="{par_custom_price}">
+						<input type="hidden" name="item_options[purchased_price]" value="{par_custom_price}" />
+						<input type="hidden" name="item_options[customer_number]" value="{exp:stash:get name='customer_number'}" />
+						<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='no'}" />
+						<div class="input-group">
+
+
+
+						<input type="number" name="quantity" class="form-control" maxlength="3" size="3" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-primary rounding-0" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> </button>
+						</div>
+						</div>
+				</td>
+				{/exp:cartthrob:add_to_cart_form}
+			{/if}
+
+	</tr>
+
+
+{/exp:channel:entries}

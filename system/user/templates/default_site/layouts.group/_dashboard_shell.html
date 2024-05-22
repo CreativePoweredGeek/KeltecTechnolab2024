@@ -1,0 +1,29 @@
+{layout="layouts/_accounts_html_layout"}
+
+{!-- Header --}
+<div class="container-fluid dashboard-header bg-dkblue">
+    <div class="row padding-two-percent">
+        <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+            <h4 class="text-right text-white">
+            {if logged_in_group_id == "9"}
+                {layout:pageTitle}
+            {if:elseif logged_in_group_id == "8"}
+                {layout:pageTitle}
+            {if:elseif logged_in_group_id == "5"}
+                {exp:stash:get name="company"}
+            {if:else}
+	            
+            {/if}   
+        </h4>
+            
+            
+        </div>
+    </div>
+</div>
+
+{layout:contents}

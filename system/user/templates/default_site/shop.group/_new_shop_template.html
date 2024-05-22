@@ -1,0 +1,55 @@
+{layout="layouts/_header_layout"}
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			{layout:topCopy}
+		</div>
+	</div>
+</div>
+
+<div class="container">
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+				{layout:copy}
+			</div>
+			<div class="col-12">
+				{par_credit_hold_message}
+				<div class="card-deck">
+					{embed="embeds/search_by_oem" searchpage="{layout:template}"}
+						{embed="embeds/shop-search-options" searchpage="{layout:template}"}
+						{par_filter_cross_reference}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h3 class="mb-3">Your last 10 products purchased</h3>
+			<table class="table table-striped">
+				<thead class="bg-dkblue text-white">
+					<tr>
+						<th>Item</th>
+						<th>Description</th>
+						<th>Weight</th>
+						<th>Price*</th>
+
+						<th style="line-height: .8rem;">Available Inventory**<br><small>by warehouse</small></th>
+						<th>Order</th>
+					</tr>
+				</thead>
+				<tbody>
+					{layout:tableContents}
+				</tbody>
+			</table>
+			<p>*If you have discounts available, those have been calculated into the price. The original price is shown next to it.
+			<p>**By default, the preferred warehouse that is identified in your profile is where your order will ship from. If there is no available inventory at your preferred warehouse, you can select that it ship from another.</p>
+			<p>**The number in parenthesis (if any) in the inventory dropdown are the number of units currently in transit to that warehouse, in addition to the ones actually in stock.</p>
+
+		</div>
+	</div>
+</div>

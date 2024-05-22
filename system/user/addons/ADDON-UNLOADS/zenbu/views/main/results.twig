@@ -1,0 +1,46 @@
+{% include "main/pagination.twig" %}
+
+<div class="resultArea-inner">
+	<form id="resultList" action="{{ action_url }}" method="post">
+
+		<result-table :entries="entries"></result-table>
+
+	    <pagination :pagination="pagination_data"></pagination>
+
+		<fieldset class="tbl-bulk-act filters zenbu-bulk-actions" v-show="_.size(selected_entries) > 0">
+			<ul>
+				<li @mouseenter="toggleShowBulkMenu('showBulkMenuEntryEdit')" @mouseleave="toggleShowBulkMenu('showBulkMenuEntryEdit')" style="padding-bottom: 10px">
+					<a class="zenbu-has-sub" href="#" title="{{'Entries'|t}}"><span>{{'Entries'|t}}</span></a>
+					<div class="sub-menu" :style="{ display: showBulkMenuEntryEdit ? 'block' : 'none' }">
+						<ul>
+							<li><a href="#" @click.prevent="triggerAppModal('edit')">Edit</a></li>
+							<li><a href="#" @click.prevent="triggerAppModal('bulk-edit')">Bulk Edit</a></li>
+							<li><a href="#" @click.prevent="triggerAppModal('remove')">Delete</a></li>
+						</ul>
+					</div>
+				</li>
+				<li @mouseenter="toggleShowBulkMenu('showBulkMenuCategoryEdit')" @mouseleave="toggleShowBulkMenu('showBulkMenuCategoryEdit')" style="padding-bottom: 10px">
+					<a class="zenbu-has-sub" href="#" title="{{'Categories'|t}}"><span>{{'Categories'|t}}</span></a>
+					<div class="sub-menu" :style="{ display: showBulkMenuCategoryEdit ? 'block' : 'none' }">
+						<ul>
+							<li><a href="#" @click="triggerAppModal('bulk-edit', 'add-categories')">Add</a></li>
+							<li><a href="#" @click="triggerAppModal('bulk-edit', 'remove-categories')">Remove</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</fieldset>
+
+			<fieldset class="tbl-bulk-act hidden">
+				<select name="bulk_action">
+					<option value="remove" data-confirm-trigger="selected" rel="modal-confirm-remove-entry">Remove</option>
+					<option value="edit" data-confirm-trigger="selected" rel="modal-edit">edit</option>
+					<option value="bulk-edit" data-confirm-trigger="selected" rel="modal-bulk-edit">Bulk Edit</option>
+					<option value="add-categories" data-confirm-trigger="selected" rel="modal-bulk-edit">add categories</option>
+					<option value="remove-categories" data-confirm-trigger="selected" rel="modal-bulk-edit">remove categories</option>
+				</select>
+				<button class="btn submit" data-conditional-modal="confirm-trigger" @click="triggerBulkEditModal">Submit</button>
+			</fieldset>
+
+	</form>
+</div>

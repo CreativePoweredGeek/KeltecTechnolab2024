@@ -1,0 +1,65 @@
+{layout="layouts/_dashboard_single_full_col"}
+{if (logged_in_group_id == '1' OR logged_in_group_id == '9')}
+
+{par_user_stash_variables}
+
+{layout:set name="css"}{/layout:set}
+{layout:set name="js"}{/layout:set}
+{layout:set name="pageTitle"}Currently Logged In Customers{/layout:set}
+
+{layout:set name="rightButton"}
+{/layout:set}
+<div class="container">
+    <div class="row">
+
+	{if segment_3 == 'success'}
+		<div class="col-12">
+			<div class="alert alert-success text-center" role="alert">
+				Customer was logged out successfully!
+			</div>
+		</div>
+	{/if}
+
+
+{exp:query sql="SELECT member_id, last_activity, ip_address as session_ip, session_id, user_agent FROM exp_sessions WHERE member_id != '13' ORDER BY last_activity DESC"}
+
+
+{exp:member:custom_profile_data member_id="{member_id}"}
+
+<div class="col-12 col-sm-6 col-md-4 col-lg-">
+    <div class="card border-primary mb-3 ">
+        <div class="card-header">
+            {username}
+
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style="float:right">
+                <a type="button" href="{path='accounts/csr-customer-orders'}" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i></a>
+                <a type="button" href="{site_url}accounts/dashboard/{member_id}/{username}" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i></a>
+                <a type="button" href="{path='managers/logout-user/{member_id}'}" class="btn btn-danger " style="float:right" onclick="return confirm('Are you sure? Forcibly logging a user out will cause them to lose any orders they are building but have not yet placed.')"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text" style="font-size:10pt; line-height:13pt;">
+        {!--{if company == ""}<strong>(Not Listed)</strong>{if:else}
+        <strong>{company}</strong>{/if}--}
+
+            
+        <p class="card-text" style="font-size:10pt; line-height:13pt;"><strong>Last Activity: </strong>{last_activity format="%m/%d/%Y - %g:%i:%s"}</p>
+            <p class="card-text" style="font-size:10pt; line-height:13pt;"><strong>IP Address:</strong> {session_ip}</p>
+                <p class="card-text" style="font-size:10pt; line-height:13pt;"><strong>User Agent:</strong> {user_agent}</p>
+                    <p class="card-text" style="font-size:10pt; line-height:13pt;">{session_id}</p>
+        </p>
+
+        </div>
+    </div>
+</div>
+
+{/exp:member:custom_profile_data}
+
+{/exp:query}
+
+</div>
+</div>
+
+{if:else}
+No Access
+{/if}

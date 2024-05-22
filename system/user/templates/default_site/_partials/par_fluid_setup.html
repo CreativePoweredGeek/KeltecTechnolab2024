@@ -1,0 +1,56 @@
+{page_content}
+
+				{if page_content:first && !{page_content:first name="section_divider"}}
+					<div class="section">
+						<div class="row">
+				{/if}
+				{page_content:section_divider}
+					{if page_content:count != 1}
+							</div>
+						</div>
+					{/if}
+
+					{content}
+						<div class="section-divider {content:additional_css}">
+							<div class="row">
+					{/content}
+				{/page_content:section_divider}
+				{page_content:headline}
+					{content}
+						<{content:element} class="col-12 text-{content:align_text}">{content:{language_code}_headline}</{content:element}>
+					{/content}
+				{/page_content:headline}
+				{page_content:rich_text_area}
+					{content}
+						<div class="col-md-{content:column}">{content:{language_code}_text}</div>
+					{/content}
+				{/page_content:rich_text_area}
+				{page_content:image}
+					{content}
+						<div class="col-md-{content:column} pb-3"><img src="{content:image}" loading="lazy" class="img-fluid" alt="{content:{language_code}_alt_text}" title="{content:{language_code}_alt_text}"></div>
+					{/content}
+				{/page_content:image}
+				{page_content:call_to_action_button}
+					{content}
+						{if segment_1 !=""}
+						<div class="col-sm-4 offset-sm-4 button-v-space">
+							<a href="{site_url}{language_code}/{content:button_link}" class="btn btn-primary btn-lg btn-block rounded-0">{content:{language_code}_button_text}</a>
+						</div>
+						{if:else}
+						<div class="col-sm-4 offset-sm-4 button-v-space">
+							<a href="{content:button_link}" class="btn btn-primary btn-lg btn-block rounded-0">{content:{language_code}_button_text}</a>
+						</div>
+
+						{/if}
+					{/content}
+				{/page_content:call_to_action_button}
+				{page_content:file_download}
+					{content}
+						<div class="col-sm-4 offset-sm-4 button-v-space">
+							<a href="{content:file}" class="btn btn-outline-primary btn-lg btn-block rounded-0" target="_blank"><i class="fas fa-cloud-download-alt"></i> {content:{language_code}_button_text}</a>
+						</div>
+					{/content}
+				{/page_content:file_download}
+
+				{if page_content:last && !{page_content:last name = "section_divider"}}</div></div>{/if}
+			{/page_content}

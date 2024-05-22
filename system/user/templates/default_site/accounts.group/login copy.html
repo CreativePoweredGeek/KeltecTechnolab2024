@@ -1,0 +1,49 @@
+{layout="layouts/_main_html_layout"}
+
+
+{!-- Header --}
+<div class="container-fluid dashboard-header bg-dkblue">
+    <div class="row padding-two-percent">
+        <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}{language_code}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+                <h4 class="text-right text-white">{exp:stash:get name="company"}</h4>
+        </div>
+    </div>
+</div>
+
+
+
+{if logged_in}
+
+<p><a href="{path='accounts/dashboard'}">Dashboard</a></p>
+{/if}
+
+{if logged_out}
+	<div class="container mt-5 mb-5 p-5">
+		<div class="row">
+			<div class="col-sm-6 col-md-3 ml-auto mr-auto">
+				<p><strong>Please note:</strong> At the current time we are only allowing a single login per customer.</p>
+					{exp:member:login_form action="{site_url}{language_code}/" return='accounts/router'}
+						<div class="form-group">
+						    <label for="username">Customer Number:</label>
+						    <input type="text" class="form-control rounded-0" name="username" value="" id="username" required>
+						    
+						</div>
+						<div class="form-group">
+							<label for="password">Password</label>
+						    <input type="password" name="password" value="" class="form-control rounded-0" id="password" required>
+						</div>
+						
+						<button type="submit" name="submit" class="btn btn-primary rounded-0">Submit</button> 
+						<p class="text-right mt-3"><a href="{path='member/forgot_password'}">Forgot your password?</a></p>
+							 
+					{/exp:member:login_form}
+				
+			</div>
+		</div>
+	</div>
+{/if}

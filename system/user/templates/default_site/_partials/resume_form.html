@@ -1,0 +1,79 @@
+{exp:channel:form
+	channel="job_applications"
+	return="{language_code}/careers/thank-you/ENTRY_ID"
+	entry_id="{segment_3}"
+	rules:applicants_email="required|min_length[5]|valid_email"
+	rules:applicants_phone="required|min_length[5]|max_length[14]"
+	}
+
+
+	    <div class="card" style="margin-bottom:24px;"><div class="card-body">
+    	<div class="form-group">
+	    	<label for="posted_jobs">Posted Positions:</label>
+		    <select class="form-control" id="posted_jobs" name="posted_jobs">
+		      	{embed="embeds/jobs_list"}
+		    </select>
+	  	</div>
+    </div></div>
+
+    <div class="card" style="margin-bottom:24px;"><div class="card-body">
+	    <p><strong>Postion types you might be interested in:</strong></p>
+	    {options:interested_position_types}
+
+	    <div class="form-check">
+		  <input class="form-check-input" type="checkbox" value="{option_name}" id="interested_position_types" name="interested_position_types">
+		  <label class="form-check-label" for="interested_position_types" style="margin-left:24px;">
+		    {option_name}
+		  </label>
+
+		</div>
+
+    {/options:interested_position_types}
+    </div></div>
+
+	<div class="card" style="margin-bottom:24px;"><div class="card-body">
+	<div class="form-group">
+	    <label for="title">*{full_name_{language_code}}: {error:title}</label>
+	    <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Full Name" required>
+	</div>
+
+	<div class="form-group">
+	    <label for="applicants_email">*{email_address_{language_code}}: {error:applicants_email}</label>
+	    <input type="email" class="form-control" name="applicants_email" id="applicants_email" aria-describedby="emailHelp" placeholder="Enter email" autocomplete="email" required>
+		{error:my_field_name}
+	    <small id="emailHelp" class="form-text text-muted">{never_share_email_{language_code}}</small>
+	</div>
+
+	<div class="form-group">
+	    <label for="applicants_phone">*{phone_{language_code}}: {error:applicants_phone}</label>
+	    <input type="text" class="form-control" name="applicants_phone" id="applicants_phone" placeholder="Phone Number" required>
+		{error:my_field_name}
+	</div>
+
+
+	<div class="form-group">
+    	<label for="resume_upload">*Upload your Resume: {error:resume_upload}</label>
+		<input type="file" name="resume_upload" required/>
+    <input type="hidden" name="resume_upload_directory" value="7" />
+  	</div>
+
+
+	<div class="form-group">
+		<label for="comments">{message_{language_code}}:</label>
+		<textarea class="form-control" name="comments" id="comments" rows="6"></textarea>
+	</div>
+
+
+<div class="card" style="margin-bottom:24px;">
+	<div class="card-body">
+        <label for="captcha">{captcha_text_{language_code}}:</label>
+        <p>{captcha}<br>
+        <input type="text" name="captcha" value="{captcha_word}" class="col-md-4" required></p>
+	</div>
+</div>
+
+	</div></div>
+ <button type="submit" class="btn btn-primary btn-lg rounded-0" value="Submit">Submit</button>
+
+
+{/exp:channel:form}

@@ -1,0 +1,16 @@
+
+        {exp:cartthrob:item_options entry_id="{entry_id}" row_id="{row_id}"}
+            {if dynamic}
+                <label>{option_label}</label>
+                {input}
+            {if:else}
+                {if options_exist}
+                    <label>{option_label}</label>
+                    {select}  
+                        <option {selected} value="{option_value}">
+                            {option_name}{if option_price_numeric > 0} +{option_price}{/if}
+                        </option>
+                    {/select}
+                {/if}
+            {/if}
+        {/exp:cartthrob:item_options}

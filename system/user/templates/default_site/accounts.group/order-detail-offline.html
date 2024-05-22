@@ -1,0 +1,180 @@
+{layout="layouts/_dashboard_single_full_col"}
+{if logged_in_group_id == 8 OR logged_in_group_id == 9}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/csr-customer-orders'}" class="btn btn-primary rounded-0">Customer Orders</a>
+	{/layout:set}
+{if:else}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/orders'}" class="btn btn-primary rounded-0">Order History</a>
+	{/layout:set}
+
+{/if}
+
+<?php
+ee()->load->helper('cookie');
+$username = get_cookie('custno');
+
+//dbg $username = 'TAS05';
+
+//LIVE
+$rootfolder = 'keltecinc';
+//DEV $rootfolder = 'keltec';
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/DBFunctions.php');
+
+//PROCESS HTML POST
+//END POST PROCESSING
+
+//VALIDATIONS
+
+$soQuery = "select
+    csono,dorder,cpono,isnull(comisc.ctype,cshipvia) as cshipvia, nsalesamt, nfrtamt,
+    cbaddr1,cbaddr2,cbcity,cbstate,cbzip
+    csaddr1,csaddr2,cscity,csstate,cszip
+  from sosord
+  left outer join comisc on sosord.cshipvia = comisc.ccode and comisc.ctype = 'SHIPVIA'
+  where csono = ?";
+$soParameters = Array(str_pad(trim($_GET['csono']),10,' ',STR_PAD_LEFT));
+$soResult = ExecuteQuery($soQuery, $soParameters);
+
+$orderData = Array();
+if (intval($soResult[0]) == 1)
+  $orderData = $soResult[1][0];
+
+$soItemQuery = "select *
+  from sostrs
+  where csono = ?
+  order by nseq asc";
+$soItemParameters = Array(str_pad(trim($_GET['csono']),10,' ',STR_PAD_LEFT));
+$soItemResult = ExecuteQuery($soItemQuery, $soItemParameters);
+
+$orderItems = Array();
+if (intval($soItemResult[0]) == 1)
+  $orderItems = $soItemResult[1];
+
+$dship = '';
+$shipstatusQuery = "select distinct isnull(dship,drequest) as dship
+    from sostrs
+    left outer join sosptr on sosptr.csono = sostrs.csono and sosptr.clineitem = sostrs.clineitem
+    where sostrs.csono = ?
+    order by dship desc";
+$shipstatusParameters = Array(str_pad(trim($_GET['csono']),10,' ',STR_PAD_LEFT));
+$shipstatusResult = ExecuteQuery($shipstatusQuery,$shipstatusParameters);
+if ($shipstatusResult[0])
+  $dship = date('m/d/Y',strtotime($shipstatusResult[1][0]['dship']));
+
+$shipstatus = '';
+$shipstatusQuery = "select sum(nordqty - nshipqty) backorder, sum(nordqty) as ordered
+    from sostrs where sostrs.csono = ?";
+$shipstatusParameters = Array(str_pad(trim($_GET['csono']),10,' ',STR_PAD_LEFT));
+$shipstatusResult = ExecuteQuery($shipstatusQuery,$shipstatusParameters);
+if ($shipstatusResult[0]){
+  if ($shipstatusResult[1][0]['backorder'] == 0){
+    $shipstatus = 'Complete';
+  }
+  elseif ($shipstatusResult[1][0]['ordered'] - $shipstatusResult[1][0]['backorder'] > 0){
+    $shipstatus = 'Partial';
+  }
+}
+
+$invoice = '';
+$invoiceQuery = "select distinct cinvno from aritrs where csono = ?";
+$invoiceParameters = Array(str_pad(trim($_GET['csono']),10,' ',STR_PAD_LEFT));
+$invoiceResult = ExecuteQuery($invoiceQuery,$invoiceParameters);
+if ($invoiceResult[0]){
+  foreach ($invoiceResult[1] as $currentInvoice){
+    $invoice .= ' <a target=_blank href="https://www.keltecinc.com/fileDownload/DownloadPDF.php?cinvno='.$currentInvoice['cinvno'].'&pdf=1">'.trim($currentInvoice['cinvno']).'</a> ';
+  }
+}
+
+?>
+
+<div class="col">
+	<table class="table table-striped">
+    	<tbody>
+				{layout:set name="pageTitle"}SO#: <?php echo htmlspecialchars($_GET['csono']); ?>{/layout:set}
+				<tr>
+					<th scope="row" width="20%">Order Date:</th>
+					<td><?php echo date('m/d/Y',strtotime($orderData['dorder'])) ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Order Type:</th>
+					<td>Call-in/Email Order</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Open Invoice(s):</th>
+					<td><?php echo $invoice ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Expected Ship Date:</th>
+					<td><?php echo $dship ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Shipping:</th>
+					<td><?php echo $shipstatus ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Shipping Method:</th>
+					<td><?php echo trim($orderData['cshipvia']) ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Order Subtotal:</th>
+					<td>$<?php echo number_format($orderData['nsalesamt'],2) ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Order Shipping:</th>
+					<td><?php echo number_format($orderData['nfrtamt'],2) ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%"><b>Order Total:</b></th>
+					<td><?php echo number_format($orderData['nsalesamt']+$orderData['nfrtamt']+$orderData['ntaxamt1']+$orderData['ntaxamt2']+$orderData['ntaxamt3']-$orderData['ndiscamt'],2) ?></td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Order Items:</th>
+					<td>
+						<table class="table table-sm">
+							<tr><th>Product</th><th>Warehouse</th><th>Expected Ship</th><th>Qty</th><th>Price</th></tr>
+							<?php foreach ($orderItems as $currentItem){  ?>
+								<tr>
+									<td><?php echo trim($currentItem['citemno']) ?></td>
+									<td><?php echo trim($currentItem['cwarehouse']) ?></td>
+									<td><?php echo date('m/d/Y',strtotime($currentItem['drequest'])) ?></td>
+									<td><?php echo number_format($currentItem['nordqty'],2) ?></td>
+									<td><?php echo number_format($currentItem['nprice'],2) ?></td>
+								</tr>
+							<?php } ?>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Billing Address:</th>
+					<td>
+            <?php echo
+              trim($orderData['cbaddr1']).
+              (trim($orderData['cbaddr2'])!=''?' '.trim($orderData['cbaddr2']):'').
+              ' '.trim($orderData['cbcity']).
+              ', '.trim($orderData['cbstate']).
+              ' '.trim($orderData['cbzip']);
+            ?>
+          </td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Shipping Address:</th>
+					<td>
+            <?php echo
+              trim($orderData['csaddr1']).
+              (trim($orderData['csaddr2'])!=''?' '.trim($orderData['csaddr2']):'').
+              ' '.trim($orderData['cscity']).
+              ', '.trim($orderData['csstate']).
+              ' '.trim($orderData['cszip']);
+            ?>
+          </td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Customer PO:</th>
+					<td><?php echo trim($orderData['cpono']) ?></td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+
+

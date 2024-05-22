@@ -1,0 +1,79 @@
+[2021-Jan-31 17:15:22 -0500] Maximum execution time: 0
+[2021-Jan-31 17:15:22 -0500] Memory limit: 256M
+[2021-Jan-31 17:15:22 -0500] Checking file permissions needed to complete the update
+[2021-Jan-31 17:15:22 -0500] Cleaning up upgrade working directory
+[2021-Jan-31 17:15:22 -0500] Checking free disk space
+[2021-Jan-31 17:15:22 -0500] Free disk space (bytes): 175592525824
+[2021-Jan-31 17:15:23 -0500] Downloading update package
+[2021-Jan-31 17:15:25 -0500] Unzipping package
+[2021-Jan-31 17:15:26 -0500] Package unzipped
+[2021-Jan-31 17:15:26 -0500] Verifying integrity of unzipped package
+[2021-Jan-31 17:15:26 -0500] Package contents successfully verified
+[2021-Jan-31 17:15:26 -0500] Checking server requirements of new ExpressionEngine version
+[2021-Jan-31 17:15:26 -0500] Server requirements check passed with flying colors
+[2021-Jan-31 17:15:26 -0500] Moving the updater micro app into place
+[2021-Jan-31 17:15:26 -0500] Taking the site offline
+[2021-Jan-31 22:15:26 +0000] Starting backup of existing installation
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/Mexitek to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/Mexitek
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/eecms to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/eecms
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/EllisLab to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/EllisLab
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/index.html to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/index.html
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/legacy to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/legacy
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/ee/templates to /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/templates
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/asset to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/asset
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/cform to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/cform
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/forum to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/forum
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/site to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/site
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/cp to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/cp
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/index.html to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/index.html
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/member to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/member
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/themes/ee/debug to /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/debug
+[2021-Jan-31 22:15:26 +0000] Moving new ExpressionEngine installation into place
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/Mexitek to /home/keltecinc/public_html/system/ee/Mexitek
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/eecms to /home/keltecinc/public_html/system/ee/eecms
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/EllisLab to /home/keltecinc/public_html/system/ee/EllisLab
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/index.html to /home/keltecinc/public_html/system/ee/index.html
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/installer to /home/keltecinc/public_html/system/ee/installer
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/legacy to /home/keltecinc/public_html/system/ee/legacy
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/templates to /home/keltecinc/public_html/system/ee/templates
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/asset to /home/keltecinc/public_html/themes/ee/asset
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/cform to /home/keltecinc/public_html/themes/ee/cform
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/forum to /home/keltecinc/public_html/themes/ee/forum
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/site to /home/keltecinc/public_html/themes/ee/site
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/cp to /home/keltecinc/public_html/themes/ee/cp
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/index.html to /home/keltecinc/public_html/themes/ee/index.html
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/member to /home/keltecinc/public_html/themes/ee/member
+[2021-Jan-31 22:15:26 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/debug to /home/keltecinc/public_html/themes/ee/debug
+[2021-Jan-31 22:15:26 +0000] Verifying the integrity of the new ExpressionEngine files
+[2021-Jan-31 22:15:26 +0000] New ExpressionEngine files successfully verified
+[2021-Jan-31 22:15:44 +0000] Rolling back to previous installation's files
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/Mexitek to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/Mexitek
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/eecms to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/eecms
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/EllisLab to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/EllisLab
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/index.html to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/index.html
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/installer to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/installer
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/legacy to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/legacy
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/ee/templates to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/system/ee/templates
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/asset to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/asset
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/cform to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/cform
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/forum to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/forum
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/site to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/site
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/cp to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/cp
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/index.html to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/index.html
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/member to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/member
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/themes/ee/debug to /home/keltecinc/public_html/system/user/cache/ee_update/ExpressionEngine/themes/ee/debug
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/Mexitek to /home/keltecinc/public_html/system/ee/Mexitek
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/eecms to /home/keltecinc/public_html/system/ee/eecms
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/EllisLab to /home/keltecinc/public_html/system/ee/EllisLab
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/index.html to /home/keltecinc/public_html/system/ee/index.html
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/legacy to /home/keltecinc/public_html/system/ee/legacy
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/system_ee/templates to /home/keltecinc/public_html/system/ee/templates
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/asset to /home/keltecinc/public_html/themes/ee/asset
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/cform to /home/keltecinc/public_html/themes/ee/cform
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/forum to /home/keltecinc/public_html/themes/ee/forum
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/site to /home/keltecinc/public_html/themes/ee/site
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/cp to /home/keltecinc/public_html/themes/ee/cp
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/index.html to /home/keltecinc/public_html/themes/ee/index.html
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/member to /home/keltecinc/public_html/themes/ee/member
+[2021-Jan-31 22:15:44 +0000] Moving /home/keltecinc/public_html/system/user/cache/ee_update/backups/themes_ee/debug to /home/keltecinc/public_html/themes/ee/debug
+[2021-Jan-31 22:15:44 +0000] Deleting updater working directory: /home/keltecinc/public_html/system/user/cache/ee_update/

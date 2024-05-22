@@ -1,0 +1,65 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:"View Cart" } %}
+
+</head>
+<body>
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+{!-- since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements--}
+	<div class="container">
+		{!-- twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows --}
+		<div class="row">
+
+			{!-- twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up --}
+			<div class="span3">
+                <div class="bs-docs-sidenav">
+                    {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+                    {% set cart_items = exp.cartthrob.cart_items_info({limit:"1", order_by:"entry_id", sort:"desc"})  %}
+                    {% for entry in cart_items %}
+                        {% include('ee::default_site.' ~template_group~ '._also_purchased') with {entry_id:entry.entry_id} %}
+                    {% endfor %}
+
+                </div>
+
+			</div>
+
+			<div class="span9">
+
+				{% set order = exp.cartthrob.submitted_order_info() %}
+                    {% if order.authorized == 1 %}
+                        <h1>Payment successful</h1>
+                        Your transaction is complete!<br />
+                        Transaction ID: {{ order.transaction_id }}<br />
+                        Your total: {{ order.cart_total }}<br />
+                        Your order ID: {{ order.order_id }}<br /><br />
+
+                        <a href="{{ exp.path(template_group ~ '/account') }}">Order History &raquo;</a><br>
+
+                        {# encrypting a link to this invoice so it can be stored and shared #}
+                        {% set hashed_id = exp.cartthrob.view_encrypted_string({string:order.order_id}) %}
+                        <a target="_blank" href="{{ exp.path(template_group ~ '/invoice/' ~ hashed_id) }}">View invoice &raquo; </a>
+
+                    {% elseif order.processing %}
+                        <h1>Payment is processing</h1>
+                        Your Order is Currently being processed: {{ order.error_message }}<br />
+                        Transaction ID: {{ order.transaction_id }}<br />
+                        <br />Order processing is generally completed within 48 hours depending on your payment method.
+                    {% elseif order.declined %}
+                        <h1>Payment was declined</h1>
+
+                        Your credit card was declined: {{ order.error_message }}
+                        <a href="{{ exp.path(template_group ~ '/checkout') }}">Try checking out again &raquo;</a>
+                    {% elseif order.failed %}
+                        <h1>Payment failed</h1>
+
+                        Your payment failed: {{ order.error_message }}
+                        <a href="{{ exp.path(template_group ~ '/checkout') }}">Try checking out again &raquo;</a>
+                    {% endif %}
+				</div>
+		</div>
+	</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

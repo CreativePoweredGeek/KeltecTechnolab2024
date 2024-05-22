@@ -1,0 +1,101 @@
+{if segment_1 == 'shop' OR segment_2 == 'item'}
+<div class="container mt-1 mb-5 pt-5 border-top">
+	<div class="row">
+		<div class="col">
+		<!-- Disclaimer-->
+				{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+					<h3 class="text-uppercase">{en_title}</h3>
+						<p class="">{en_basic_text}</p>
+				{/exp:channel:entries}
+		</div>
+	</div>
+</div>
+{/if}
+<footer class="footer bg-brightblue">
+	<div class="container">
+		<div class="row" style="margin-bottom:12px;"> {!--KT Logo--}
+			<div class="col-10 offset-1 col-md-4 offset-md-4">
+				<img src="{site_url}assets/images/keltec-technolab-white.png" class="col-8 offset-2" alt="">
+			</div>
+		</div>
+		<div class="row" style="margin-bottom:24px;"> {!--AS Logos--}
+			<div class="col-10 offset-1 col-md-4 offset-md-4">
+				<img src="{site_url}assets/images/chicopee-and-air-supply-logos-trans-wh.png" class="img-fluid" alt="">
+			</div>
+		</div>
+		<div class="row mt-5"> {!--3 col row--}
+			<div class="col-12 col-md-3 text-white px-4 pb-5"> {!-- Address & Social --}
+				<p> <!-- ADDRESS -->
+				  <address class="text-center text-md-left">
+					  	{exp:channel:entries channel="locations" entry_id="13549" dynamic="no" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+						  	<strong>{title}</strong><br>
+						  	{address1}<br>{city}, {state} {postal} {country}<br>
+						  	Ph. <a href="tel:{location_phone}" class="text-white">{location_phone}</a>
+						  	{if location_fax}<br>Fax {location_fax}{/if}
+					  	{/exp:channel:entries}
+				  </address>
+
+				</p>
+				<p>  <!-- SOCIAL -->
+					<a href="https://www.facebook.com/Keltec-Technolab-348144402499747" class="btn btn-default p-0" target="_blank">
+						<i class="fab fa-facebook-square fa-3x"></i>
+					</a>&nbsp;&nbsp;
+					<a href="https://www.linkedin.com/company/keltec-technolab/" class="btn btn-default p-0" target="_blank">
+						<i class="fab fa-linkedin fa-3x"></i>
+					</a>
+				</p>
+		  	</div>
+		  	<div class="col-12 col-md-6 text-white border-left border-right"> {!-- Center Column --}
+				<!--<div class="col-md-4 offset-md-4" style="margin-bottom:36px;"> {!--ISO--}
+					<a href="{site_url}{language_code}/quality-assurance">
+						<img src="{site_url}assets/images/ISO-9001-2015-accreedited.png" class="col-6 offset-3 col-md-10 offset-md-1" alt="Keltec Technolab is an ISO 9001:2015 Certified Company">
+					</a>
+				</div>-->
+			  	{exp:channel:entries channel="misc_content" url_title="copyright" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+			  		<p class="text-center text-white-50">{en_basic_text}</p>
+			  	{/exp:channel:entries}
+				
+			 		<p class="text-center text-white-50"> {!-- Privacy, terms, etc --}
+						<a href="{path='privacy-policy'}" class="text-white">Privacy Policy</a>
+			 			&nbsp;&bullet;&nbsp;
+						<a href="{path='terms-of-use'}" class="text-white">Terms of Use</a>
+			  			&nbsp;&bullet;&nbsp;
+						<a href="{path='consent-requests'}" class="text-white">About Cookies</a>
+			 			
+						
+					</p>
+			  		<p class="small text-center">{var_last_update}</p>
+		  	</div>
+			<div class="col-12 col-md-3 mt-5 mt-md-0"> {!--Mailing List--}
+			 	<h4>Join our Mailing List</h4>
+			 	{par_mailinglist_ac_form}
+			</div>
+		</div>
+	</div>
+</footer>
+{if logged_in}
+<div class="container-fluid">
+	<p class="small">
+			<b>Username:</b> {username} ::
+			<b>Customer#:</b> {exp:cookie:get name="custno"}
+
+			<b>Company:</b> {exp:stash:get name="company"}  ::
+			<b>Price Code:</b> {exp:stash:get name="price_code"} ::
+			<b>Warehouse:</b> {exp:stash:get name="warehouse"} ::
+			<b>Pay Code:</b> {exp:stash:get name="paycode"} ::
+
+		<span class="float-right">Page Load: {elapsed_time}</span>
+	</p>
+</div>
+{/if}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+{layout="layouts/_dashboard_shell"}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-lg-3 bg-light" style="padding:3%;">
+          {layout:sidebar}
+        </div>
+        <div class="col-md-8 col-lg-9" style="padding:3%;">
+		      <div class="row no-gutters" style="margin-bottom:24px;">
+            <div class="col-8">
+              <h3>{layout:companyName}</h3>
+            </div>
+            <div class="col-4 text-right">
+                {layout:rightButton}
+            </div>
+        </div>
+        <div><hr></div>
+<nav>
+  <div class="nav nav-pills btmrule" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link rounded-0 active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+    <a class="nav-item nav-link rounded-0" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Shipping Preferences</a>
+    <a class="nav-item nav-link rounded-0" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Ship To Addreses</a>
+   {!-- <a class="nav-item nav-link rounded-0" id="nav-contact-tab" data-toggle="tab" href="#nav-customPricing" role="tab" aria-controls="nav-customPricing" aria-selected="false">Custom Pricing</a>
+    <a class="nav-item nav-link rounded-0" id="nav-contact-tab" data-toggle="tab" href="#nav-discounts" role="tab" aria-controls="nav-customPricing" aria-selected="false">Discounts</a> --}
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+  	{layout:general}
+
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">{layout:contacts}</div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+	  
+	  
+	  
+	<!--  <p class="lead text-center pt-5">Shipping adresses are temporarily unavailable for viewing in the Dashboard.</p>
+	<p class="lead text-center"> We'll have them back soon.</p>-->
+	
+		<table class="table table-striped">
+			<thead class="bg-dkblue text-white">
+				<tr>
+					<th></th>
+					<th>Company</th>
+					<th>Contact</th>
+					<th>Address</th>
+					
+					<th>Phone</th>
+					<th></th>
+				<tr>
+			</thead>
+			<tbody>
+				
+					{exp:channel:entries 
+						channel="customer_shipping_addresses" 
+						search:customer_number="={exp:cookie:get name='custno'}"
+						dynamic="no" 
+						disable="categories|category_fields|member_data|pagination" cache="no" refresh="0" 
+						 limit = "150"
+	                    parse="inward"
+	                   
+					}
+			
+						<td>{count}</td>
+						<td>{title} </td>
+						<td>{cs_contact_name}</td>
+						<td>{cs_address_1} {if cs_address_2}{cs_address_2} {/if}{cs_city}, {cs_state} {cs_zip} {cs_country}</td>
+						
+						<td>{cs_phone}</td>
+						<td class="text-right"><a href="{path='{language_code}/accounts/edit-ship-to/{entry_id}'}" class=""><i class="fas fa-edit"></i></a></td>
+					</tr>
+				{/exp:channel:entries}
+			</tbody>
+		</table>
+		<p><a href="{site_url}accounts/create-ship-to" class="btn btn-outline-primary rounded-0">Add Ship To</a></p>
+		
+
+	  
+	  
+	  
+	  
+  </div>
+ {!-- <div class="tab-pane fade" id="nav-customPricing" role="tabpanel" aria-labelledby="nav-contact-tab">{layout:contract_pricing}</div>
+  <div class="tab-pane fade" id="nav-discounts" role="tabpanel" aria-labelledby="nav-contact-tab">{layout:discounts}</div>--}
+</div>
+        
+        </div>
+    </div>
+</div>
+
+

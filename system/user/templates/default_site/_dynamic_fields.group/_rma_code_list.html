@@ -1,0 +1,10 @@
+{exp:channel:entries
+	channel="rma_codes" 
+	disable="categories|category_fields|pagination|trackbacks"
+	dynamic="no" 
+}
+{if count == 1} [ {/if}
+	{"value" : "{title}", "label" : "{rma_code_description}"} {if count != total_results},{/if}
+{if count == total_results} ] {/if}
+
+{/exp:channel:entries} 

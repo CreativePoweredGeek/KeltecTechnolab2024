@@ -1,0 +1,37 @@
+<select class="form-control form-control-sm" name="item_options[requested_warehouse]" id="whseSelect">
+	{!-- This builds the option list based off the warehouses in the array that is passed into it.
+	 To add another warehouse, just add it to the array.
+	{exp:kt_tools:build_inventory_drop_options prdct="{title}" whse="MAIN|NC|TX|CA" userwhse="{exp:stash:get name='warehouse'}" parse="inward"} --}
+	<option value="MAIN">
+	{if '{exp:keltec:inventoryLessIntransit val1="{inventory_main}" val2="{in_transit_qty_main}"}' <= 0}
+		0 OH {if '{in_transit_qty_main}' > '0'}({in_transit_qty_main}){/if}
+	{if:else}
+		{exp:keltec:inventoryLessIntransit val1="{inventory_main}" val2="{in_transit_qty_main}"} OH {if '{in_transit_qty_main}' > '0'}({in_transit_qty_main}){/if}
+	{/if}
+	</option>
+	<option value="NC">
+	{if '{exp:keltec:inventoryLessIntransit val1="{inventory_nc}" val2="{in_transit_qty_nc}"}' <= 0}
+		0 NC {if '{in_transit_qty_nc}' > '0'}({in_transit_qty_nc}){/if}
+	{if:else}
+		{exp:keltec:inventoryLessIntransit val1="{inventory_nc}" val2="{in_transit_qty_nc}"} NC {if '{in_transit_qty_nc}' > '0'}({in_transit_qty_nc}){/if}
+	{/if}
+	</option>
+	<option value="TX">
+	{if '{exp:keltec:inventoryLessIntransit val1="{inventory_tx}" val2="{in_transit_qty_tx}"}' <= 0}
+		0 TX {if '{in_transit_qty_tx}' > '0'}({in_transit_qty_tx}){/if}
+	{if:else}
+		{exp:keltec:inventoryLessIntransit val1="{inventory_tx}" val2="{in_transit_qty_tx}"} TX {if '{in_transit_qty_tx}' > '0'}({in_transit_qty_tx}){/if}
+	{/if}
+	</option>
+	<option value="CA">
+	{if '{exp:keltec:inventoryLessIntransit val1="{inventory_ca}" val2="{in_transit_qty_ca}"}' <= 0}
+		0 CA {if '{in_transit_qty_ca}' > '0'}({in_transit_qty_ca}){/if}
+	{if:else}
+		{exp:keltec:inventoryLessIntransit val1="{inventory_ca}" val2="{in_transit_qty_ca}"} CA {if '{in_transit_qty_ca}' > '0'}({in_transit_qty_ca}){/if}
+	{/if}
+	</option>
+</select>
+
+
+
+

@@ -1,0 +1,119 @@
+{layout="layouts/_dashboard_single_full_col"}
+{if logged_in_group_id == 8 OR logged_in_group_id == 9}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/csr-customer-orders'}" class="btn btn-primary rounded-0">Customer Orders</a>
+	{/layout:set}
+{if:else}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/orders'}" class="btn btn-primary rounded-0">Order History</a>
+	{/layout:set}
+
+{/if}
+
+<div class="col">
+	<table class="table table-striped">
+    	<tbody>
+
+			{exp:channel:entries channel="orders" entry_id="{segment_3}" status="not open|close" disable="categories|category_fields|pagination|member_data" }
+				{layout:set name="pageTitle"}SO#: {so_number}{/layout:set}
+
+				<tr>
+					<th scope="row" width="20%">Order Date:</th>
+					<td>{entry_date format="%m/%d/%Y"}</td>
+				</tr>
+				{!--<tr>
+					<th scope="row" width="20%">Transaction ID::</th>
+					<td>{order_transaction_id}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Expected Ship Date:</th>
+					<td>
+						{if order_shipping_instruction:label == "Complete"}
+							{order_items orderby="expected_ship" sort="desc" limit="1"}
+							{expected_ship format="%m/%d/%Y"}
+							{/order_items}
+						{if:else}
+							{order_items orderby="expected_ship" sort="asc"}
+								{expected_ship format="%m/%d/%Y"}&nbsp;&nbsp;-&nbsp;&nbsp;{title}<br>
+							{/order_items}
+						{/if}
+					</td>
+				</tr>--}
+				<tr>
+					<th scope="row" width="20%">Status:</th>
+					<td>{status}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Ship:</th>
+					<td>{order_shipping_instruction:label}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Shipping Method:</th>
+					<td>{shipping_method}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Tracking Numbers:</th>
+					<td>{exp:keltec_shipping:tracking_links shipvia="{shipping_method}" tracking="{order_tracking_number}"}</td>
+				</tr>
+				{!--<tr>
+					<th scope="row" width="20%">Order Subtotal:</th>
+					<td>{order_subtotal}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Order Shipping:</th>
+					<td>{order_shipping}</td>
+				</tr>--}
+				<tr>
+					<th scope="row" width="20%"><b>Order Total:</b></th>
+					<td>{order_total} + Shipping</td>
+				</tr>
+
+				<tr >
+					<th scope="row" width="20%">
+						Order Items:</th>
+					<td>
+						<p> <span class="text-success"><i class="fas fa-check-circle"></i> </span> = Product has shipped <br>
+						 <span class="text-warning"><i class="fas fa-pause-circle"></i></span> = Product has not yet shipped<br>
+						 No icon indicates insufficient online data. </p>
+						<table class="table table-sm">
+							<tr><th class="thead-dark">Product</th><th>Description</th><th>Expected Ship*</th><th>Warehouse</th><th>Qty</th><th>Price</th></tr>
+
+							{order_items orderby="expected_ship" sort="asc"}
+								<tr>
+									<td>
+
+										{exp:kt_tools:mark_unshipped product='{title}' unshipped='{unshipped_items}'}</td>
+
+
+									<td>{exp:kt_tools:cleandescription}{description}{/exp:kt_tools:cleandescription}</td>
+									<td>{expected_ship format="%m/%d/%Y"}</td>
+									<td>{requested_warehouse} </td>
+
+									<td>{quantity}</td>
+									<td>{price}</td>
+								</tr>
+							{/order_items}
+						</table>
+						<p class="small">* Please note: For products set to ship the same day from DIFFERENT warehouses, please add one additional day to the second warehouse. For questions regarding the ship date of an item, please contact your KELTEC Technolab Customer Sales Rep.</p>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row" width="20%">Billing Address:</th>
+					<td>{order_full_billing_address} - {order_billing_country}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Shipping Address:</th>
+					<td>{order_full_shipping_address}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="20%">Customer PO:</th>
+					<td>{customer_po}</td>
+				</tr>
+
+			{/exp:channel:entries}
+		</tbody>
+	</table>
+</div>
+
+

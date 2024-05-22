@@ -1,0 +1,105 @@
+{layout="layouts/_dashboard_single_full_col"}
+{par_user_stash_variables}
+
+{layout:set name="css"}
+<link href="{site_url}assets/vendors/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="{path='css/_ee_channel_form_css'}" type="text/css" rel="stylesheet" media="screen">
+{/layout:set}
+{layout:set name="js"}
+<script src="{site_url}assets/vendors/datatables/jquery.dataTables.min.js"</script>
+<script src="{site_url}assets/vendors/datatables/dataTables.bootstrap4.min.js"</script>
+<script>
+	$(document).ready(function() {
+    $('#orders').DataTable( {
+	   "order": [[ 1, "desc" ]],
+	   "lengthChange": false
+    });
+} );
+</script>
+{/layout:set}
+
+
+{layout:set name="rightButton"}
+    <a href="{path='accounts/create-return'}" class="btn btn-primary rounded-0">New Return</a>  
+    <a href="{path='accounts/dashboard'}" class="btn btn-outline-primary rounded-0">Dashboard</a> 
+
+{/layout:set}
+{layout:set name="pageTitle"}Return Authorizations for {exp:kt_tools:get_company_name_fr_un username="{segment_3}"}{/layout:set}
+
+{if segment_3 != ""}
+	{exp:member:custom_profile_data member_id="{segment_3}"}
+{if:else}
+	{exp:member:custom_profile_data}
+{/if}
+    {layout:set name="companyName"}{title}{/layout:set}
+{/exp:member:custom_profile_data}
+<div class="col-12">
+<table id="rma" class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>RMA #</th>
+            <th>Entry Date</th>
+            <th>Customer #</th>
+            <th>Claim Entry ID</th>
+            <th>Return Type</th>
+            <th>KELTEC Invoice#</th>
+            <th>Customer PO#</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {if logged_in_group_id == '5'}
+            {exp:channel:entries 
+                channel="rma_portal" 
+                author_id="CURRENT_USER" 
+                status="REQUEST PENDING|REQUEST MORE INFORMATION|DENY RETURN|PROCESS RETURN"
+            }
+        {if:elseif logged_in_group_id == '8'}
+            {exp:channel:entries 
+                channel="rma_portal" 
+                author_id="{segment_3}" 
+                status="REQUEST PENDING|REQUEST MORE INFORMATION|DENY RETURN|PROCESS RETURN"
+            }
+        {/if}
+			{if no_results}
+			<tr>
+				<td colspan="9" style="text-center">There are currently no RMAs for this Customer.</td>
+			</tr>
+			{/if}
+
+        <tr>
+            <td>{rma_number}</td>
+            <td>{entry_date format="%m/%d/%Y"}</td>
+            <td>{customer_number}</td>
+            <td>{title}</td>
+            <td>{return_type}</td>
+            <td>{keltec_invoice_number}</td>
+            <td>{customer_po}</td>
+            <td>{status}</td>
+            <td>
+                <a href="{path='accounts/view-return/{entry_id}'}"><i class="fas fa-eye"></i></a> &nbsp;&nbsp;
+                {if comment_total > 0}
+                <a href="{path='accounts/view-return/{entry_id}'}"><i class="fas fa-comments"></i>({comment_total})</a>
+                {/if}
+            </td>
+        </tr>
+{/exp:channel:entries}
+</tbody>
+<tfoot class="thead-dark">
+        <tr>
+            
+            <th>RMA #</th>
+            <th>Entry Date</th>
+            <th>Customer #</th>
+            <th>Claim Entry ID</th>
+            <th>Return Type</th>
+            <th>KELTEC Invoice#</th>
+            <th>Customer PO#</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </tfoot>
+
+</table>
+</div> 

@@ -1,0 +1,174 @@
+{layout="layouts/_dashboard_layout"}
+{par_user_stash_variables}
+{layout:set name="rightButton"}
+	{if segment_3 !=""}
+        <a href="{path='accounts/orders/{segment_3}'}" class="btn btn-primary rounded-0">Orders</a>
+    {if:else}
+      {!--   <a href="{path='accounts/returns'}" class="btn btn-primary rounded-0">Returns</a> --}
+		<a href="{site_url}payments" class="btn btn-outline-primary rounded-0">Pay Open Invoices</a>
+		 <a href="{path='accounts/orders'}" class="btn btn-primary rounded-0">Orders</a>
+    {/if}
+{/layout:set}
+{if segment_3 != ""}
+
+	{exp:member:custom_profile_data member_id="{segment_3}"}
+{if:else}
+	{exp:member:custom_profile_data}
+{/if}
+
+
+
+
+{layout:set name="companyID"}{customer_number}{/layout:set}
+{layout:set name="companyName"}{company}{/layout:set}
+{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{layout:set name="sales_rep"}{sales_rep}{item:label}{/sales_rep}{/layout:set}
+	{layout:set name="sales_rep_id"}{sales_rep}{item:value}{/sales_rep}{/layout:set}
+	{layout:set name="membergroupid"}{member_group}{/layout:set}
+
+
+
+{layout:set name="sidebar"}
+			      <table class="table" style="font-size:14px;">
+                 <tbody>
+                    <tr>
+                      <th scope="row">Your CSR</th>
+                      <td class="text-right">
+
+	                      {exp:kt_tools:get_users_csr_screenname member_id="{logged_in_member_id}"}<br>
+	                      <small>{exp:kt_tools:get_users_csr_email member_id="{logged_in_member_id}"}</small></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row">Warehouse</th>
+                      <td class="text-right">{preferred_warehouse}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Price Code</th>
+                      <td class="text-right">{price_code}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Pay Code</th>
+                      <td class="text-right">{pay_code}</td>
+                    </tr>
+                     <tr>
+                      <th scope="row">Customer Credit Limit</th>
+                      <td class="text-right">${credit_limit}</td>
+                    </tr>
+                    </tr>
+                     <tr>
+                      <th scope="row">Last User Edit</th>
+                      <td class="text-right">{last_edit_date}</td>
+                    </tr>
+
+                 </tbody>
+                </table>
+
+{!--{embed="embeds/shipping_date"}--}
+{/layout:set}
+
+{layout:set name="general"}
+{par_credit_hold_message}
+      <table class="table">
+  <tbody>
+	   <tr>
+      <th scope="row" width="20%">Company ID</th>
+      <td>{customer_number}</td>
+    </tr>
+    <tr>
+      <th scope="row" width="20%">Contact Name</th>
+      <td>{first_name} {last_name}</td>
+    </tr>
+    <tr>
+      <th scope="row">Address</th>
+      <td>{address}</td>
+    </tr>
+	<tr>
+      <th scope="row">Address 2</th>
+      <td>{address2}</td>
+    </tr>
+    <tr>
+      <th scope="row">City</th>
+      <td>{city}</td>
+    </tr>
+    <tr>
+      <th scope="row">State</th>
+      <td>{state}</td>
+    </tr>
+    <tr>
+      <th scope="row">Postal</th>
+      <td>{postal}</td>
+    </tr>
+    <tr>
+      <th scope="row">Country</th>
+      <td>{country}</td>
+    </tr>
+    <tr>
+      <th scope="row">Phone 1</th>
+      <td>{phone_1}</a></td>
+    </tr>
+    <tr>
+      <th scope="row">Phone 2</th>
+      <td>{phone_2}</a></td>
+    </tr>
+     <tr>
+      <th scope="row">Fax</th>
+      <td>{if fax}{fax}{/if}</td>
+    </tr>
+    <tr>
+      <th scope="row">Email</th>
+      <td>{email}</td>
+    </tr>
+    <tr>
+      <th scope="row">Website</th>
+      <td>{if website}<a href="{website}" target="blank">{website}</a>{/if}
+			</p></td>
+    </tr>
+    </tbody>
+</table>
+<p class="col-lg-6">
+	<div class="alert alert-warning">If you need to update any information on this page, please contact your Keltec CSR. They will make the change and the website will then be updated within 12 hours.</div>
+
+</p>
+{/layout:set}
+
+
+{layout:set name="contacts"}
+
+		<table class="table">
+			<tbody>
+        <tr>
+					<th scope="row" width="30%">Preferred Warehouse:</th>
+					<td>{preferred_warehouse}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="30%">UPS Collect Number:</th>
+					<td>{ups_collect_number}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="30%">FedEx Collect Number:</th>
+					<td>{fedex_collect_number}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="30%">Preferred Carrier:</th>
+					<td>{preferred_carrier}</td>
+				</tr>
+				<tr>
+					<th scope="row" width="30%">General Shipping Notes:</th>
+					<td>{general_shipping_notes}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			{if segment_3 !=""}
+				<a href="{path='accounts/edit-shipping-info/{segment_3}'}" class="btn btn-outline-primary rounded-0">Edit Customer</a>
+			{if:else}
+				<a href="{path='accounts/edit-shipping-info'}" class="btn btn-outline-primary rounded-0">Edit</a>
+			{/if}
+		</p>
+
+{/layout:set}
+{/exp:member:custom_profile_data}
+
+

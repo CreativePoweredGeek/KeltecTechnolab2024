@@ -1,0 +1,62 @@
+{layout="layouts/_single_column_layout"}
+
+	{layout:set name="title"}Filter Cross Reference Guide{/layout:set}
+	{layout:set name="page_title"}Product List{/layout:set}
+	{layout:set name="seo_description"}{{language_code}_seo_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+<div class="col-12 mobile">
+    <div class="row">
+    <div class="col-12 mb-3">
+        <h2>Keltec & Air Supply Filter replacements for {segment_3} Products.</h2>
+        {embed="embeds/oem_lookup_search_bar"}</div>
+
+			{exp:channel:entries
+			channel="oem_lookup"
+			limit="50"
+			paginate="bottom"
+			dynamic="no"
+			orderby="pg_oem_name"
+			{if segment_3 !=""}
+                search:pg_oem_name="{segment_3}"
+            {if:else}
+                search:pg_oem_name="not IS_EMPTY"
+            {/if}
+			sort="asc"
+			disable="categories|category_fields|member_data"
+			cache="yes" refresh="30"}
+
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>{pg_keltec_number}<br>
+                            <small class="small">{pg_item_description}</small>
+                            </h5>
+                            <p>OEM#: {pg_oem_number}<br>
+                            OEM: {pg_oem_name}</p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+		{if count == total_results}
+			</row>
+		{/if}
+		{par_paginate}
+
+
+		{/exp:channel:entries}
+
+	<div class="card mt-4">
+			<div class="card-body">
+				<!-- Disclaimer-->
+				{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no"}
+					{if {language_code}_title != ""}<h3 class="text-uppercase">{{language_code}_title}</h3>{/if}
+						<p class="card-text">{{language_code}_basic_text}</p>
+				{/exp:channel:entries}
+			</div>
+		</div>
+
+</div>

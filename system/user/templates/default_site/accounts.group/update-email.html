@@ -1,0 +1,48 @@
+{layout="layouts/_main_html_layout"}
+
+
+{!-- Header --}
+<div class="container-fluid dashboard-header bg-dkblue">
+    <div class="row padding-two-percent">
+        <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}{language_code}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+                <h4 class="text-right text-white">{exp:stash:get name="company"}</h4>
+        </div>
+    </div>
+</div>
+
+
+
+{if logged_in}
+<div class="container mt-5 mb-5 p-5">
+	<div class="row">
+		<div class="col-sm-6 col-md-4 ml-auto mr-auto">
+		<h3>Please update your email address</h3> 
+			<p>We need a good email address so that purchase confirmations can be sent to you and - should you ever forget your password - you can reset it conveniently on your own.</p>	
+				
+		{exp:smart_members:edit}
+   {!-- {exp:member:update_form member_id="{segment_3}" return="accounts/edit_profile/{segment_3}/success"} --}
+        <input type="hidden" name="update_email" value="">
+        <div class="form-group">
+            <label for="member_firstname">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="" aria-describedby="emailHelp" placeholder="" required>
+        
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+    {/exp:smart_members:edit}
+				
+		</div>
+	</div>
+</div>
+
+
+{/if}
+
+{if logged_out}
+	{redirect='accounts/login' status_code="301"}
+{/if}

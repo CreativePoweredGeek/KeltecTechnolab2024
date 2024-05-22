@@ -1,0 +1,104 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+
+
+{embed="{template_group}/_header" title="Create a Payment Method" template_group="{template_group}" template="{template}" }
+
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+{embed="{template_group}/_navbar" template_group="{template_group}" template="{template}"}
+
+{embed="{template_group}/_subhead" template_group="{template_group}" template="{template}"}
+
+{!-- since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements--}
+<div class="container">
+  {!-- twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows --}
+  <div class="row">
+
+    {!-- twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up --}
+    <div class="span3">
+      <div class="bs-docs-sidenav">
+        {embed="{template_group}/_leftnav" template_group="{template_group}" template="{template}"}
+        {embed="{template_group}/_also_purchased" template_group="{template_group}" template="{template}"}
+      </div>
+
+    </div>
+
+    <div class="span9">
+      <section id="about-us">
+        <div class="row">
+          <div class="span6">
+            <h1>Create a Payment Method</h1>
+            {exp:cartthrob:add_vault_form
+              error_handling="inline"
+              class="form-horizontal"
+              required="first_name|name";
+              return="{template_group}/vaults/created"
+            }
+            {if errors_exist}
+            <div class="control-group">
+              {!-- not a fan of inline JS, but the if_errors conditional works only inside the checkout form
+              so if you want to use JS, you'll need to use inline JS.
+              --}
+              <script type="text/javascript">
+                jQuery(document).ready(function($){
+                  {errors}
+                  {if field_error}
+                  $("#{field}").closest(".control-group").addClass("error");
+                  $("#{field}").after('<span class="help-inline">{error}</span>');
+                  {/if}
+                    {/errors}
+                    });
+              </script>
+              {errors}
+              {if first_error}
+              <div class="alert alert-error">
+                <strong>Alert</strong> There are <span class="badge badge-warning">{error:total_results}</span> error(s). Please correct the errors listed below
+              </div>
+              {/if}
+
+              <p>
+                {if field_error}<span class="label label-important">{field}</span>{/if}
+                {if global_error}<span class="label label-important">Error</span>{/if}
+                {error}
+              </p>
+              {/errors}
+
+            </div>
+            {/if}
+
+            <fieldset>
+              <legend>General Details</legend>
+              <div class="control-group">
+                <label for="name" class="control-label">Name</label>
+                <div class="controls">
+                  <input type="text" value="{name}" name="name" id="name" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label for="primary_vault" class="control-label">Make Primary</label>
+                <div class="controls">
+                  <input type="checkbox" value="1" name="primary" id="primary_vault" {if primary == 1}checked="checked"{/if}>
+                </div>
+              </div>
+            </fieldset>
+
+            {vault_fields}
+
+            <div class="control-group">
+              <div class="form-actions">
+                {!-- do not add a name attribute to your submit button if you want it to work with stripe payment gateway --}
+                <input type="submit" id="checkout_complete" class="btn btn-success"  value="Create Payment Method" />
+              </div>
+            </div>
+            {/exp:cartthrob:add_vault_form}
+
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+{embed="{template_group}/_footer" template="{template}" template_group="{template_group}"}

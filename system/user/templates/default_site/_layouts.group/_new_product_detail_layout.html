@@ -1,0 +1,133 @@
+{layout="layouts/_main_html_layout"}
+<div class="container-fluid bg-dkblue mb-3 mb-md-5">
+    <div class="row">
+        <div class="col-8 col-sm-6 col-md-8 col-lg-2 p-4 mx-auto">
+            <a href="{site_url}{language_code}">
+                <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="img-fluid brand-logo" alt="Keltec Technolab">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card p-3 mb-3 bg-light">
+                <div class="row no-gutters">
+                  <div class="col-10 col-md-4 mx-auto">
+                    <img src="{layout:photo}" class="img-fluid border-1" alt="{layout:photo_alt}">
+                  </div>
+                  <div class="col-md-8 pl-4">
+                    <div class="card-body">
+                      <h4 class="card-title display-4 my-0">{layout:product}</h4>
+                      <p class="card-text my-0 lead">{layout:description} {layout:class}</p>
+                      <p class="card-text price" style="font-size:1.75rem;font-weight:600;">{layout:price}</p>
+                      {!-- Add to Cart --}
+                      <p class="card-text">
+                        {exp:cartthrob:add_to_cart_form entry_id="{layout:entry_id}" allow_user_price="yes" return="{current_url}"}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select class="form-control form-control" name="item_options[requested_warehouse]" id="whseSelect">
+                                        {!-- This builds the option list based off the warehouses in the array that is passed into it.
+                                         To add another warehouse, just add it to the array.
+                                        {exp:kt_tools:build_inventory_drop_options prdct="{title}" whse="MAIN|NC|TX|CA" userwhse="{exp:stash:get name='warehouse'}" parse="inward"} --}
+                                        <option value="MAIN">Ohio {layout:inventory_oh}</option>
+                                        <option value="NC">N. Carolina {layout:inventory_nc}</option>
+                                        <option value="TX">Texas {layout:inventory_tx}</option>
+                                        <option value="CA">California {layout:inventory_ca}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3 align-self-bottom">
+                                        <input type="hidden" name="item_options[customer_number]" value="{layout:customer_number}" />
+								        <input type="hidden" name="item_options[purchased_price]" value="{adjPrice}" />
+								        <input type="hidden" name="item_options[expected_ship]" value="{layout:expected_ship}" />
+                                        <input type="number" name="quantity" class="form-control" placeholder="00" aria-label="Quantity" value="1" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        {/exp:cartthrob:add_to_cart_form}
+                        
+                      </p>
+                    </div>
+                  </div>
+                </div>
+            </div> 
+            <!-- TABBED LOWER PAGE -->
+            <div class="mt-4 p-1" style="background-color:#efefef;">
+                <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color:#efefef;">
+                    <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="details-tab" data-toggle="tab" data-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">Details</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="oem-tab" data-toggle="tab" data-target="#oem" type="button" role="tab" aria-controls="oem" aria-selected="false">OEM Matches</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="relproducts-tab" data-toggle="tab" data-target="#relproducts" type="button" role="tab" aria-controls="Related Products" aria-selected="false">Related Products</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-4 bg-white" id="myTabContent">
+                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                        {if layout:class == 'DR'}<div class="alert alert-warning" role="alert">{var_dryer_note}</div>{/if}
+                        {if logged_in}
+                        <p>If ordered today, the expected ship date for this product from {if '{exp:stash:warehouse}' == 'MAIN'}Ohio{if:else}{exp:stash:warehouse}{/if} is: <span class="newShipdate">{layout:expected_ship format="%Y-%m-%d"}</span>.</p>
+                        {/if}
+                        
+                        <table class="table table-stripped col-lg-6">
+                            <tbody>
+                                <tr><th>Product Weight:</th><td>{layout:product_weight}</td></tr>
+                                <tr><th>Product Height:</th><td>{layout:product_height}</td></tr>
+                                <tr><th>Product Width:</th><td>{layout:product_width}</td></tr>
+                            </tbody>
+                        </table>
+                        {if logged_in}
+                        
+            
+                <p class="">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>
+            
+                <p class="">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from.<br> ** If there is no available inventory at your preferred warehouse, you can select that it ship from another.<br>
+                ** If you see a number in parenthesis &mdash; for example: 0 NC <strong>(3)</strong> &mdash; that quantity is on its way to the warehouse and will be available to ship once it arrives.</p>
+            
+                {/if}
+                    </div>
+                    <div class="tab-pane fade" id="oem" role="tabpanel" aria-labelledby="oem-tab">
+                        <table class="table table-striped table-sm">
+                            <thead class="thead-dark bg-dkblue">
+                        <tr>
+                            <th>#</th>
+                            <th>OE Manufacturer</th>
+                            <th>OEM#</th>
+                            <th>KELTEC#</th>
+                            <th>Item Description</th>
+                        </tr>
+                            </thead>
+                            <tbody>
+                                {layout:oem_list}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="relproducts" role="tabpanel" aria-labelledby="relproducts-tab">
+                        {if layout:associated_products !=""}
+                            {layout:associated_products}
+                        {if:else}
+                        <p class="lead">There are currently no related products for this item.</p>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-4">
+            {if logged_in && logged_in_group_id != 12}
+			{embed="embeds/search_by_oem" searchpage="shop"}
+			{embed="embeds/shop-search-options" searchpage="shop"}
+            {if:else}
+                {embed="embeds/search_by_oem" searchpage="search"}
+                {embed="embeds/shop-search-options" searchpage="search"}
+            {/if}
+            {par_filter_cross_reference}
+        </div>
+    </div>
+</div>

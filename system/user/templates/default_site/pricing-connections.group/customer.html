@@ -1,0 +1,7 @@
+{!-- Segment3 is Customer--}{!-- Segment4 is Product--}{!-- use: http://keltecinc.com/pricing-connections/customer/BH01/KA140-033 --}{if segment_3 == 'BH01'}{exp:channel:entries channel="products" url_title="{segment_4:url_slug}" disable="categories|member_data|category_fields|pagination" limit="1"}{exp:kt_pricing:evaluate_price
+	customerID="{segment_3}"
+	KTproduct="{title}"
+	pPrice="{price}"
+	pClass="{class}"
+	pMAXdiscount="{max_product_discount}" parse="inward"
+}{/exp:channel:entries}{if:else}{/if}

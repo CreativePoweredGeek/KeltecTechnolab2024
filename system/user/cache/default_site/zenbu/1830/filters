@@ -1,0 +1,1 @@
+a:3:{s:4:"time";i:1624370688;s:3:"ttl";i:300;s:4:"data";a:5:{s:10:"channel_id";b:0;s:4:"rows";a:1:{i:0;a:3:{i:0;s:5:"title";i:1;s:8:"contains";i:2;s:0:"";}}s:5:"limit";s:2:"15";s:8:"order_by";s:8:"entry_id";s:4:"sort";s:4:"desc";}}

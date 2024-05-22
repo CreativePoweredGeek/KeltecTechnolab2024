@@ -1,0 +1,124 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+{preload_replace:language_code="en"}
+
+{embed="store/_new_header" template_group="{template_group}" template="{template}" title="View Cart" pagetitle="View Cart"}
+{par_user_stash_variables}
+
+
+<div class="container">
+	<div class="row">
+        {if logged_out}
+            {exp:channel:entries channel="shop" url_title="login-message-for-checkout"}
+            <div class="alert alert-warning" role="alert">
+				<h5>{{language_code}_title}</h5>
+					{{language_code}_basic_text}
+				</div>
+            {/exp:channel:entries}
+        {/if}
+        {if logged_in}
+		<div class="col-12">
+			<div class="alert alert-warning p-2 p-md-5" role="alert">
+			  {exp:channel:entries channel="misc_content" url_title="multiple-warehouse-orders" disable="categories|category_fields|member_data|pagination" cache="no" refresh="0"}
+			  	{{language_code}_basic_text}
+			  {/exp:channel:entries}
+			</div>
+		</div>
+		{/if}
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+        <div class="col">
+        {exp:cartthrob:update_cart_form return="{current_url}" id="save_data"}
+        	<table class="table table-striped table-condensed border-0">
+	            <thead class="bg-dkblue text-white">
+	                <tr>
+	                    <th></th>
+	                    <th>{item_{language_code}}</th>
+						<th>Label Description<br><small>Customize or leave the default.</small></th>
+						<th>{price_{language_code}}*</th>
+						<th>Available Inventory**<br><small>by warehouse</small></th>
+						<th>Expected<br>Ship</th>
+	                    <th>{quantity_{language_code}}</th>
+	                    <th>Item<br>Subtotal</th>
+						<th></th>
+					</tr>
+	            </thead>
+	            <tbody>
+		        {exp:cartthrob:cart_items_info}
+
+		        	<tr>
+		                <td>{count}.</td>
+		                <td><b><a href="{site_url}products/item/{title:url_slug}" target="_blank">{title}</a></b></td>
+		                <td>
+		                   {if '{item_options:label_description}' !=""}
+
+		                    	<input type="text" class="form-control" name="item_options[{row_id}][label_description]" maxlength="54" value='{item_options:label_description}' required>
+		                   {if:else}
+		                   	<input type="text" class="form-control" name="item_options[{row_id}][label_description]" value="{description:attr_safe}" required>
+		                   {/if}
+
+		                </td>
+		                <td>{if logged_in}{price}{if:else}{login_for_pricing_{language_code}}{/if}</td>
+		                <td>
+		                  	<select class="form-control rounded-0 input-sm" name="item_options[{row_id}][requested_warehouse]">
+			            		{exp:kt_tools:build_inventory_drop_options prdct='{title}' whse='MAIN|NC|TX|CA' userwhse='{item_options:requested_warehouse}'}
+								{!--
+								<option value="MAIN" {if '{item_options:requested_warehouse}' == "MAIN"}selected{/if}>OH | {if inventory_main >= '0'}{inventory_main}{if:else}0{/if}</option>
+									<option value="NC" {if '{item_options:requested_warehouse}' == "NC"}selected{/if}>NC | {if inventory_nc >= '0'}{inventory_nc}{if:else}0{/if}</option>
+									<option value="TX" {if '{item_options:requested_warehouse}' == "TX"}selected{/if}>TX | {if inventory_tx >= '0'}{inventory_tx}{if:else}0{/if}</option>
+									<option value="CA" {if '{item_options:requested_warehouse}' == "CA"}selected{/if}>CA | {if inventory_ca >= '0'}{inventory_ca}{if:else}0{/if}</option>
+									--}
+			            	</select>
+					        <input type="hidden" name="item_options[{row_id}][expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{item_options:requested_warehouse}' entry_id = '{entry_id}' display='no'}">
+						</td>
+						<td class="ship">{item_options:expected_ship format="%m/%d/%Y"}{!--{exp:keltec_shipping:estimated_date_alt warehouse='{item_options:requested_warehouse}' entry_id = '{entry_id}' display='yes'}--}</td>
+		                <td><input type="text" class="form-control rounded-0 input-sm" name="quantity[{row_id}]" size="1" value="{quantity}" /></td>
+						<td>{item_subtotal}</td>
+
+						<td class="text-right"><input type="checkbox" name="delete[{row_id}]">&nbsp;&nbsp;<i class="fas fa-trash-alt text-danger"></i></td>
+		            </tr>
+				{/exp:cartthrob:cart_items_info}
+					<tr>
+			    		<td></td>
+			    		<td></td>
+			    		<td></td>
+			    		<td></td>
+			    		<td></td>
+			    		<td></td>
+			    		<td></td>
+			    		<td><b>{exp:cartthrob:cart_subtotal}</b></td>
+			    		<td></td>
+			    	</tr>
+	            </tbody>
+        	</table>
+			<div class="row">
+                <div class="col-8">
+					<div class="alert alert-warning" role="alert"><strong>IMPORTANT:</strong> If you make any edits to your cart, click "Update Cart" before continuing to shipping.</div>
+
+
+				</div>
+				<div class="col-4 text-right">
+                    <input type="submit" class="btn btn-primary rounded-0" value="{update_cart_{language_code}}" />
+                    <a href="{site_url}store/checkout-shipping" class="btn btn-success rounded-0"> Continue to Shipping</a>
+
+                </div>
+			</div>
+        {/exp:cartthrob:update_cart_form}
+        </div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-12 mt-5">
+
+	        <p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from. If there is no available inventory at your preferred warehouse, you can select that it ship from another.</p>
+        </div>
+	</div>
+</div>
+
+
+
+{embed="store/_new_footer" template_group="{template_group}" template="{template}"}
+

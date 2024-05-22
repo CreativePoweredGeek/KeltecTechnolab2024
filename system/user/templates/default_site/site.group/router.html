@@ -1,0 +1,7 @@
+{exp:member:custom_profile_data}
+    {exp:stash:set name="last_visit"}{last_visit format="%m/%d/%Y"}{/exp:stash:set}
+    {exp:stash:set name="join_date"}{join_date format="%m/%d/%Y"}{/exp:stash:set}
+    {exp:stash:set name="customer_number" scope="user" save="yes"}{customer_number}{/exp:stash:set}
+    {exp:stash:set name="company" scope="user" save="yes"}{company}{/exp:stash:set}
+{/exp:member:custom_profile_data}
+{redirect='accounts/dashboard' status_code="301"}

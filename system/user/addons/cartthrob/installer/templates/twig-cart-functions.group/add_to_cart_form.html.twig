@@ -1,0 +1,21 @@
+{% set product = exp.channel.entries({entry_id:23}).0 %}
+{% set template_group = 'twig-cart-functions' %}
+
+Product Name: {{ product.title}} {{ product.product_price}}
+
+{% set add_to_cart_form = exp.cartthrob.add_to_cart_form({
+    class:'form-horizontal',
+    entry_id:product.entry_id,
+    no_tax:product.no_tax,
+    no_shipping:product.no_shipping,
+    return: template_group ~ "/cart_info" })
+%}
+
+{{ add_to_cart_form.form_open | raw }}
+        Quantity <input type="text" name="quantity" value="1"/>
+        <input type="submit" />
+{{ add_to_cart_form.form_close | raw }}
+
+<br />Creates a form for adding products to the cart
+<br />NOTE: example requires "products" channel and entries
+<br />http://cartthrob.com/docs/tags_detail/add_to_cart_form/

@@ -1,0 +1,15 @@
+{% if rows|length > 0 %}
+	<div class="fluid">
+		{% for row in rows %}
+			{% if row.content is iterable %}
+				{% for item in row.content %}
+					{{ item|json_encode }}
+				{% endfor %}
+			{% else %}
+				<div class="item">
+					{{ row.content }}
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endif %}

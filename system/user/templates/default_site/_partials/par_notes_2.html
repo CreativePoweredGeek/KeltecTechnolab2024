@@ -1,0 +1,17 @@
+<h4 class="">Filter & Search our Inventory</h4>
+	<p class="">
+		Welcome to our new Filter Cross Reference Guide. There are 2 ways to use this Guide.
+		<ol>
+			<li>Enter your OEM#, KELTEC Item# or Air Supply Part Number in the search box and hit "Enter" on your keyboard or click the magnifying glass.</li>
+			<li>Select the compressor manufacturer you are searching a part for to see all our available inventory.</li>
+		</ol>
+	</p>
+
+{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+	<div class="card rounded-0 mt-4">
+  <div class="card-body">
+	{if {language_code}_title != ""}<h4 class="text-uppercase">{{language_code}_title}</h4>{/if}
+		<p class="">{{language_code}_basic_text}</p>
+		</div>
+	</div>
+{/exp:channel:entries}	

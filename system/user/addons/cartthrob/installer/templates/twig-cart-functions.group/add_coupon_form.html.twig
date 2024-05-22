@@ -1,0 +1,17 @@
+{% set template_group = 'twig-cart-functions' %}
+
+{% set add_coupon_form = exp.cartthrob.add_coupon_form({
+    class:'form-horizontal',
+    entry_id:product.entry_id,
+    no_tax:product.no_tax,
+    no_shipping:product.no_shipping,
+    return: template_group ~ "/cart_info" })
+%}
+
+{{ add_coupon_form.form_open | raw }}
+    <input type="text" name="coupon_code" /><br />
+    <input type="submit" value="Add" />
+{{ add_coupon_form.form_close | raw }}
+
+<br />Creates a form for adding a coupon code to the cart
+<br />http://cartthrob.com/docs/tags_detail/add_coupon_form/

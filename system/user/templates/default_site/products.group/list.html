@@ -1,0 +1,29 @@
+{layout="layouts/_product_page_template"}
+
+	{layout:set name="title"}Listing | Products{/layout:set}
+	{layout:set name="page_title"}Product List{/layout:set}
+	{layout:set name="seo_description"}{{language_code}_seo_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+{exp:channel:entries channel="products" limit="20" paginate="both" dynamic="no"}
+	
+	<p>{title}</p>
+
+{/exp:channel:entries}
+
+
+{layout:set name="sidebar"}
+			
+		{par_filter_application_selector}
+		
+		{par_filter_cross_reference}
+		
+		<div class="sidebar-item-divider">
+			<!-- Disclaimer-->
+			{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no"}
+				{if {language_code}_title != ""}<h3 class="text-uppercase">{{language_code}_title}</h3>{/if}
+					<p class="">{{language_code}_basic_text}</p>
+			{/exp:channel:entries}	
+		</div>
+{/layout:set}

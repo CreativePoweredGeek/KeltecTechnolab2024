@@ -1,0 +1,134 @@
+{layout="layouts/_shop_layout"}
+{preload_replace:language_code="en"}
+{par_user_stash_variables}
+{layout:set name="template"}shop{/layout:set}
+{exp:channel:entries channel="global_content" url_title="main" dynamic="no" disable="categories|category_fields|member_data|pagination|relationships" cache="yes" refresh="60"}
+  	{par_global_content_lo_vars}
+{/exp:channel:entries}
+{exp:channel:entries channel="site_pages" url_title="{last_segment}" disable="categories|member_data|pagination" cache="yes" refresh="60"}
+{layout:set name="title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+{layout:set name="page_title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+{layout:set name="seo_description"}{seo_page_description}{seo_page_description:{language_code}}{/seo_page_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+ 
+	
+	{if feature_photo}
+		<img src="{feature_photo}" class="img-fluid feature-product" alt="{{language_code}_title}">
+	{/if}
+	{if {language_code}_rich_text_block}
+		{{language_code}_rich_text_block}
+	{/if}
+
+{/exp:channel:entries}
+
+
+
+ 	{layout:set name="copy"}
+	 
+ 		<div class="col mb-5">
+{if logged_in_group_id == 12}{redirect='{site_url}{language_code}/search' status_code="301"}{/if}
+			 <p class="lead">With over
+		 		<strong>18,000 products</strong> matching to over <strong>33,000 OEM numbers</strong>, we give you multiple ways of searching our massive database. Search by Original Equipment Manufacturer, OEM#, KELTEC Item# or product type. When logged in, all pricing reflects your custom pricing as well as your discounts. The price you see is what you pay.</p>
+			<p>Use the tools below to start searching Today.</p>
+ 		</div>
+		{/layout:set}
+
+{!--{layout:set name="productslist"}
+<div class="col mt-5 pt-4 border-top">
+	<h2>Items you have purchased before</h2>
+
+{exp:query sql="SELECT DISTINCT title AS item FROM exp_channel_titles WHERE channel_id = '27' AND author_id = '{logged_in_member_id}'" limit="10" paginate="bottom"}
+	{if count == 1}
+	<table class="table table-striped">
+			<thead class="bg-dkblue text-white">
+			<tr>
+				<th>Item</th>
+				<th>Description</th>
+				<th>Weight</th>
+				<th>Price</th>
+				<th></th>
+				<th style="line-height: .8rem;">Available Inventory**<br><small>by warehouse</small></th>
+				<th>Order</th>
+			</tr>
+		</thead>
+	<tbody>
+
+	{/if}
+
+	{exp:channel:entries channel="products" url_title="{item:url_slug}" disable="categories|category_fields|member_data|pagination"}
+		<tr>
+			<td style="vertical-align:middle">{title}{if photo !=""} <i class="far fa-image"></i>{/if}</td>
+			<td style="vertical-align:middle">{description}</td>
+			<td style="vertical-align:middle">{if '{weight}' != 0}{weight} lbs.{/if}</td>
+			<td style="vertical-align:middle">{if logged_in}{par_custom_price}{if:else}Login for Pricing{/if}</td>
+			<td style="vertical-align:middle"><a href="{path='{language_code}/products/item/{url_title}'}" class="btn btn-outline-primary rounded-0 btn-sm">Details</a></td>
+				{if logged_in}
+					{exp:cartthrob:add_to_cart_form
+						entry_id="{entry_id}"
+						allow_user_price="yes"
+						return="{current_url}"
+						prefix=""}
+						<td style="vertical-align:middle"><div class="input-group">{par_inventory_drop}</div></td>
+						<td style="vertical-align:middle">
+							<input type="hidden" name="price" value="{par_custom_price}">
+							<input type="hidden" name="item_options[purchased_price]" value="{par_custom_price}" />
+							<input type="hidden" name="item_options[customer_number]" value="{exp:stash:get name='customer_number'}" />
+							<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='no'}" />
+							<div class="input-group">
+							<input type="number" name="quantity" class="form-control" maxlength="3" size="3" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary rounding-0" type="submit" id="button-addon2"><i class="fas fa-cart-plus"></i> </button>
+							</div>
+							</div>
+						</td>
+					{/exp:cartthrob:add_to_cart_form}
+				{/if}
+		</tr>
+	{/exp:channel:entries}
+
+	{if count == '{total_results}'}
+	</tbody>
+	</table>
+	{/if}
+	{paginate}
+  {pagination_links}
+    <ul class="pagination">
+      {first_page}
+        <li class="page-item"><a href="{pagination_url}" class="page-link page-first">First Page</a></li>
+      {/first_page}
+
+      {previous_page}
+        <li class="page-item"><a href="{pagination_url}" class="page-link page-previous">Previous Page</a></li>
+      {/previous_page}
+
+      {page}
+        <li class="page-item"><a href="{pagination_url}" class="page-link page-{pagination_page_number} {if current_page}active{/if}">{pagination_page_number}</a></li>
+      {/page}
+
+      {next_page}
+        <li class="page-item"><a href="{pagination_url}" class="page-link page-next">Next Page</a></li>
+      {/next_page}
+
+      {last_page}
+        <li class="page-item"><a href="{pagination_url}" class="page-link page-last">Last Page</a></li>
+      {/last_page}
+    </ul>
+  {/pagination_links}
+{/paginate}
+{/exp:query}
+
+
+
+
+
+	<p><hr></p>
+	<!--<p class="small">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>-->
+
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from.<br> ** If there is no available inventory at your preferred warehouse, you can select that it ship from another.<br>
+	** If you see a number in parenthesis &mdash; for example: 0 NC <strong>(3)</strong> &mdash; that quantity is on its way to the warehouse and will be available to ship once it arrives.</p>
+
+</div>
+
+
+{/layout:set}--}

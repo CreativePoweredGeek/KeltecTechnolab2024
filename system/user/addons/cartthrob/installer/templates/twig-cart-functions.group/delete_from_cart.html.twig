@@ -1,0 +1,8 @@
+{% set template_group = 'twig-cart-functions' %}
+
+{{ exp.cartthrob.delete_from_cart({entry_id:"23", return:template_group ~ "/single_page_checkout"}) }}
+
+<br />Deletes items from the cart
+<br />NOTE: example requires that item with entry_id:1 be in cart
+<br />NOTE: This will redirect you to a different page when this template is viewed
+<br />http://cartthrob.com/docs/tags_detail/delete_from_cart/

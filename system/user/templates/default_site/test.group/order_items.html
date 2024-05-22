@@ -1,0 +1,31 @@
+<?php
+    $order_id = '148016';
+    
+    // fetch the order items associate with the Order ID
+    $orderItems = ee()->db->select('title, price, quantity, extra')
+    ->from('exp_cartthrob_order_items')
+    ->where(array(
+          'order_id' => $order_id
+    ))
+    ->get();
+
+// use foreach to work with the results - returning an array
+echo '<table cellpadding="4" cellspacing="1" border="1">';
+
+foreach($orderItems->result_array()as $row){
+    
+    //deserialize and decode the CT order_items field
+    $items = array(unserialize(base64_decode($row['extra'])));
+	echo '<tr>';
+	echo '<td>'.$row['title'].'</td><td>'.$row['price'].'</td><td>'.$row['quantity'].'</td>';
+	
+		//now lets run through the order_items as an array
+	    foreach($items as $item){
+		    echo '<td>'.$item['requested_warehouse'].'</td><td>'.date('m/d/Y', $item['expected_ship']).'</td><td>'.$item['label_description'].'</td>';
+			
+		}
+	echo '</tr>';
+ }
+
+echo '</table>';
+?>

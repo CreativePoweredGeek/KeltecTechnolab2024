@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Primary/Product/CartThrob Pro</title>
+    <g id="Icon/Primary/Product/CartThrob-Pro" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#AACBF2" cx="21" cy="21" r="20"></circle>
+        <g id="cart-favorite" transform="translate(11.000000, 12.000000)" stroke="#182E3C" stroke-linecap="square">
+            <g id="Group" transform="translate(0.050000, 0.050000)" stroke-linecap="round">
+                <ellipse id="Oval" stroke-linejoin="round" cx="4.7769231" cy="17.9770409" rx="1.45384615" ry="1.44642857"></ellipse>
+                <ellipse id="Oval" stroke-linejoin="round" cx="16.4076924" cy="17.9770409" rx="1.45384615" ry="1.44642857"></ellipse>
+                <path d="M0,0 L2.49230771,0 L2.49230771,11.5714286 C2.49230771,12.4843892 3.23620382,13.2244899 4.15384618,13.2244899 L17.446154,13.2244899" id="Path" stroke-width="1.25" stroke-linejoin="round"></path>
+                <polyline id="Path" stroke-width="1.25" stroke-linejoin="round" points="15.2137354 9.45 14.9538462 9.91836741 2.49230771 9.91836741"></polyline>
+                <line x1="2.7" y1="3.375" x2="9.45" y2="3.375" id="Line" stroke-width="1.25"></line>
+            </g>
+        </g>
+        <path d="M30.6530126,12.7196001 C29.6678501,11.6996751 28.0235501,11.8664001 27.2500001,13.0726251 C26.4757751,11.8650501 24.8311376,11.7006876 23.8469876,12.7192626 C22.9843376,13.6119501 22.9843376,15.0598251 23.8469876,15.9525126 L27.2496626,19.4750001 L30.6530126,15.9528501 C31.5156626,15.0598251 31.5156626,13.6122876 30.6530126,12.7196001 Z" id="Path" stroke="#182E3C" stroke-width="1.25" fill="#FBD36B" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M11.5305349,2.64763763 C13.5512866,1.76910802 15.859957,1.46950967 18.3820718,1.92842641 C24.366018,3.01724796 29.6207111,4.8357038 33.5796086,8.27357825 C36.9474998,11.1982277 39.3664713,15.2969557 40.5094354,21.0966767 C41.6362674,26.814539 39.9053182,31.3682104 36.6567146,34.6168141 C32.7989157,38.474613 26.8326613,40.5 21,40.5 C15.8600398,40.5 12.2990473,39.3425691 9.67327435,36.8355075 C6.79936701,34.0915296 5.04519845,29.7680463 3.509747,23.7148063 C1.99435918,17.7406634 3.11069908,11.5809808 6.06835565,7.29164439 C7.49120001,5.2281668 9.34098116,3.59955458 11.5305349,2.64763763 Z" id="Oval" stroke="#182E3C"></path>
+    </g>
+</svg>

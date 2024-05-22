@@ -1,0 +1,7 @@
+{if embed:prod != ""}
+    {exp:channel:entries channel="products" url_title="{embed:prod}" dynamic="no"}
+        {description}
+    {/exp:channel:entries}
+{if:else}
+    {embed:prod}
+    {/if}

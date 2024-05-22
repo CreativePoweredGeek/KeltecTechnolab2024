@@ -1,0 +1,51 @@
+<!-- Order List -->
+<div class="container mb-5">
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-striped table-sm border-0">
+		            <thead class="bg-dkblue text-white">
+			            <tr>
+				            <th>#</th>
+				            <th>Product</th>
+				            <th>Label Description</th>
+				            <th>Weight</th>
+				            <th>Warehouse</th>
+				            <th>Expected Ship Date</th>
+				            <th>Price ea.</th>
+				            <th>Qty.</th>
+				            <th>Subtotal</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            {exp:cartthrob:cart_items_info}
+						   <tr>
+							   	<td>{count}</td>
+							   	<td><strong>{title}</strong></td>
+							   	<td>{if '{item_options:label_description}' != ""}{item_options:label_description}{if:else}<div class="alert alert-danger" role="alert">THIS CANNOT BE BLANK. Return to the Cart & Accept the default.</div>{/if}</td> 
+							   	<td>{embed="embeds/_product_weight product="{title:url_slug}"}</td>
+							   	<td>{if '{item_options:requested_warehouse}' == "MAIN"}OH{if:else}{item_options:requested_warehouse}{/if}</td> 
+								<td>{item_options:expected_ship format="%m/%d/%Y"}</td>
+								<td>{price}</td> 
+							    <td>{quantity}</td>
+							   	<td>{item_subtotal}</td> 
+						   </tr>
+						{/exp:cartthrob:cart_items_info}
+			            <tr>
+				             <td></td><td></td> <td></td><td></td> <td></td><td></td>
+				            <td>
+					            <strong>Subtotal</strong>
+				            </td>
+				            <td></td>
+				            <td>
+								<strong>{exp:cartthrob:cart_subtotal}</strong>
+							</td>
+			            </tr>
+		            </tbody>
+		         </table>
+				
+			</div>
+			<div class="col-12">
+				<a href="{site_url}store/view-cart" class="btn btn-primary rounded-0">Return to Cart</a>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,158 @@
+
+{exp:cartthrob:customer_info}
+<div class="row">
+    <div class="col-md-6">
+     
+    <div class="card billing" id="billing">
+        <div class="card-header">
+            Billing Info
+        </div>
+        <div class="card-body">
+            <input type="hidden" class="form-control" id="customer_number" name="customer_number" value="{exp:stash:get name='customer_number'}" placeholder="">
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" class="form-control" id="company" name="company" value="{customer_company}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{customer_first_name}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{customer_last_name}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="{customer_address}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="address2">Address2</label>
+                <input type="text" class="form-control" id="address2" name="address2" value="" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="{customer_city}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                {exp:cartthrob:state_select name="state" selected="{customer_state}" class="form-control"}
+            </div>
+            <div class="form-group">
+                <label for="zip">ZIP</label>
+                <input type="text" class="form-control" id="zip" name="zip" value="{customer_zip}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="country_code">{customer_country_code} - Country</label>
+                {exp:cartthrob:country_select name="country_code" selected="{customer_country_code}" class="form-control"}
+            </div>
+            
+            <div class="form-group">
+                <label for="member_customer_number">Customer Number</label>
+                <input type="text" readonly class="form-control-plaintext" id="member_customer_number" name="member_customer_number" value="{exp:stash:get name='customer_number'}" >
+                
+            </div>
+  </div>
+</div>
+       
+    </div>
+    
+    
+    <div class="col-md-6">
+      {if segment_3 == "self"}
+
+        <div class="card shipping" id="shipping">
+            <div class="card-header">
+                Shipping Info
+                <span style="float:right"><a href="{path='store/checkout-shipping'}" class="">Change</a></span>
+            </div>
+            <div class="card-body">
+            <div class="form-group">
+                <label for="shipping_first_name">Company:</label>
+                <input type="text" class="form-control" id="customer_company" name="customer_company" value="{customer_company}" placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="shipping_first_name">First Name</label>
+                <input type="text" class="form-control" id="shipping_first_name" name="shipping_first_name" value="{customer_first_name}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="shipping_last_name">Last Name</label>
+                <input type="text" class="form-control" id="shipping_last_name" name="shipping_last_name" value="{customer_last_name}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="shipping_address">Address</label>
+                <input type="text" class="form-control" id="shipping_address" name="shipping_address" value="{customer_address}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="shipping_address2">Address2</label>
+                <input type="text" class="form-control" id="shipping_address2" name="shipping_address2" value="" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="shipping_city">City</label>
+                <input type="text" class="form-control" id="shipping_city" name="shipping_city" value="{customer_city}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                {exp:cartthrob:state_select name="state" selected="{customer_state}"}
+                
+            </div>
+            <div class="form-group">
+                <label for="zip">ZIP</label>
+                <input type="text" class="form-control" id="shipping_zip" name="shipping_zip" value="{customer_zip}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="shipping_country_code">Country</label>
+                {exp:cartthrob:country_select name="country_code" selected="{customer_country_code}"}
+            </div>
+            </div></div>
+       
+        {if:else}
+            {embed="store/_ship_fields" id="{segment_3}"}
+
+
+        {/if}
+    </div>
+</div>
+
+
+
+
+
+
+<legend>Additional Info</legend>
+<div class="control-group"><label for="phone" class="control-label required">Phone</label><div class="controls"><input type="text" name="phone" value="{exp:member:custom_profile_data}{phone_1}{/exp:member:custom_profile_data}" id="phone" class="required"  /></div><!-- end control --></div><!-- end control group -->
+<div class="control-group"><label for="email_address" class="control-label required">Email Address</label><div class="controls"><input type="text" name="email_address" value="{email}" id="email_address" class="required"  /></div><!-- end control --></div><!-- end control group --></fieldset><fieldset class="payment" id="payment">
+{/exp:cartthrob:customer_info}
+<legend>Payment Info</legend>
+<div class="control-group"><label for="card_type" class="control-label">Payment Type</label><div class="controls"><select name="card_type"  id="card_type">
+		<option value="visa">Visa</option>
+		<option value="mc">Mastercard</option>
+		<option value="amex">American Express</option>
+		<option value="discover">Discover</option>
+	</select></div><!-- end control --></div><!-- end control group --><div class="control-group"><label for="credit_card_number" class="control-label required">Credit Card Number</label><div class="controls"><input type="text" name="credit_card_number" value="" id="credit_card_number" class="required"  /></div><!-- end control --></div><!-- end control group --></fieldset><fieldset class="payment_expiration" id="payment_expiration">
+<legend>Card Expiration</legend>
+<div class="control-group"><label for="expiration_month" class="control-label required">Expiration Month</label><div class="controls"><select name="expiration_month"  id="expiration_month" class="required">
+		<option value="01">January</option>
+		<option value="02">February</option>
+		<option value="03">March</option>
+		<option value="04">April</option>
+		<option value="05">May</option>
+		<option value="06">June</option>
+		<option value="07">July</option>
+		<option value="08">August</option>
+		<option value="09">September</option>
+		<option value="10">October</option>
+		<option value="11">November</option>
+		<option value="12">December</option>
+	</select></div><!-- end control --></div><!-- end control group --><div class="control-group"><label for="expiration_year" class="control-label required">Expiration Year</label><div class="controls"><select name="expiration_year"  id="expiration_year" class="required">
+		<option value="2019">2019</option>
+		<option value="2020">2020</option>
+		<option value="2021">2021</option>
+		<option value="2022">2022</option>
+		<option value="2023">2023</option>
+		<option value="2024">2024</option>
+		<option value="2025">2025</option>
+		<option value="2026">2026</option>
+		<option value="2027">2027</option>
+		<option value="2028">2028</option>
+	</select></div><!-- end control --></div><!-- end control group --></fieldset>

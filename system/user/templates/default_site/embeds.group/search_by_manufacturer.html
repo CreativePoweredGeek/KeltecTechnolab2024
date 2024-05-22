@@ -1,0 +1,22 @@
+<div class="card bg-light rounded-0 mb-3 border border-primary">
+	<div class="card-header bg-dkblue text-white rounded-0">
+    Search by OE Manufacturer
+  	</div>
+	<div class="card-body rounded-0">
+	{exp:channel:entries channel="misc_content" disable="" url_title="search-for-products" dynamic="no"}
+
+      <p class="card-text">To view our available products by OEM, select an OEM from the list below.</p>
+    {/exp:channel:entries}
+    
+    	<select class="form-control border border-primary" onchange="if(this.selectedIndex!=0) self.location=this.options[this.selectedIndex].value">
+			<option value="">Select an OEM</option>
+			{exp:query sql="SELECT DISTINCT field_id_222 AS oem FROM exp_channel_data_field_222"}
+				<option value="{site_url}{language_code}/shop/manufacturers/{oem:url_encode}">{oem}</option>
+				{/exp:query}
+		</select>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Returns a list of products</small>
+    </div>
+</div>
+

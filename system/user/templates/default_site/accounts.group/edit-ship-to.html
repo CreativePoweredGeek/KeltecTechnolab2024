@@ -1,0 +1,101 @@
+{layout="layouts/_dashboard_single_full_col"}
+{par_user_stash_variables}
+
+{layout:set name="rightButton"}
+	<a href="{path='{language_code}/accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+{/layout:set}
+
+<div class="container">
+	<div class="row">
+		{if segment_4 == "success"}
+			<div class="col-12">
+				<div class="alert alert-success" role="alert">
+					Address Updated Successfully!
+				</div>
+			</div>
+		{/if}
+	</div>
+		<div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 rounded-0">
+
+
+{exp:channel:form 
+	channel="customer_shipping_addresses" 
+	entry_id="{segment_3}" 
+	return="{language_code}/accounts/edit-ship-to/ENTRY_ID/success" 
+	error_handling="inline" 
+	rules:title="required" 
+	rules:cs_address_1="required" 
+	rules:cs_city="required" 
+	rules:cs_state="required" 
+	rules:cs_zip="required|min_length[5]" 
+	rules:cs_country="required|min_length[3]" 
+ 
+}
+
+<input type="hidden" name="customer_number" value="{exp:stash:get name='customer_number'}">
+<div class="form-group">
+    <label for="title">*Customer:</label>
+    <input type="text" class="form-control" id="title" name="title" value="{title}" aria-describedby="emailHelp" placeholder="" required>
+    {error:title}
+</div>
+
+
+<div class="form-group">
+    <label for="cs_address_1">*Customer Address 1:</label>
+    <input type="text" class="form-control" id="cs_address_1" name="cs_address_1" value="{cs_address_1}" placeholder="" required>
+    {error:cs_address_1}
+</div>
+
+<div class="form-group">
+    <label for="cs_address_2">Customer Address 2:</label>
+    <input type="text" class="form-control" id="cs_address_2" name="cs_address_2" value="{cs_address_2}" placeholder="" >
+</div>
+
+<div class="form-group">
+    <label for="cs_city">*Customer City:</label>
+    <input type="text" class="form-control" id="cs_city" name="cs_city" value="{cs_city}" placeholder="" required>
+    {error:cs_city}
+</div>
+
+<div class="form-group">
+    <label for="cs_state">*Customer State:</label>
+    {!--{exp:cartthrob:state_select name="cs_state" class="form-control" selected="{cs_state}"}--}
+    
+    {exp:reegion_select:states_provinces name="cs_state" class="form-control" selected="{cs_state}" required="yes" type="alpha2"}
+    
+    {error:cs_state}
+</div>
+
+<div class="form-group">
+    <label for="cs_zip">*Customer ZIP:</label>
+    <input type="text" class="form-control" id="cs_zip" name="cs_zip" value="{cs_zip}" placeholder="" required>
+    {error:cs_zip}
+</div>
+
+<div class="form-group">
+    <label for="cs_country">*Customer Country:</label>
+   {!-- {exp:cartthrob:country_select name="cs_country" class="form-control" selected="{cs_country}"} --}
+    
+    {exp:reegion_select:countries name="cs_country" class="form-control" selected="{cs_country}" type="alpha3"}
+    
+    {error:cs_country}
+</div>
+
+<div class="form-group">
+    <label for="cs_contact_name">Customer Contact Full Name:</label>
+    <input type="text" class="form-control" id="cs_contact_name" name="cs_contact_name" value="{cs_contact_name}" placeholder="" >
+</div>
+
+<div class="form-group">
+    <label for="cs_phone">Customer Phone:</label>
+    <input type="text" class="form-control" id="cs_phone" name="cs_phone" value="{cs_phone}" placeholder="">
+</div>
+<p>
+	<button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+</p>
+
+{/exp:channel:form}
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,9 @@
+<select class="form-control form-control" name="item_options[requested_warehouse]" id="whseSelect">
+	{!-- This builds the option list based off the warehouses in the array that is passed into it.
+	 To add another warehouse, just add it to the array.
+	{exp:kt_tools:build_inventory_drop_options prdct="{title}" whse="MAIN|NC|TX|CA" userwhse="{exp:stash:get name='warehouse'}" parse="inward"} --}
+	<option value="MAIN">Ohio {layout:inventory_oh}</option>
+	<option value="NC">N. Carolina {layout:inventory_nc}</option>
+	<option value="TX">Texas {layout:inventory_tx}</option>
+	<option value="CA">California {layout:inventory_ca}</option>
+</select>

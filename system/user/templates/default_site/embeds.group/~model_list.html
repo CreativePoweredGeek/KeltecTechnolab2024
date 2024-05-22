@@ -1,0 +1,17 @@
+<table class="table table-striped table-hover">
+	<tr>
+		<th>Equipment Models</th>
+		<th></th>
+	</tr>
+
+{exp:channel:entries channel="brand_models"  search:manufacturer="{embed:brand}" dynamic="no"}
+		{if no_results}<p class="lead">Sorry, no results! This isn't complete yet. <strong>HINT:</strong>  ABAC Compressors has data.</p>{/if}
+		
+		<tr>
+			<td>{embed:manufacturer} <strong>{title}</strong></td>
+			<td class="text-right"><a href="{par_site_url_lang}filter-application-guide/models/{url_title}">View Filter Options</a></td>
+		</tr>
+		
+{/exp:channel:entries}
+
+</table>

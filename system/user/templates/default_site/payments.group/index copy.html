@@ -1,0 +1,462 @@
+<?php
+  error_reporting(E_ALL);
+$rootfolder = 'keltec';
+
+//Load functions and connect to DB
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/DBFunctions.php');
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/VAMFunctions.php');
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/HTMLFunctions.php');
+
+ee()->load->helper('cookie');
+$username = get_cookie('custno');
+//$username = ee()->session->userdata('username'); 
+if (empty($username)){
+  header ('Location: /');
+  die('Login failed. Access Denied: '.$username);
+}
+//dbg if (trim($username) != 'RajGuleria') die("Test Mode. Access Denied: $username");
+//dbg $username = '120186';
+
+$customerInfo = VAM_GetCustomerDetails($username);
+
+
+$errorMsg = '';
+$successMsg = '';
+
+$postVars = Array();
+if (count($_POST) > 0) {
+  $postVars = $_POST;
+  if ($_POST['SubmitButton'] == 'Submit Payment'){
+    if (empty($postVars['ccustno'])){
+      $errorMsg = "Error Saving Payment.<br/>No Customer Loaded";
+    } else {     
+      $saveResult = ExecutePost('Payment',$postVars);
+      if (substr($saveResult,0,7) == 'SUCCESS'){
+        $successMsg = "Payment Saved.<br/>".substr($saveResult,7);   
+        $postVars = Array();
+      } else {
+        $errorMsg = $saveResult;        
+      }      
+    }
+  } 
+}
+
+$invoiceQuery = "select arinvc.*
+					from arinvc
+					where arinvc.lvoid = 0
+          and arinvc.nbalance > 0
+          and arinvc.ccustno = ? 
+          ORDER BY dinvoice desc,cinvno desc";
+$parameters = Array($username,$username);          
+$result = ExecuteQuery($invoiceQuery,$parameters);
+$invoices = Array();
+if ($result[0]){
+  $invoices = $result[1];
+}
+
+
+
+?>
+{layout="payments/_RDI_template_layout"}
+
+<!-- This will set the Customer ID of the logged in user for you as an EE variable you can use in any of your scripts -->
+{preload_replace:customerId="{exp:member:custom_profile_data}{customer_number}{/exp:member:custom_profile_data}"}
+
+
+{layout:set name="rightButton"}
+      {!-- <a href="{path='accounts/returns'}" class="btn btn-primary rounded-0">Returns</a> --}
+		 <a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+		 <a href="{path='accounts/orders'}" class="btn btn-primary rounded-0">Orders</a>
+{/layout:set}
+{layout:set name="title"}Payment Pages Home{/layout:set}
+
+{layout:set name="css"}
+	{!-- To insert a stylesheet in the head of the page, place it here.  It will go just before the site stylesheet--}
+{/layout:set}
+
+{layout:set name="headjs"}
+  <script type="text/javascript">
+    $(function() 
+      { 
+        //$('#memberTable').dataTable( {"sPaginationType": "full_numbers", "sDom": '<"top"f><"clear">rt<"bottom"ilp><"clear">',"bSort": false});
+
+				$('#cardcountry').change(function() {
+					var countrycode = $("#cardcountry").val();
+					update_fields(countrycode);
+				});
+				
+        //Form Validation Setup and Functions
+        var validationOptions = { 
+          validateOn: 'submit',
+          errorValidateOn: 'blur',
+          scrollToError:false,
+          onBeforeAllValidations : function(jqObj) { 
+            if ($.data(document.body,'validate') == 'no') { 
+              $.data(document.body,'validate','yes'); 
+              return false; 
+            } 
+          },
+          onAfterValidate : function(jqObj, action, result){
+          },
+          onAfterAllValidations: function(element, result){                                    
+            if (!result){
+              $('#validationMsg').html("There is an error in the Form Data. <br/>Please Review all input fields marked Red before Saving<br/>Page Tabs with errors are highlighted in Red.");
+              $('#validationMsg').show(); 
+              
+              if ($('#successMsgDiv').length > 0) $('#successMsgDiv').hide();
+              
+              //$('html, body').animate({scrollTop:0}, 'slow');
+            } else {
+              $('#validationMsg').html("");
+              $('#validationMsg').hide(); 
+            }
+          }
+        };                 
+        
+        $('#PaymentForm').bValidator(validationOptions);
+        
+        update_fields($("#cardcountry").val());
+      }      
+    );        
+    
+    function UpdatePaidAmount(){
+    
+      var invoices = '';
+      var total = 0;
+      $('.paymentboxes').each(function(index,value){
+        var cinvno = $(value).val();          
+        var balance = parseFloat($('#nbalance_'+$.trim(cinvno)).val());
+        if ($(value).is(':checked')){
+          if (isNaN(balance)) balance = 0;
+          
+          total += balance
+          if ($.trim(invoices) != '') invoices += ', ';
+          invoices += cinvno;
+          
+          $('#napplyamount_'+$.trim(cinvno)).val(balance); 
+          } else {
+          $('#napplyamount_'+$.trim(cinvno)).val(0);           
+        }
+          
+      });
+      
+			$('#InvoiceNumber').html($.trim(invoices));
+      
+      $('#npaidamt').val(parseFloat(total).toFixed(2));
+			//$('#PaymentTable').fadeIn(1000);
+			//$('#cardcardno').focus();
+    }
+		
+		function VerifyCard(){
+		
+			var cvv = $('#cardseccode').val();
+			if ( $.trim(cvv) == '' || cvv == undefined || isNaN(parseInt(cvv)) ){
+				alert('Error: Please enter a valid Security Code before proceeding.');
+				return false;      
+			} 
+
+			var returnFalse = false;
+			$.ajaxSetup({async:false});   
+			$.get( 
+        'payments/AjaxFindCard',
+        { 'ccardno' : $('#cardcardno').val(),
+          'ccustno' : $('#ccustno').val()
+        },
+        function(data){         
+          if (data.substring(0,5) == 'ERROR'){ 
+            alert('Card Verification Error\n\n'+data);
+            returnFalse = true;
+          } else {
+            $('#cardtype').val(data);
+          } 
+        }
+			);
+			
+			if (returnFalse) {    
+				return false;
+			}
+			
+			return true;
+		}
+    
+	//function to load/unload state/province/stateprovince fields
+	function update_fields(countrycode){
+    
+    var postvalue = '<?php echo (!empty($postVars['cardstate'])?$postVars['cardstate']:'') ?>';
+    
+		if (countrycode == "CAN"){
+			$('#cardstate').attr('disabled', true);
+			$('#cardstate').hide();
+			
+			$('#cardstateprovince').attr('disabled', true);
+			$('#cardstateprovince').hide();
+			
+			$('#cardprovince').show();
+			$('#cardprovince').attr('disabled', false);
+      $('#cardprovince').val(postvalue);
+			$('#tdlblstate').html('Province<span style="color:red;font-weight:bold">*</span>');
+		}
+		else if(countrycode == "USA") {
+			$('#cardprovince').attr('disabled', true);
+			$('#cardprovince').hide();
+			
+			$('#cardstateprovince').attr('disabled', true);
+			$('#cardstateprovince').hide();
+			
+			$('#cardstate').show();
+			$('#cardstate').attr('disabled', false);
+      $('#cardstate').val(postvalue);
+      
+			$('#tdlblstate').html('State<span style="color:red;font-weight:bold">*</span>');
+    } 
+    else {
+			$('#cardstate').attr('disabled', true);
+			$('#cardstate').hide();
+			
+			$('#cardprovince').attr('disabled', true);
+			$('#cardprovince').hide();
+			
+			$('#cardstateprovince').show();
+			$('#cardstateprovince').attr('disabled', false);
+			$('#cardstateprovince').val(postvalue);
+			$('#tdlblstate').html('State/Province<br/>(2 letters)<span style="color:red;font-weight:bold">*</span>');
+		}
+	}
+			
+  function ToggleAllPayments(){
+    
+    var isChecked = false;
+    if ($('#checkAll').is(':checked')) isChecked = true;
+    
+    $('.paymentboxes').each(function(index,value){      
+      $(value).prop('checked',isChecked);      
+    });
+    
+    UpdatePaidAmount();
+  }
+  </script>
+{/layout:set}
+
+
+{layout:set name="footjs"}
+  <link type="text/css" href="/assets/vendors/bValidator/bvalidator.css" rel="stylesheet" />  
+  <script type="text/javascript" src="/assets/vendors/bValidator/jquery.bvalidator.js"></script>
+{/layout:set}
+
+{!-- NOTE: --}
+{!-- The "Layout Sets" above will inject content into specific areas of the "_RDI_template_layout" Simply place the content you want in the page between the opening and closing tags. --}
+{!-- The content below will be injected by default into the body of the page.--}
+
+
+<div class="title" style="text-align:center">
+  <h1 style="color:#0033CC;font-size:28px;font-weight:bold"><?php echo $customerInfo['ccompany']?></h1>
+  <br/>
+  OPEN BALANCE: <b><?php echo number_format($customerInfo['nbalance'],2) ?></b>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  CREDIT LIMIT: <b><?php echo number_format($customerInfo['ncrlimit'],2) ?></b>
+</div>
+<div style="clear:both"></div>
+   
+<?php if (!empty($errorMsg)){ ?>
+  <div style="color:red;font-weight:bold;width:50%;margin:auto;text-align:center;border:1px dashed gray;background-color:#FFDFDF">
+    <?php echo $errorMsg; ?>
+  </div>
+  <div style="clear:both;height:10px"></div>
+<?php } ?>
+  
+<?php if (!empty($successMsg)){ ?>
+  <div id="successMsgDiv" style="color:green;font-weight:bold;width:50%;margin:5px auto;text-align:center;border:1px dashed gray;background-color:#C2EFD5;padding:5px">
+    <?php echo $successMsg; ?>
+  </div>
+<?php } ?>
+<div id="validationMsg" style="color:red;font-weight:bold;display:none;border:1px solid red; background-color:#FFDFDF; text-align:center;margin:5px auto;width:50%"></div>
+
+
+<div>
+  <?php
+  $form_details = array(
+    'action'          => '/payments',
+    'name'            => 'PaymentForm',
+    'id'              => 'PaymentForm',//ee()->TMPL->form_id,
+    'class'           => ee()->TMPL->form_class,
+    'hidden_fields'   => array(),
+    'secure'          => TRUE,
+    'onsubmit'        => "return VerifyCard()"
+  );
+  echo ee()->functions->form_declaration($form_details);   
+  ?>
+    <?php echo RenderHiddenField('dpaid',date('Y-m-d')) ?>
+    <?php echo RenderHiddenField('cpaycode','CC PMT',''); ?>
+    <?php echo RenderHiddenField('cardtype','',''); ?>
+
+    <div>
+      <div style="width:50%;float:left">
+        <h2 style="color:black;font-size:28px">Outstanding Invoices</h2>
+        <p>Click on an Invoice # to view details</p>
+      </div>
+      <!--
+      <div style="float:right;text-align:right;font-weight:bold;vertical-align:center;">
+        <div style="text-align:center;font-size:14px"><b>Filters</b></div>
+        From <?php echo RenderTextBox('datefrom','','class="datePicker"') ?>
+        &nbsp;
+        To <?php echo RenderTextBox('dateto','','class="datePicker"') ?>
+        <br/>
+        <label style="font-weight:bold" for="showClosed">Show Paid/Closed Invoices&nbsp;&nbsp;&nbsp;</label><input type="checkbox" name="showClosed" id="showClosed" value="1" />
+        &nbsp;&nbsp;
+        <button onclick="return false" style="float:right;margin:5px 0px">Apply Filter</button>
+      </div>
+      -->
+      <div style="clear:both" />
+      <table id="memberTable" class="table table-striped table-hover">
+        <thead>         
+          <tr>
+            <th>Invoice #</th>
+            <th>Invoice Date</th>
+						<th>PO #</th>
+            <th>Total Amount</th>
+						<th>Invoice Amount</th>
+            <th>Previous Payments against Invoice</th>
+            <th>Amount Due</th>
+            <th>Pay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php						
+						$invoiceNumber = '';
+            $counter = 1;
+            $grandTotal = 0;
+            foreach ($invoices as $currentInvoice){              
+						
+							$invoiceType = '';
+							$invoiceAmount = number_format($currentInvoice['nfinamt']+$currentInvoice['nsalesamt']+$currentInvoice['nfrtamt']+$currentInvoice['ntaxamt1']-$currentInvoice['ndiscamt'],2);
+							
+              echo '<tr class="itemRow">'.
+                RenderHiddenField('invoiceNos[]',trim($currentInvoice['cinvno'])). 
+								RenderHiddenField('cpono_'.trim($currentInvoice['cinvno']), $currentInvoice['cpono']). 
+								RenderHiddenField('ntaxamt_'.trim($currentInvoice['cinvno']), $currentInvoice['ntaxamt1']). 
+								RenderHiddenField('nsalesamt_'.trim($currentInvoice['cinvno']),$currentInvoice['nfinamt']+$currentInvoice['nsalesamt']+$currentInvoice['nfrtamt']). 
+								RenderHiddenField('nfinamt_'.trim($currentInvoice['cinvno']), $currentInvoice['nfinamt']). 
+								RenderHiddenField('nfrtamt_'.trim($currentInvoice['cinvno']), $currentInvoice['nfrtamt']). 
+								RenderHiddenField('nbalance_'.trim($currentInvoice['cinvno']), $currentInvoice['nbalance']). 
+                '<td>'.'<a target=_blank href="https://www.keltecinc.com/fileDownload/DownloadPDF.php?'.$invoiceType.'cinvno='.$currentInvoice['cinvno'].'&pdf=1">'.trim($currentInvoice['cinvno']).'</a></td>'.
+                '<td>'.date('m/d/Y',strtotime($currentInvoice['dinvoice'])).'</td>'.
+								'<td>'.trim($currentInvoice['cpono']).'</td>'.
+                '<td style="text-align:right">'.number_format($currentInvoice['nfinamt']+$currentInvoice['nsalesamt']+$currentInvoice['nfrtamt']+$currentInvoice['ntaxamt1']-$currentInvoice['ndiscamt'],2).'</td>'.
+								'<td style="text-align:right">'.$invoiceAmount.'</td>'.
+                '<td style="text-align:right">'.number_format($currentInvoice['ntotpaid'],2).'</td>'.
+                '<td style="text-align:right">'.number_format($currentInvoice['nbalance'],2).'</td>'.
+                '<td style="text-align:center">';
+							if (floatval($currentInvoice['nbalance']) > 0){
+								echo RenderHiddenField('napplyamount_'.trim($currentInvoice['cinvno']),(!empty($postVars['napplyamount_'.trim($currentInvoice['cinvno'])])?$postVars['napplyamount_'.trim($currentInvoice['cinvno'])]:''),'class="applyAmountBox" ');
+								echo '<input name="invoicecheckboxes" class="paymentboxes" type="radio" onchange="UpdatePaidAmount();return false;" value="'.trim($currentInvoice['cinvno']).'" />';
+							}
+							echo
+                '</td></tr>';
+                
+              $grandTotal += $currentInvoice['nbalance'];
+              $counter++;
+            }
+          ?>
+        </tbody>
+      </table>
+
+			<?php echo RenderHiddenField('usecard',(!empty($errMsg) && isset($postVars['usecard'])?$postVars['usecard']:''),'') ?>
+			<?php echo RenderHiddenField('ncvvreason',(!empty($postVars['ncvvreason'])?$postVars['ncvvreason']:''),'') ?>
+			<?php echo RenderHiddenField('ccustno',$username,'') ?>
+      <?php echo RenderHiddenField('cardcvvreason',3,'') ?>
+
+      <div class="container">
+        <div class="row">
+					<div class="col"><b>Make Payment</b></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 text-right">Total Amount</div>
+          <div class="col-sm-2"><?php echo RenderTextBox("npaidamt",(!empty($postVars['npaidamt'])?number_format($postVars['npaidamt'],2,'.',''):''),'class="form-control text-right" data-bvalidator="number,required,min[1],valempty" readonly="readonly" data-bvalidator-msg="Please Allocate a Payment Amount to a transaction before proceeding."') ?></div>
+          <div class="col-sm-1">Invoice(s)</div>
+          <div class="col"><b><span id="InvoiceNumber"></span></b></div>
+        </div>
+        
+				<div class="row mt-2">
+        <div class="col-sm-2 text-right">Email<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardemail',(!empty($postVars['cardemail'])?$postVars['cardemail']:''),'class="form-control" data-bvalidator="required"') ?></div>
+					<div class="col-sm-2 text-right">Company</div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardcompany',(!empty($postVars['cardcompany'])?$postVars['cardcompany']:''),'class="form-control"') ?></div>
+				</div>
+        
+        <div class="row mt-2">
+					<div class="col-sm-2 text-right">Name on Card<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardcardname',(!empty($postVars['cardcardname'])?$postVars['cardcardname']:''),'class="form-control" data-bvalidator="required"') ?></div>
+					<div class="col-sm-2 text-right">Card Number<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox("cardcardno",(!empty($postVars['cardcardno'])?$postVars['cardcardno']:''),'class="form-control" data-bvalidator="required" maxlength=16 size=20 '); ?></div>
+				</div>
+				
+				<div class="row mt-2">
+					<div class="col-sm-2 text-right">Exp. Date<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-1">
+						Month&nbsp;<?php echo RenderTextBox('cardexpmonth',(!empty($postVars['cardexpmonth'])?$postVars['cardexpmonth']:''),'class="form-control" data-bvalidator="required" maxlength="2" size="2" onkeyup="if ($(this).val().length >= 2) $(\'#cardexpyear\').focus();"') ?>
+          </div>
+					<div class="col-sm-1">
+						Year&nbsp;<?php echo RenderTextBox('cardexpyear',(!empty($postVars['cardexpmonth'])?$postVars['cardexpyear']:''),'class="form-control" data-bvalidator="required" maxlength="2" size="2" onkeyup="if ($(this).val().length >= 2) $(\'#cardseccode\').focus();"') ?>
+          </div>
+					<div class="col-sm-2 text-right">Security Code<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardseccode',(!empty($postVars['cardseccode'])?$postVars['cardseccode']:''),'class="form-control" maxlength="5" data-bvalidator="required"') ?></div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col" colspan="100%">
+						<b>Billing Address for Credit Card</b>
+					</div>
+				</div>
+				
+				<div class="row mt-2">
+					<div class="col-sm-2 text-right">Street<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardaddress',(!empty($postVars['cardaddress'])?$postVars['cardaddress']:''),'class="form-control" data-bvalidator="required"') ?></div>
+					<div class="col-sm-2 text-right">City<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardcity',(!empty($postVars['cardcity'])?$postVars['cardcity']:''),'class="form-control" data-bvalidator="required"') ?></div>
+				</div>
+        
+				<div class="row mt-2">
+					<div class="col-sm-2 text-right">Country<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderSelectFromQuery('cardcountry',"select ccode as '0', cdescript as '1' from rdi_ISOCountries order by cdescript asc",(!empty($postVars['cardcountry'])?$postVars['cardcountry']:''),'class="form-control" data-bvalidator="required"', Array('USA', 'United States')) ?></div>
+					<div class="col-sm-2 text-right" id="tdlblstate">State<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2">
+						<?php //echo RenderTextBox('cardstate', (!empty($postVars['cardstate'])?$postVars['cardstate']:''), 'data-bvalidator="required" maxlength=2 style="width:50px"') ?>
+							<select  name="cardstate" id="cardstate" data-bvalidator="required" class="form-control" ><option value="AA" >AA - Armed Forces - Americas</option><option  value="AE" >AE - Armed Forces - Europe</option><option  value="AK" >AK - Alaska</option><option  value="AL" >AL - Alabama</option><option  value="AP" >AP - Armed Forces - Pacific</option><option  value="AR" >AR - Arkansas</option><option  value="AS" >AS - American Samoa</option><option  value="AZ" >AZ - Arizona</option><option  value="CA" >CA - California</option><option  value="CO" >CO - Colorado</option><option  value="CT" >CT - Connecticut</option><option  value="DC" >DC - District of Columbia</option><option  value="DE" >DE - Delaware</option><option  value="FL" >FL - Florida</option><option  value="FM" >FM - Federated States of Micronesia</option><option  value="GA" >GA - Georgia</option><option  value="GU" >GU - Guam</option><option  value="HI" >HI - Hawaii</option><option  value="IA" >IA - Iowa</option><option  value="ID" >ID - Idaho</option><option  value="IL" >IL - Illinois</option><option  value="IN" >IN - Indiana</option><option  value="JM" >JM - New Mexico</option><option  value="KS" >KS - Kansas</option><option  value="KY" >KY - Kentucky</option><option  value="LA" >LA - Louisiana</option><option  value="MA" >MA - Massachusetts</option><option  value="MD" >MD - Maryland</option><option  value="ME" >ME - Maine</option><option  value="MH" >MH - Marshall Islands</option><option  value="MI" >MI - Michigan</option><option  value="MN" >MN - Minnesota</option><option  value="MO" >MO - Missouri</option><option  value="MP" >MP - Northern Mariana Islands</option><option  value="MS" >MS - Mississippi</option><option  value="MT" >MT - Montana</option><option  value="NC" >NC - North Carolina</option><option  value="ND" >ND - North Dakota</option><option  value="NE" >NE - Nebraska</option><option  value="NH" >NH - New Hampshire</option><option  value="NJ" >NJ - New Jersey</option><option  value="NM" >NM - New Mexico</option><option  value="NV" >NV - Nevada</option><option  value="NY" >NY - New York</option><option  value="OH" >OH - Ohio</option><option  value="OK" >OK - Oklahoma</option><option  value="OR" >OR - Oregon</option><option  value="PA" >PA - Pennsylvania</option><option  value="PR" >PR - Puerto Rico</option><option  value="PW" >PW - Palau</option><option  value="RI" >RI - Rhode Island</option><option  value="SC" >SC - South Carolina</option><option  value="SD" >SD - South Dakota</option><option  value="TN" >TN - Tennessee</option><option  value="TX" >TX - Texas</option><option  value="UT" >UT - Utah</option><option  value="VA" >VA - Virginia</option><option  value="VI" >VI - Virgin Islands</option><option  value="VT" >VT - Vermont</option><option  value="WA" >WA - Washington</option><option  value="WI" >WI - Wisconsin</option><option  value="WV" >WV - West Virginia</option><option  value="WY" >WY - Wyoming</option></select>							
+          <select  name="cardstate" id="cardprovince" data-bvalidator="required" class="form-control" style="display:none" disabled="true"><option value="AB"> AB - Alberta </option><option value="BC"> BC - British Columbia </option><option value="MB"> MB - Manitoba </option><option value="NB"> NB - New Brunswick </option><option value="NL"> NL - Newfoundland and Labrador </option><option value="NT"> NT - Northwest Territories </option><option value="NS"> NS - Nova Scotia </option><option value="NU"> NU - Nunavut </option><option value="ON"> ON - Ontario </option><option value="PE"> PE - Prince Edward Island </option><option value="QC"> QC - Quebec </option><option value="SK"> SK - Saskatchewan </option><option value="YT"> YT - Yukon Territory </option></select>							
+							<input type="text" name="cardstate" id="cardstateprovince"  data-bvalidator="maxlength[2],required" maxlength="2" class="form-control" value = ""  style="display:none" disabled="true"/>
+					</div>
+					<div class="col-sm-2 text-right">Zip/Postal Code<span style="color:red;font-weight:bold">*</span></div>
+					<div class="col-sm-2"><?php echo RenderTextBox('cardzip', (!empty($postVars['cardzip'])?$postVars['cardzip']:''), 'class="form-control" data-bvalidator="required"') ?></div>
+				</div>
+				
+				<div class="row mt-2">
+					<div class="col-sm-2 text-right">Phone #</div>
+					<div class="col-sm-2">
+						<?php echo RenderTextBox('cardphone',(!empty($postVars['cardphone'])?$postVars['cardphone']:''),'class="form-control" data-bvalidator="required,digit,maxlength[10]" maxlength=10') ?>
+						<span style="color:red;font-weight:bold;font-size:smaller">10 Digits NO SPACES</span>
+					</div>
+					<div class="col-sm-2 text-right">Fax #</div>
+					<div class="col-sm-2">
+						<?php echo RenderTextBox('cardfax',(!empty($postVars['cardfax'])?$postVars['cardfax']:''),'class="form-control" data-bvalidator="digit,maxlength[10]" maxlength=10') ?>
+            <span style="color:red;font-weight:bold;font-size:smaller">10 Digits NO SPACES</span>
+					</div>
+				</div>        
+				
+        <div class="row mt-2">
+          <div class="col-sm-2 text-right">Remarks</div>
+          <div class="col" colspan="5"><?php echo RenderTextBox('cpayref',(!empty($postVars['cpayref'])?$postVars['cpayref']:''),'class="form-control" style="width:690px" maxlength="20" '); ?></div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col">
+            <input type="Submit" class="btn btn-primary" id="SubmitPaymentButton" name="SubmitButton" value="Submit Payment" style="display:inline;font-weight:bold;font-size:16px" />
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </form>
+</div>
+
+</div>
+<div class="footer">&copy; <?php echo date("Y"); ?> RDI Consulting.</div> 

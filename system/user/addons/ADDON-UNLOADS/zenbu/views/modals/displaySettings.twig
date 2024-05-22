@@ -1,0 +1,38 @@
+{% extends "modals/index.twig" %}
+
+{% set modalName = 'displaySettings' %}
+
+{% set modalTitle = 'Display Settings'|t %}
+
+{% set closeButtonAttributes = '@click="dispatchRunSearchEvent(1)"' %}
+
+{% set modalContent %}
+<div class="col-group">
+    <div class="col w-4">
+        <select2 name="channel_id" class="display_settings_channel_id" @change="getSettings" v-model="channel_id" placeholder="{{ 'All Channels'|t }}">
+            <option value="all">All Channels</option>
+            {% for id, channel_title in channel_dropdown_options %}
+                <option value="{{id}}">{{channel_title}}</option>
+            {% endfor %}
+        </select2>
+    </div>
+
+</div>
+
+<div class="col-group">
+    <div class="col w-16">
+        <display-settings-field :fields="fields"></display-settings-field>
+    </div>
+
+    <div class="col w-16">
+        <filter-settings-field></filter-settings-field>
+    </div>
+
+    {% if permissions.can_copy_profile is defined %}
+    <div class="col w-16">
+        <display-settings-copy-to-group></display-settings-copy-to-group>
+    </div>
+    {% endif %}
+</div>
+
+{% endset %}

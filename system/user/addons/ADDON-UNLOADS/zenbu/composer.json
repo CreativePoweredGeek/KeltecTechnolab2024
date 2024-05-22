@@ -1,0 +1,12 @@
+{
+	"name": "Zenbu",
+	"require": {
+		"twig/twig": "~1.0",
+		"mexitek/phpcolors": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Zenbu\\": ""
+		}
+	}
+}

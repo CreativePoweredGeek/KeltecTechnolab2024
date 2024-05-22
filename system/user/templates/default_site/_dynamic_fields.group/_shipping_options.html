@@ -1,0 +1,10 @@
+{exp:channel:entries
+	channel="shipping_options" 
+	disable="categories|category_fields|pagination|trackbacks"
+	dynamic="no" 
+}
+{if count == 1} [ {/if}
+	{"value" : "{ship_code}", "label" : "{title}"} {if count != total_results},{/if}
+{if count == total_results} ] {/if}
+
+{/exp:channel:entries} 

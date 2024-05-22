@@ -1,0 +1,33 @@
+{layout="layouts/_main_html_layout"}
+
+
+<div class="container-fluid bg-dkblue mb-0 p-4">
+
+    <div class="row">
+	    
+	    <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}{language_code}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+            <h4 class="text-right text-white">{exp:stash:get name="company"} - {layout:page_title}</h4>
+        </div>
+	</div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12 text-right p-4">
+         {layout:rightButton}
+      </div>
+    </div>
+    <p><hr></p>
+    <div class="row" style="padding:3%;padding-top:0px;">
+      <div class="col-md-12">
+	      {layout:contents}
+      </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,54 @@
+{layout="layouts/_header_layout"}
+
+
+
+<div class="section-wrapper rounded-0">
+	<div class="container">
+		<div class="row">
+			<main class="col-md-8">
+				{layout:contents}
+			</main>
+			<aside class="col-md-4">
+				<div class="col-md-11 offset-md-1">
+ {if segment_2 == "compressed-air-dryers"}
+                
+
+            <div class="col-12 card application p-3 mb-3 bg-dkblue text-light">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <h3>Find the correct Replacement Kit for your Dryer</h3>
+                    </div>
+                    <div class="col-md-4 col-lg-12">
+                        <div class="mb-3">
+                            <label for="model" class="form-label sr-only">Dryer Model</label>
+                            <select class="form-control" name="model" id="model" aria-label="model" >
+                                <option selected>Select your Dryer Model</option>
+                                {exp:query sql="SELECT DISTINCT model FROM kt_dryer_kits"}
+                                    <option value="{model}">{model}</option>
+                                {/exp:query}
+                              </select>
+                          </div>
+                    </div>
+                    <div class="col-md-4 col-lg-12" id="second">
+                        
+                    </div>
+                    <div class="col-md-4 col-lg-12 mt-3" id="elementkit">
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+
+
+            {/if}
+
+				{layout:sidebar}
+
+
+
+				</div>
+			</aside>
+		</div>
+	</div>
+</div>

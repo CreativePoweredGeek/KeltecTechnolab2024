@@ -1,0 +1,49 @@
+<!-- Modal -->
+<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body member-login">
+        <h3 class="text-white text-uppercase text-center">{search_{language_code}}</h3>
+        <p class="text-white">
+	        Enter a Keltec, Air Supply, Chicopee or OEM Part Number below.</p>
+			{if logged_in}
+				{exp:search:simple_form
+		        	channel="products|oem_to_keltec"
+		        	result_page = "shop/results"
+		        	no_result_page = "shop/no-results"
+		        	search_in="title|description|item_description"
+		        	where="all"
+		        }
+
+			{/if}
+			{if logged_out}
+				{exp:search:simple_form
+	        		channel="products|oem_to_keltec"
+					result_page = "search/results"
+					no_result_page = "search/noresults"
+					search_in="title|description|item_description"
+					where="all"
+				}
+
+			{/if}
+
+
+
+				  <div class="input-group input-group-lg">
+					  <label for="keywords" class="sr-only">{search_{language_code}}:</label>
+					  <input type="text" class="form-control rounded-0" name="keywords" id="keywords" value="" aria-label="Input your search here">
+					  <div class="input-group-append">
+
+					    <button class="btn btn-primary rounded-0" type="submit" value="submit" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search"></i></button>
+
+					  </div>
+					</div>
+
+			{/exp:search:simple_form}
+
+
+      </div>
+    </div>
+  </div>
+</div>

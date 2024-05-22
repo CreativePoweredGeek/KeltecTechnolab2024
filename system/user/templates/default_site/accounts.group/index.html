@@ -1,0 +1,7 @@
+{layout="layouts/_contact_page_w_sidebar"}
+
+{exp:channel:entries channel="contact"}
+	{layout:set name="title"}{{language_code}_title}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}

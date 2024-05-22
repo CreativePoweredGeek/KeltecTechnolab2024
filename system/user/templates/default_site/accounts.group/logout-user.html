@@ -1,0 +1,6 @@
+{!-- unset all user-scoped variables --}
+{exp:cookie:delete name='custno'}
+{exp:cookie:delete name='paycode'}
+{exp:stash:unset scope="all"}
+
+{redirect='logout'}

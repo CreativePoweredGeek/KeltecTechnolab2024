@@ -1,0 +1,47 @@
+{layout="layouts/_kt_profile_layout"}
+
+{if segment_3 != ""}
+	{exp:visitor:details member_id="{segment_3}"}
+{if:else}
+	{exp:visitor:details}
+{/if}
+
+  
+	{layout:set name="title"}{visitor:member_firstname} {visitor:member_lastname}{/layout:set}
+	{layout:set name="page_title"}{visitor:member_firstname} {visitor:member_lastname}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{layout:set name="sales_rep"}{sales_rep}{item:label}{/sales_rep}{/layout:set}
+	{layout:set name="sales_rep_id"}{entry_id}{/layout:set}
+	{layout:set name="membergroupid"}{member_group_id}{/layout:set}
+
+{layout:set name="details"}
+	<div class="card">
+		<div class="card-body bg-dkblue ">
+			<h5 class="card-title text-white">Contact</h5>
+			<p class="card-text text-white">
+				<b>{visitor:member_customer_number}</b><br>
+				{visitor:member_company}</p>
+			<p class="card-text text-white">
+				{visitor:member_address}<br>
+				{visitor:member_city}, {visitor:member_state} {visitor:member_postal}<br>{visitor:member_country}
+			</p>
+			<p class="card-text text-warning">
+				<b>Email:</b> <a href="mailto:{visitor:member_email}">{email}</a><br>
+				<b>Phone 1: </b><a href="tel:{exp:low_replace find='-|(|)|SPACE|.' replace='' multiple='yes'}{visitor:member_phone_1}{/exp:low_replace}" class="text-warning">{visitor:member_phone_1}</a>
+				{if phone_2}<br><b>Phone 2: </b><a href="tel:{exp:low_replace find='-|(|)|SPACE|.' replace='' multiple='yes'}{visitor:member_phone_2}{/exp:low_replace}" class="text-warning">{visitor:member_phone_2}</a>{/if}
+				{if visitor:member_fax}<br><b>Fax:</b> {visitor:member_fax}{/if}
+				{if visitor:member_website}<br><b>Website: </b><a href="{visitor:member_website}" target="blank">{visitor:member_website}</a>{/if}
+			</p>
+
+			</p>
+		</div>
+	
+		
+		<p class="card-body"><a href="{path='accounts/edit_profile/{member_id}'}" class="btn btn-outline-primary rounded-0">Edit Profile</a></p>
+	</div>
+	
+{/layout:set}
+
+
+{/exp:visitor:details}

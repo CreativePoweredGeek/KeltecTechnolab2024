@@ -1,0 +1,38 @@
+<button class="btn btn-primary rounded-0 btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Cart Summary
+</button>
+
+<div class="collapse" id="collapseExample">
+  <div class="card">
+     <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th><th>Qty</th><th>$</th>
+            </tr>
+        </thead>
+        <tbody>
+        {exp:cartthrob:cart_items_info}
+            <tr>
+                <td>{title}</td>
+                <td>{quantity}</td>
+                <td>{if logged_in}{item_price}{/if}</td>
+            </tr>
+        {/exp:cartthrob:cart_items_info}
+        </tbody>
+    </table>
+    <div class="card-body">
+        {if logged_in}
+            <a href="{path='cart/view-cart'}" class="btn btn-sm-btn-primary">View Cart</a>
+        {/if}
+        {if logged_out}
+            <p class="card-text">
+                In order to see pricing, and access your cart you must be a logged in KELTEC Technolab Customer. 
+                <a href="#" data-toggle="modal" data-target="#memberLogin">Log In here.</a>
+            </p>
+            <p>If you are not a KELTEC customer please create an account when you checkout.</p>
+        {/if}
+    </div>
+        
+    </div>
+</div>
+</div>

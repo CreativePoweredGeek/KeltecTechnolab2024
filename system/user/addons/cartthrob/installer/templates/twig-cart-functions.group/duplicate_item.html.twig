@@ -1,0 +1,7 @@
+{% set template_group = 'twig-cart-functions' %}
+
+{{ exp.cartthrob.duplicate_item({ row_id:"0", return:template_group ~ "/index"})  }}
+
+<br />Duplicates an item in the cart
+<br />NOTE: example requires that entry_id:1 be an item in the cart.
+<br />http://cartthrob.com/docs/tags_detail/duplicate_item/

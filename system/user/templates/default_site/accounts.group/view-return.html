@@ -1,0 +1,122 @@
+{layout="layouts/_dashboard_single_full_col"}
+{par_user_stash_variables}
+{layout:set name="css"}
+    <link href="{path='css/_ee_channel_form_css'}" type="text/css" rel="stylesheet" media="screen">
+{/layout:set}
+{layout:set name="rightButton"}
+    <a href="{path='accounts/returns'}" class="btn btn-primary rounded-0">Returns</a>  
+    <a href="{path='accounts/dashboard'}" class="btn btn-outline-primary rounded-0">Dashboard</a> 
+ 
+{/layout:set}
+{layout:set name="pageTitle"}View Return Authorization{/layout:set}
+
+<div class="col">
+    {if segment_4 == "success"}
+        <div class="col-12">
+            <div class="alert alert-success" role="alert">
+                Status Changed!
+            </div>
+        </div>
+    {/if}
+    <table class="table">
+    <tbody>
+    {exp:channel:entries channel="rma_portal" entry_id="{segment_3}" status="REQUEST PENDING|REQUEST MORE INFORMATION|DENY RETURN|PROCESS RETURN"}
+        <tr>
+        <th scope="row" width="20%">Clam Status:</th>
+        <td>
+            {if logged_in_group_id != "5"}
+                {embed="embeds/status_update"}
+            {if:else}
+                {status}
+            {/if}
+            
+            </td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">RMA Number::</th>
+        <td>{rma_number}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Company ID:</th>
+        <td>{customer_number}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Claim Date:</th>
+        <td>{entry_date format="%m/%d/%Y"}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Claim Entry ID:</th>
+        <td>{title}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Return Type:</th>
+        <td>{return_type}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Description of Issue:</th>
+        <td>{description_of_issue}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Part Numbers:</th>
+        <td>
+            {part_numbers_and_quantity}
+                <button type="button" class="btn btn-secondary">
+                    {part_numbers_and_quantity:part_number} <span class="badge badge-light">qty: {part_numbers_and_quantity:quantity}</span>
+                </button> 
+            {/part_numbers_and_quantity}
+            </td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Keltec Invoice:</th>
+        <td>{keltec_invoice_number}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Customer PO:</th>
+        <td>{customer_po}</td>
+        </tr>
+        <tr>
+        <th scope="row" width="20%">Photos:</th>
+        <td>{rma_photos}</td>
+        </tr>
+
+
+    {/exp:channel:entries}
+    </tbody>
+    </table>
+</div>
+
+
+    <div class="col-md-4 offset-md-1">
+ 
+    {!--Comment Form--}
+    <h5>Comments:</h5>
+    {exp:comment:entries channel="{embed:the_channel}"}
+        <div class="card" style="margin-bottom:12px;"">
+            <div class="card-body">
+				<div class="card_title" style="font-size:12px;">
+                    <strong>#{count}.&nbsp;Posted by {url_as_author} on {comment_date format="%F %d, %Y"}</strong>
+                </div>
+			    <p class="card-text">{comment}</p>
+			</div>
+		</div>
+		{/exp:comment:entries}
+        
+       <div style="margin-top:12px;border-top:1px solid #666666;padding-top:12px;">
+        {exp:comment:form}
+			
+            <div class="form-group">
+                <label for="comment">Reply or leave a comment:</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3">{comment}</textarea>
+            </div>
+
+			
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" class="check" name="notify_me" value="yes" {notify_me} /> Notify me of follow-up comments?
+				</label>
+			</div>
+			<p><input type="submit" class="submit_button btn btn-primary" name="submit" value="Submit" /></p>
+		{/exp:comment:form}
+        </div>
+    </div>
+{/if}

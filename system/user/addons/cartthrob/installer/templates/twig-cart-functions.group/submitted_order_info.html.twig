@@ -1,0 +1,22 @@
+{% set order = exp.cartthrob.submitted_order_info() %}
+{{ dump(order) }}
+{% if order.authorized %}
+    Your payment is a success!<br />
+    Transaction ID: {{ order.transaction_id }}<br />
+    Your total: {{ order.cart_total }}<br />
+    Your order ID: {{ order.entry_id }}<br />
+{% elseif order.processing %}
+    Your transaction is being processed!<br />
+    Transaction ID: {transaction_id}<br />
+    Your total: {cart_total}<br />
+    Your order ID: {order_id}
+{% elseif declined%}
+    Your credit card was declined: {error_message}
+{if:elseif failed}
+    Your payment failed: {error_message}
+{% endif %}
+
+
+<br />Outputs the results of a checkout_form submission.
+<br />NOTE: example requires that a checkout be attempted before any results will display
+<br />http://cartthrob.com/docs/tags_detail/submitted_order_info/

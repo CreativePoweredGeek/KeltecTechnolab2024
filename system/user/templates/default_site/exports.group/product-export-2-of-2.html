@@ -1,0 +1,5 @@
+{layout="_layouts/_step2_email_template"}
+{layout:set name="csvdata"}
+{exp:channel:entries channel="products" status="open" disable="categories|member_data|pagination|trackback" offset="8000" limit="16900" dynamic="no"}
+{title},{price:replace find="," replace=""},{inventory_main},{inventory_nc},{inventory_tx},{inventory_ca},{weight},{exp:keltec:catbyclass class='{class}'}{/exp:channel:entries}
+{/layout:set}

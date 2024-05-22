@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="memberLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body member-login">{!--   <h3 class="text-white text-uppercase text-center">Login temporarily disabled while we make a quick update. Please Check back in a few minutes.</h3>--}
+				<h3 class="text-white text-uppercase text-center">{member_login_{language_code}}</h3>
+				{exp:member:login_form action="{site_url}{language_code}/" return='accounts/router'}
+					<div class="form-group input-group-lg">
+						<label for="username text-white" class="sr-only">Username</label>
+						<input type="text" class="form-control input-lg rounded-0" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter Username">
+					</div>
+					<div class="form-group input-group-lg">
+						<label for="password" class="sr-only">Password</label>
+						<input type="password" class="form-control rounded-0" id="password" name="password" placeholder="Password">
+					</div>
+					{if auto_login}
+						<p><input type="checkbox" name="auto_login" value="1" /> Auto-login on future visits</p>
+					{/if}
+					<button type="submit" name="submit"class="btn btn-primary btn-lg rounded-0">{submit_{language_code}}</button>
+				{/exp:member:login_form}
+      		</div>
+	  		<div class="modal-footer">
+	        	<a href="{path='member/forgot_password'}" class="btn btn-link">{forgot_password_{language_code}}</a>  ||  <a href="{site_url}{language_code}/accounts/request-webstore-access" class="btn btn-link">{request_access_{language_code}}</a>
+			</div>
+		</div>
+	</div>
+</div>

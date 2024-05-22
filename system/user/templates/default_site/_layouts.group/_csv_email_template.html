@@ -1,0 +1,5 @@
+{exp:mx_email_from_template to='russkern01@gmail.com' from='weborders@keltecinc.com' subject='Member Export {current_time format="%D, %F %d, %Y"}'}
+{csv:file}"customer Number","company name","first","last","email","address","address2","city","state","postal","country","phone 1","phone 2","fax","website","ups_collect_number","fedex_collect_number","preferred_carrier","pay code","price code","preferred warehouse","credit limit","assigned CSR"
+{layout:csvdata}
+{/csv:file}
+{/exp:mx_email_from_template}

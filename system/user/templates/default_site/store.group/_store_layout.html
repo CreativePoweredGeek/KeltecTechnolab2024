@@ -1,0 +1,118 @@
+{!-- we're setting the doctype specifically like this so that we can use Twitter Bootstrap.
+http://twitter.github.com/bootstrap/scaffolding.html#global
+ --}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{layout:title} - {site_name}</title>
+
+	{!-- ///////// SAMPLE TEMPLATE //////////////// --}
+	{!-- CT ajax uses jQuery. Include your own or EE's included version --}
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	{!-- CT uses jQuery form for ajax form submissions --}
+	<script type="text/javascript" src="{theme_folder_url}../user/cartthrob/scripts/jquery.form.js" ></script>
+	{!-- CT sample templates  form for ajax form submissions --}
+	<script type="text/javascript" src="{path='{embed:template_group}/cart.js'}" ></script>
+
+	{!-- CT template CSS files --}
+	<link rel="stylesheet" type="text/css" media="all" href="{site_url}shop/main.css}" />
+    
+	{!-- ///////// TWITTER BOOSTRAP //////////////// --}
+	{!-- http://twitter.github.com/bootstrap/getting-started.html --}
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	{!-- Twitter Boostrap CSS files. The sample templates use Twitter Bootstrap for layout, styles and some JS functionality. --}
+	<link href="{site_url}assets/vendors/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+	
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	{layout:css}
+   <link href="{site_url}assets/css/stylesheet.css" rel="stylesheet">
+
+	{!-- NOTE: if you don't like things to move around on the page, comment this out. This enables responsive layout, 
+		and the contents of the page flow to fit the viewport --}
+	<link href="{theme_folder_url}../user/cartthrob/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script src="{site_url}assets/vendors/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>   
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+
+{par_menu}
+<section id="header" class="page_header_wrapper bg-dkblue" style="margin-bottom:48px;">
+	<div class="container">
+		<div class="row align-items-center" style="height:105px;">
+			<div class="col-8 offset-2 col-md-2 offset-md-0 divider">
+				<a href="{site_url}{language_code}">
+					<img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="img-fluid brand-logo" alt="Keltec Technolab">
+				</a>
+			</div>
+			<div class="col-md-10">
+				<h1 class="text-white">{layout:page_title}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="container">
+	<div class="row">
+        <div class="col-md-3">
+            {layout:sidebar}
+
+
+        </div>
+        <div class="col-md-9">
+            {layout:contents}
+
+
+        </div>
+
+
+    </div>
+</div>
+
+	<!-- Footer
+	================================================== -->
+	{par_page_footer}
+	{par_memberLogin}
+{par_search}
+	{!-- this form is used for hidden ajax submissions by CartThrob. D--}
+	<div style="display:none" id="hidden_save_customer_info_form_wrapper">
+		{!-- Data input in other forms is copied to this form, and submitted 
+			if debug is turned on in the javascript file, this form should be automatically shown.
+			--}
+		{exp:cartthrob:save_customer_info_form return="" id="hidden_save_customer_info_form" }
+			<div class="cart_data">
+
+			</div>
+		<input type="submit" name="Submit" /> 
+		{/exp:cartthrob:save_customer_info_form}
+	</div>
+
+{!-- if you've set the google analytics code in the backend, this will output the google analytics tag --}
+{if '{exp:cartthrob:view_setting store_google_code="yes"}'!=''}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{exp:cartthrob:view_setting store_google_code="yes"}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+{/if}
+</body>
+</html>

@@ -1,0 +1,59 @@
+{layout="layouts/_main_html_layout"}
+
+<div class="w-100 bg-dkblue py-5 mb-5">
+	<div class="container">
+    <div class="row">
+		<div class="col-12">
+        <h3 class="text-white">Monthly Sales Totals</h3>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-12">
+{!--<form>
+    <select name="month">
+        <option>Select a Month</option>
+        {exp:query sql="SELECT DISTINCT(month) as mo FROM exp_channel_titles ORDER BY month DESC"}
+        <option value="{mo}">{mo}</option>
+        {/exp:query}
+    </select>
+    <select name="year">
+        <option>Select a Year</option>
+        {exp:query sql="SELECT DISTINCT(year) as yr FROM exp_channel_titles ORDER BY year DESC"}
+        <option value="{yr}">{yr}</option>
+        {/exp:query}
+    </select>
+</form>--}
+<table class="table table-stripped table-hover">
+    <tr>
+    	<th>Month</th>
+    	<th>Total Orders</th>
+        <th>Total Value</th>
+        <th>Average Order Value</th>
+     </tr>
+{!--{exp:query sql="SELECT month, year, COUNT(*) AS total FROM exp_channel_titles WHERE channel_id = '26' AND year = '2024' GROUP BY year,month ORDER BY month desc"}--}
+{exp:query sql="SELECT 
+exp_channel_titles.month as mo, 
+exp_channel_titles.year as yr,
+exp_channel_titles.entry_date as date, 
+exp_channel_titles.entry_id,
+SUM(exp_channel_data_field_103.field_id_103) as totalvalue, 
+AVG(exp_channel_data_field_103.field_id_103) as averageordervalue, 
+COUNT(*) as totalcount
+FROM exp_channel_titles
+INNER JOIN exp_channel_data_field_103 ON exp_channel_titles.entry_id=exp_channel_data_field_103.entry_id 
+WHERE exp_channel_titles.channel_id = '26' GROUP BY yr,mo ORDER BY yr DESC,mo DESC"} 
+<tr>
+<td><a href="sales-reports/monthly/{yr}/{mo}">{yr} - {date format="%F"}</a></td>
+<td>{totalcount}</td>
+<td>${totalvalue:number_format decimals='2'}</td>
+<td>${averageordervalue:number_format decimals='2'}</td>
+</tr>
+{/exp:query}
+
+</table>
+</div>
+</div>
+</div>

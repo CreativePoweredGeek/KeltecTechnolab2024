@@ -1,0 +1,41 @@
+{layout="layouts/_products_single_column_layout"}
+
+{layout:set name="title"}Products Listing{/layout:set}
+
+		<div class="col">
+			<table class="table table-striped table-hover">
+				<thead class="thead-dark">
+					<tr>
+						<th></th>
+						<th>
+							Keltec#
+						</th>
+						
+						<th>
+							Description
+						</th>
+						<th>
+							List Price
+						</th>
+						<th>
+							OEM#'s
+						</th>
+						
+					</tr>
+				</thead>
+			{exp:channel:entries channel="products" limit="20" paginate="bottom" dynamic="no"}
+				<tr>
+					<td>{count}</td>
+					<td>{title}</td>
+					<td>{description}</td>
+					<td>${price:number_format decimals='2'}</td>
+					<td>{oem_number}</td>
+			
+				</tr>
+				{paginate}
+					<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+				{/paginate}
+				
+			{/exp:channel:entries}
+			</table>	
+		</div>

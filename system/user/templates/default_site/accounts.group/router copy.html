@@ -1,0 +1,32 @@
+{if logged_in}
+{exp:member:custom_profile_data}
+	{exp:stash:set name="last_visit"}{last_visit format="%m/%d/%Y"}{/exp:stash:set}
+    {exp:stash:set name="join_date"}{join_date format="%m/%d/%Y"}{/exp:stash:set}
+    {exp:stash:set name="fullname" scope="user" save="yes"}{first_name} {last_name}{/exp:stash:set}
+    {exp:stash:set name="customer_number" scope="user" save="yes"}{customer_number}{/exp:stash:set}
+    {exp:stash:set name="company" scope="user" save="yes"}{company}{/exp:stash:set}
+    {exp:stash:set name="price_code" scope="user" save="yes"}{price_code}{/exp:stash:set}
+    {exp:stash:set name="country" scope="user" save="yes"}{country}{/exp:stash:set}
+    {exp:stash:set name="warehouse" scope="user" save="yes"}{preferred_warehouse}{/exp:stash:set}
+	
+	
+	{if logged_in_group_id == '5'}
+		{if update_email == "y"}
+			{redirect='{language_code}/accounts/update-email' status_code="301"}
+		{if:else}
+			{redirect='{language_code}/accounts/dashboard' status_code="301"}
+		{/if}
+	{if:elseif logged_in_group_id == '8'}
+		{redirect='{language_code}/accounts/csr-customer-orders' status_code="301"}
+	{if:elseif logged_in_group_id == '9'}
+		{redirect='{language_code}/accounts/customer-list' status_code="301"}
+	{if:else}
+		{redirect='{language_code}/' status_code="301"}
+	{/if}
+
+{/exp:member:custom_profile_data}	
+
+{/if}
+{if logged_out}
+	{redirect='{site_url}{language_code}/' status_code="301"}
+{/if}

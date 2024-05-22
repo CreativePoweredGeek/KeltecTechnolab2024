@@ -1,0 +1,17 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+{embed="store/_new_header" template_group="{template_group}" template="{template}" title="Checkout" pagetitle="Checkout"}
+{par_user_stash_variables}
+<div class="container">
+	<div class="row">
+        <div class="col-md-12">
+            {par_shipping_instructions}
+
+
+
+        </div>
+    </div>
+</div>
+
+
+{embed="store/_new_footer" template_group="{template_group}" template="{template}"}

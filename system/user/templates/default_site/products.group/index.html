@@ -1,0 +1,48 @@
+{layout="layouts/_products_single_column_layout"}
+{preload_replace:language_code="en"}
+{exp:channel:entries channel="site_pages" url_title="products" disable="categories|member_data|pagination|relationships" limit="1" cache="yes" refresh="30"}
+		{if url_title == "products"}
+			{layout:set name="title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+			{layout:set name="seo_description"}{seo_page_description}{seo_page_description:{language_code}}{/seo_page_description}{/layout:set}
+			{layout:set name="seo_canonical"}{current_url}{/layout:set}
+		{/if}
+
+	{/exp:channel:entries}
+
+	{exp:channel:entries channel="site_pages" dynamic="no" fixed_order="298394|298350|298368|298359|311912|298330|298333|298338|298326|298412|298383|298316|321154|324147"  disable="categories|member_data|pagination|relationships" cache="yes" refresh="60"}
+			
+	<div class="col-6 col-sm-4 col-lg-3 cell-big" style="padding:0px;">
+		<a href="{route='products/page' url_title='{url_title}'}">
+		<div class="cell m-2">
+			  <img class="img-fluid" src="{if page_preview_image}{page_preview_image:sq}{if:else}{site_url}assets/images/general/_sq/default.jpg{/if}">
+			  <div class="overlay-text p-4">
+				  <div class="children">
+				  <h4 class="text-center">{if {language_code}_title}{{language_code}_title}{if:else}{title}{/if} </h4>
+					<p>{summary_copy}{summary_copy:{language_code}_summary}{/summary_copy}</p>
+				  </div>
+			  </div>
+		</div>
+		</a>
+	 </div>
+	
+	{/exp:channel:entries}
+
+
+
+	<div class="container mt-2 p-2 py-4 h-100 border-top border-1 border-light">
+		<div class="row h-100">
+			<div class="col-md-6 h-100">
+				{par_filter_cross_reference}
+			</div>
+			<div class="col-md-6 h-100">
+				<div class="card application rounded-0">
+				{exp:channel:entries channel="misc_content" url_title="disclaimer" dynamic="no" disable="categories|member_data|pagination|relationships" limit="1" cache="yes" refresh="30"}
+					{if {language_code}_title != ""}<h3 class="text-uppercase text-white">{{language_code}_title}</h3>{/if}
+					<p class=" text-white">{{language_code}_basic_text}</p>
+				{/exp:channel:entries}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

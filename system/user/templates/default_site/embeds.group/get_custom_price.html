@@ -1,0 +1,21 @@
+{exp:channel:entries 
+	channel="customer_contract_pricing" 
+	search:customer_number="{embed:customer_number}"
+	search:keltec_number="{embed:keltec_number}"
+}
+	{if no_results}
+		
+		{embed:price}
+	{/if}
+		<strike>{embed:price}</strike> <b class="text-success">{price}</b>
+	
+	
+{/exp:channel:entries}
+
+{!--USE:  
+	{embed="embeds/get_custom_price" 
+	customer_number="" 
+	keltec_number="" 
+	price=""} 
+
+--}

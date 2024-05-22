@@ -1,0 +1,5 @@
+<p>Export Running</p>
+{exp:mx_email_from_template to='russkern01@gmail.com' cc='' bcc='' from='weborders@keltecinc.com' subject='Product Export {current_time format="%D, %F %d, %Y"}'}
+{csv:file}product,list_price,in_main,in_nc,in_tx,in_ca,weight,desc{layout:csvdata}{/csv:file}
+{/exp:mx_email_from_template}
+<p>Export Complete</p>

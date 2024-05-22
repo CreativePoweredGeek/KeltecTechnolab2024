@@ -1,0 +1,32 @@
+{layout="layouts/_job_posting_template"}
+
+{exp:channel:entries channel="jobs"}
+	{layout:set name="title"}{{language_code}_title} | Jobs{/layout:set}
+	{layout:set name="page_title"}Job Posting{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+	{par_edit_this}
+	{if feature_photo}
+		<img src="{feature_photo}" class="card-img-top" alt="{{language_code}_title}">
+	{/if}
+	<p class="lead badge badge-primary">{position_type}</p>
+	<h1>{{language_code}_title}</h1>
+	{{language_code}_rich_text_block}
+	
+	<p><a href="{site_url}{language_code}/careers/submit-your-application" class="btn btn-primary btn-lg col-md-4 offset-md-4">Submit your Application</a></p>
+	
+	{/exp:channel:entries}
+
+
+	
+	
+	
+	
+	{layout:set name="sidebar"}
+		<h4>Sign up for our Mailing List</h4>
+		{par_mailinglist_ac_form}
+	
+	
+	{/layout:set}

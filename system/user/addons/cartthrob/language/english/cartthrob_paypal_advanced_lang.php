@@ -1,0 +1,25 @@
+<?php
+
+$lang = [
+    'ct.payments.paypal_advanced.title' => 'PayPal Advanced',
+    'ct.payments.paypal_advanced.overview' => 'Adds the <a href="https://developer.paypal.com/docs/checkout/advanced/" target="_blank">PayPal Advanced</a> payment implementation to your CartThrob site. Note that you\'re going to need a the details from your <a href="https://developer.paypal.com/developer/applications">PayPal developer console</a> to get started.  ',
+    'ct.payments.paypal_advanced.api.client_id' => 'Client ID',
+    'ct.payments.paypal_advanced.api.client_id.note' => 'This is just the internal ID PayPal assigns for your App. Note this should be the "Live" Client ID.',
+    'ct.payments.paypal_advanced.api.secret' => 'Secret',
+    'ct.payments.paypal_advanced.api.secret.note' => 'Used for creating the request signatures. Note this should be the "Live" Secret.',
+    'ct.payments.paypal_advanced.api.sandbox.client_id.note' => 'This is just the internal ID PayPal assigns for your App. Note this should be the "Sandbox" Client ID.',
+    'ct.payments.paypal_advanced.api.sandbox.secret.note' => 'Used for creating the request signatures. Note this should be the "Sandbox" Secret.',
+    'ct.payments.paypal_advanced.api.sandbox.client_id' => 'Sandbox Client ID',
+    'ct.payments.paypal_advanced.api.sandbox.secret' => 'Sandbox Secret',
+    'ct.payments.paypal_advanced.api.mode' => 'Mode',
+    'ct.payments.paypal_advanced.api.mode.note' => 'When ran in Sandbox mode, no funds will be taken or delivered. Use Sandbox mode for testing and development.',
+    'ct.payments.paypal_advanced.enable_fields' => 'Enable Checkout Fields',
+    'ct.payments.paypal_advanced.enable_fields.note' => 'By default, the checkout form includes fields for things like Shipping and Billing details; but with PayPal, there isn\'t a way to validate server-side. This toggle will remove those fields.',
+    'ct.payments.paypal_advanced.errors.missing_payment_details' => 'PayPal Payment Details are missing from POST payload :(',
+    'ct.payments.paypal_advanced.errors.paypal_unresponsive' => 'No response from PayPal on transactionReference verification',
+    'ct.payments.paypal_advanced.errors.reference_not_found' => 'Can\'t find Payment Reference',
+    'ct.payments.paypal_advanced.errors.payment_failed' => 'Payment wasn\'t successful',
+    'ct.payments.paypal_advanced.errors.refund_on_not_completed_order' => 'The Order cannot be refunded due to a failed status check.',
+    'ct.payments.paypal_advanced.errors.refund_failed' => 'The refund failed for an unknown reason; check the PayPal logs for details',
+    'ct.payments.paypal_advanced.note' => 'Allows for complete customization of your credit card fields using <a href="https://developer.paypal.com/docs/checkout/advanced/" target="_blank">PayPal</a> as your gateway.',
+];

@@ -1,0 +1,88 @@
+{layout="layouts/_dashboard_layout_one_col"}
+{layout:set name="rightButton"}
+	{if segment_3 !=""}
+        <a href="{path='accounts/dashboard/{segment_3}'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {if:else}
+         <a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {/if}
+{/layout:set}
+{if segment_3 != ""}
+	{exp:member:custom_profile_data member_id="{segment_3}"}
+{if:else}
+	{exp:member:custom_profile_data}
+{/if}
+{layout:set name="companyID"}{visitor:member_customer_number}{/layout:set}
+{layout:set name="companyName"}{visitor:member_company}{/layout:set}
+
+    {layout:set name="title"}Edit Profile{/layout:set}
+	{layout:set name="page_title"}{visitor:member_firstname} {visitor:member_lastname}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{layout:set name="sales_rep"}{sales_rep}{item:label}{/sales_rep}{/layout:set}
+	{layout:set name="sales_rep_id"}{sales_rep}{item:value}{/sales_rep}{/layout:set}
+	{layout:set name="membergroupid"}{member_group_id}{/layout:set}
+
+
+{/exp:visitor:details}
+
+
+
+{if segment_4 == "success"}
+    <div class="col-12">
+        <div class="alert alert-success" role="alert">
+            Update Successful! <a href="{path='accounts/dashboard/{segment_3}'}">Return to Profile</a>
+        </div>
+    </div>
+{/if}
+<div class="col-md-8 offset-md-2">
+    
+    {exp:smart_members:edit}
+   {!-- {exp:member:update_form member_id="{segment_3}" return="accounts/edit_profile/{segment_3}/success"} --}
+        <div class="form-group">
+            <label for="member_firstname">First Name</label>
+            <input type="text" class="form-control" id="member_firstname" name="member_firstname" value="{member_firstname}" aria-describedby="emailHelp" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <label for="member_lastname">Last Name</label>
+            <input type="text" class="form-control" id="member_lastname" name="member_lastname" value="{member_lastname}" aria-describedby="emailHelp" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <label for="member_company">Company Name</label>
+            <input type="text" class="form-control" id="member_company" name="member_company" value="{member_company}" aria-describedby="emailHelp" placeholder="">
+        </div>
+
+    <div class="form-group">
+            <label for="member_address">Address</label>
+            <input type="text" class="form-control" id="member_address" name="member_address" value="{member_address}" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="member_city">City</label>
+            <input type="text" class="form-control" id="member_city" name="member_city" value="{member_city}" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="member_state">State</label>
+            <input type="text" class="form-control" id="member_state" name="member_state" value="{member_state}" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="member_postal">Postal</label>
+            <input type="text" class="form-control" id="member_postal" name="member_postal" value="{member_postal}" aria-describedby="emailHelp" placeholder="">
+        </div>
+        
+         <div class="form-group">
+            <label for="member_phone_1">Phone 1</label>
+            <input type="text" class="form-control" id="member_phone_1" name="member_phone_1" value="{member_phone_1}" aria-describedby="emailHelp" placeholder="">
+        </div>
+     <div class="form-group">
+            <label for="member_phone_2">Phone 2</label>
+            <input type="text" class="form-control" id="member_phone_2" name="member_phone_2" value="{member_phone_2}" aria-describedby="emailHelp" placeholder="">
+        </div>
+     <div class="form-group">
+            <label for="member_fax">Fax</label>
+            <input type="text" class="form-control" id="member_fax" name="member_fax" value="{member_fax}" aria-describedby="emailHelp" placeholder="">
+        </div>
+    
+        <button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+    {/exp:smart_members:edit}
+</div>

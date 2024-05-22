@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{language_code}">
+  <head>
+	{par_GA_tracking}
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="alternate" hreflang="en" href="{site_url}en/{current_path}" />
+	<link rel="alternate" hreflang="es" href="{site_url}es/{current_path}" />
+	<link rel="alternate" hreflang="pt" href="{site_url}pt/{current_path}" />
+   <meta name="description" content="{if layout:seo_description}{layout:seo_description}{/if}">
+   <title>{site_name} | {page_title}</title>
+	<link rel="canonical" href="{if layout:seo_canonical}{layout:seo_canonical}{/if}">
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	   <!-- Bootstrap core CSS -->
+	<link href="{site_url}assets/vendors/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	{layout:css}
+
+   <link href="{site_url}assets/css/stylesheet.css" rel="stylesheet">
+{include:head_extra}
+  </head>
+  <body>
+	  {par_menu}

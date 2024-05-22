@@ -1,0 +1,124 @@
+{page_content_new}
+
+				{if page_content_new:first && !{page_content_new:first name="section_divider_new"}}
+					<div class="section">
+						<div class="row g-5">
+				{/if}
+				{page_content_new:section_divider_new}
+					{if page_content_new:count != 1}
+							</div>
+						</div>
+					{/if}
+
+					{content}
+						<div class="section-divider {content:additional_css}">
+							<div class="row g-5">
+					{/content}
+				{/page_content_new:section_divider_new}
+				{page_content_new:headline_new}
+					{content}
+						<{if content:element != ""}{content:element}{if:else}h3{/if} class="col-12{if '{content:additional_css}'} {content:additional_css}{/if}">{content:{language_code}}
+						</{if content:element != ""}{content:element}{if:else}h3{/if}>
+					{/content}
+				{/page_content_new:headline_new}
+				{page_content_new:rich_text_area_new}
+					{content}
+						<div class="col-md-{content:column}">{content:{language_code}}</div>
+					{/content}
+				{/page_content_new:rich_text_area_new}
+				{page_content_new:image_new}
+					{content}
+					<div class="col-md-{content:column}">
+						<div class="holder">
+							<img src="{content:image}" alt="{content:{language_code}_alt_text}" class="img-fluid">
+							<div class="overlay">
+								<div class="text">{content:{language_code}_alt_text}</div>
+							</div>
+						</div>
+					</div>
+
+					{/content}
+				{/page_content_new:image_new}
+				{page_content_new:call_to_action_button_new}
+					{content}
+
+						{if segment_1 !=""}
+
+						<div class="col-sm-4 mx-auto button-v-space">
+							<a href="{site_url}{language_code}/{content:button_link}{content:button_link:url_title}{/content:button_link}" class="btn btn-primary btn-lg col-12 rounded-0">{content:{language_code}_button_text}</a>
+						</div>
+						{if:else}
+						<div class="col-sm-4 mx-auto button-v-space">
+							<a href="{content:button_link}{content:button_link:url_title}{/content:button_link}" class="btn btn-primary btn-lg col-12 rounded-0">{content:{language_code}_button_text}</a>
+						</div>
+
+						{/if}
+					{/content}
+
+				{/page_content_new:call_to_action_button_new}
+				{page_content_new:file_download_new}
+					{content}
+						<div class="col-md-8 mx-auto button-v-space">
+							<a href="{content:file}" class="btn btn-outline-primary btn-lg col-12 rounded-0 mx-auto mb-3" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download" viewBox="0 0 16 16">
+								<path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+								<path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+							  </svg> {content:{language_code}_button_text}</a>
+						</div>
+					{/content}
+				{/page_content_new:file_download_new}
+				{page_content_new:related_products_new}
+					<div class="col-12">
+						<table class="table table-stripped">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Product#</th>
+									<th>Description</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{content status="open"}
+									<tr>
+										<td class="p-0 border-right border-1 text-center">
+											{if content:photo != ""}
+											<img src="{content:photo:_sm}" height="48px" class="mx-auto">
+											{if:else}
+											<img src="{site_url}assets/images/general/default_product_image_48.jpg" height="48px" class="mx-auto">
+											{/if}
+										</td>
+										<td>{content:title}</td>
+				 						<td>{exp:keltec:cleandescription}{content:description}{/exp:keltec:cleandescription}</td>
+										<td><a href="{site_url}products/item/{content:url_title}" class="btn btn-outline-primary btn-sm rounded-0">Details</a></td>
+									</tr>
+								{/content}
+							</tbody>
+						</table>
+					</div>
+					</div></div>
+				{/page_content_new:related_products_new}
+
+				{page_content_new:widgets_section}
+					{content}
+						<div class="col-{content:column_width}">
+							<div class="card rounded-0 bg-light">
+								<div class="card-body">
+							{content:widgets}
+								<h5 class="card-title">{content:widgets:widget_headline}{content:widgets:widget_headline:{language_code}}{/content:widgets:widget_headline}</h5>
+								<div class="card-text">{content:widgets:widget_copy}{content:widgets:widget_copy:{language_code}}{/content:widgets:widget_copy}</div>
+							{/content:widgets}
+							</div>	
+						</div>
+						</div>
+					{/content} 
+				{/page_content_new:widgets_section}
+
+
+
+
+
+
+
+
+				{if page_content_new:last && !{page_content_new:last name="section_divider_new"}}</div></div>{/if}
+			{/page_content_new}

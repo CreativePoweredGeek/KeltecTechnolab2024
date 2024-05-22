@@ -1,0 +1,55 @@
+<table class="table table-striped">
+	<tr>
+		<th>Product Application</th>
+		<th>Keltec Item #</th>
+		<th>OEM #</th>
+
+		<th></th>
+	</tr>
+
+{exp:channel:entries channel="brand_models"  entry_id="{embed:model}" dynamic="no"}
+	{if seperator_1 != ""}	
+		<tr>
+			<td>Seperator 1</td>
+			<td><a href="">{seperator_1}</a></td>
+			<td>{manufacturers}</td>
+			<td><a href="" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i><a href=""></td>
+		</tr>
+	{/if}	
+	
+	{if air_compressor_1 != ""}	
+		<tr>
+			<td>Air Compressor 1</td>
+			<td><a href="">{air_compressor_1}</a></td>
+			<td></td>
+			<td><a href="" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i><a href=""></td>
+		</tr>
+	{/if}
+	{if air_compressor_2 != ""}	
+		<tr>
+			<td>Air Compressor 2</td>
+			<td><a href="">{air_compressor_2}</a></td>
+			<td></td>
+			<td><a href="" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i><a href=""></td>
+		</tr>
+	{/if}
+	{if oil_compressor_1 != ""}	
+		<tr>
+			<td>Oil Compressor 1</td>
+			<td><a href="">{oil_compressor_1}</a></td>
+			<td></td>
+			<td><a href="" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i><a href=""></td>
+		</tr>
+	{/if}
+	{if oil_compressor_2 != ""}	
+		<tr>
+			<td>Oil Compressor 2</td>
+			<td><a href="">{oil_compressor_2}</a></td>
+			<td></td>
+			<td><a href="" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i><a href=""></td>
+		</tr>
+	{/if}
+	
+{/exp:channel:entries}
+
+</table>

@@ -1,0 +1,5 @@
+{exp:visitor:members member_group="8"}
+	{if count == 1} [ {/if}
+		{"value" : "{visitor:entry_id}", "label" : "{visitor:member_firstname} {visitor:member_lastname}"} {if count != total_results},{/if}
+	{if count == total_results} ] {/if}
+{/exp:visitor:members}

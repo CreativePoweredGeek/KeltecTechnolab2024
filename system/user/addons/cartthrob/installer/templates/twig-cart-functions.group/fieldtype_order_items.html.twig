@@ -1,0 +1,12 @@
+{% for order in exp.channel.entries({channel:"orders", status:"Payment Complete", order_by:'entry_date'}) %}
+
+	{% for item in order.order_items %}
+		Entry Id: {{ item.entry_id }}<br />
+		Title: {{ item.title }}<br />
+		Quantity: {{ item.quantity }}<br /><br />
+	{% endfor %}
+{% endfor %}
+
+<br />Outputs content from a CartThrob Order Items fieldtype
+<br />NOTE: example requires an "orders" channel, "order_items" field, and previous orders
+<br />http://cartthrob.com/docs/tags_detail/order_items/

@@ -1,0 +1,44 @@
+{layout="layouts/_header_layout"}
+{preload_replace:language_code="en"}
+<div class="section-wrapper rounded-0">
+	{if segment_2 == "noresults"}
+		<div class="container" style="margin-bottom:48px;">
+			<div class="row">
+				<main class="col-md-8 offset-md-2">
+					<p class="lead text-center">We're  sorry. Your product search with the keyword(s): <strong>{exp:search:keywords}</strong> returned no results.</p>
+					<p>It is possible you placed a KELTEC number in the OEM# lookup. Try again using the other search box.</p>
+					Try again using the tools below. If you still are not finding what you need, please contact a KELTEC Technolab CSR at (000) 000-0000.</p>
+				</main>
+			</div>
+		</div>
+	{/if}
+	<div class="container mb-3">
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+				{layout:copy}
+			</div>
+			<div class="col-12">
+				{par_credit_hold_message}
+			</div>
+			<div class="col-lg-4">
+				{par-1-oem-prosearch-box}
+					{!--{embed="embeds/search_by_oem" searchpage="{layout:template}"}--}
+			</div>
+			<div class="col-lg-4">
+				{par-1-keltec-prosearch-box}		
+{!--{embed="embeds/shop-search-options" searchpage="{layout:template}"}--}	
+			</div>
+			<div class="col-lg-4">
+		{par_filter_cross_reference}		
+			</div>
+		</div>
+	</div> 
+
+	<div class="container">
+		<div class="row">
+			<main class="col-md-12">
+				{layout:productslist}
+			</main>
+		</div>
+	</div>
+</div>

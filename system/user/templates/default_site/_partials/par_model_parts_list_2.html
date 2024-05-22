@@ -1,0 +1,67 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Application</th>
+            <th>KELTEC Item #</th>
+            <th>OEM #</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {if m_separator_1}
+            <tr>
+                <td>Separator</td>
+                <td><a href="{site_url}{language_code}/products/item/{m_separator_1}">{m_separator_1}</a></td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+        {if m_separator_2}
+            <tr>
+                <td>Separator</td>
+                <td><a href="{site_url}{language_code}/products/item/{m_separator_2}">{m_separator_2}</a></td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+        {if m_air_filter_1}
+            <tr>
+                <td>Air Filter</td>
+                <td><a href="{site_url}{language_code}/products/item/{m_air_filter_1}">{m_air_filter_1}</a></td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+         {if m_air_filter_2}
+            <tr>
+                <td>Air Filter</td>
+                <td>{m_air_filter_2}</td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+        {if m_oil_filter_1}
+            <tr>
+                <td>Oil Filter</td>
+                <td>{m_oil_filter_1}</td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+         {if m_oil_filter_2}
+            <tr>
+                <td>Oil Filter</td>
+                <td>{m_oil_filter_2}</td>
+                <td></td> {!-- OEM --}
+                <td></td>
+                <td></td>
+            </tr>
+        {/if}
+    </tbody>
+</table>

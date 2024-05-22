@@ -1,0 +1,11 @@
+{# the account template sends the ID of the entry encrypted. In this template, the ID is being decrypted. If found, it will load the invoice template that contains the data
+	Using this method, you can share the invoice link with someone that is not logged in.
+#}
+
+{% set template_group = 'twig-store' %}
+{% set decrypted_string = exp.cartthrob.view_decrypted_string({string:segment_3}) %}
+{% if decrypted_string !="" %}
+    {% include('ee::default_site.' ~template_group~ '._invoice') with {string:decrypted_string } %}
+{% else %}
+	Invoice could not be found
+{% endif %}

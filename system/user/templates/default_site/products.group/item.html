@@ -1,0 +1,202 @@
+{layout="layouts/_product_page_template"}
+{preload_replace:language_code="en"}
+{par_user_stash_variables}
+{if logged_in}
+{preload_replace:customerPriceCode="{exp:kt_tools:get_member_field_value fieldid='17'}"}
+{preload_replace:customerNumber="{exp:cookie:get name='custno'}"}
+{/if}
+{exp:channel:entries channel="price_guide" search:pg_keltec_number="{segment_3}" dynamic="no" parse="inward" disable="categories|category_fields|member_data|pagination" cache="no" refresh="0"}
+	{preload_replace:as_no="{pg_air_supply_number}"}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="products" url_title="{segment_3}" dynamic="yes" limit="1" disable="categories|category_fields|member_data|pagination" cache="no" refresh="0"}
+	{preload_replace:title_s="{title}"}
+	{layout:set name="title"}{title} | Products{/layout:set}
+	{layout:set name="page_title"}{title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+	{preload_replace:shipdate='{exp:keltec_shipping:estimated_date_alt warehouse="{exp:stash:warehouse}" entry_id = "{entry_id}" display="y"}'}
+	{preload_replace:newdesc='{embed="embeds/product_description" desc="{description}" keltec_number="={title}"}'}
+{preload_replace:adjPrice="{embed='embeds/customPrice_new' title='{title}' price_code='{exp:stash:price_code}' customer='{exp:stash:customer_number}' price='{price}' price3='{price_3}' class='{class}' max_product_discount='{max_product_discount}' parse='inline'}"}
+
+
+
+{if no_results}
+	{layout:set name="title"}Not Found | Products{/layout:set}
+	{layout:set name="page_title"}Product Not Found{/layout:set}
+	<div class="row">
+		<div class="col">
+			<div class="alert alert-warning lead" role="alert">Sorry. That product is either not available at the moment or is not available for sale online. Please contact a Keltec sales representative at <a href="tel:13304253100">+1 (330) 425-3100</a> for further assistance.</div>
+		</div>
+	</div>
+{/if}
+
+<div class="row pb-5 mb-5">
+
+	<div class="col-md-3">
+		{if photo!=""}
+		<img src="{photo:sm}" class="card-img rounded-0" alt = "Photo of the Keltec Technolab {title}">
+		{if:else}
+		<img src="{site_url}assets/product_images/{class}.jpg" class="card-img rounded-0" alt = "A representative photo of the Keltec Technolab {title}">
+		
+		{/if}
+	</div>
+	<div class="col">
+		{par_credit_hold_message}
+
+		<h4 class="display-3">{title}</h4>
+		<p class="lead">{exp:kt_tools:cleandescription}{description}{/exp:kt_tools:cleandescription}</p>
+		{if class == 'DR'}<div class="alert alert-warning" role="alert">{var_dryer_note}</div>{/if}
+		<table class="table">
+			<tr>
+				<th scope="row" style="vertical-align:middle">
+					Weight:
+				</th>
+				<td>
+					{if '{weight}' != 0}{weight} lbs. {if:else} Not Available {/if}
+				</td>
+			</tr>
+
+			{if '{class}' == "SEP-PROD" OR '{class}' == "SEP-PURCH" OR '{class}' == "AS" OR '{class}' == "REF" OR '{class}' == "KG" OR '{class}' == "KA-PROD" OR '{class}' == "KA-PURCH" OR '{class}' == "KC-PROD" OR '{class}' == "KC-PURCH" OR '{class}' == "KS-PROD" OR '{class}' == "KS-PURCH"}
+								<tr>
+									<th scope="row">Height:</th>
+									<th>{height} in.</th>
+								</tr>
+								<tr>
+									<th scope="row">Outer Dia.:</th>
+									<th>{od} in.</th>
+								</tr>
+								<tr>
+									<th scope="row">Flange Dia.:</th>
+									<th>{flg} in.</th>
+								</tr>
+							{/if}
+
+
+
+		</table>
+		
+		
+		
+		{exp:cartthrob:add_to_cart_form
+			entry_id="{entry_id}"
+			allow_user_price="yes"
+			return="{current_url}"}
+
+			<table class="table">
+				{!--<tr>
+					<th scope="row" style="vertical-align:middle">Air Supply Part #:</th>
+					<td>
+						{exp:kt_tools:get_as_no keltec_no="{last_segment}"}
+					</td>
+				</tr>--}
+				
+
+				<tr>
+					<th scope="row" style="vertical-align:middle">Price*:</th>
+					<td>
+						{if logged_in}
+							<strong>${adjPrice}</strong>  {if price:numeric != adjPrice:numeric}<small class="text-secondary"><del>{price}</del></small>{/if}
+						{if:else}
+							<span class="display-4"><a href="" class="btn btn-primary btn-sm rounded-0" data-toggle="modal" data-target="#memberLogin">Login for Pricing</a></span>
+						{/if}
+					</td>
+				</tr>
+				{if logged_in && logged_in_group_id != 12}
+				<tr>
+					<th scope="row"  style="vertical-align:middle;line-height: .8rem;">Available Inventory**<br>
+				<small>by warehouse</small></th>
+					<td>
+						<input type="hidden" id="entry_id" value="{entry_id}" name="entry_id">
+						<small>*Numbers in parenthesis are In Transit to the warehouse.</small>
+						{par_inventory_drop}
+
+
+
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"  style="vertical-align:middle;line-height: .8rem;">Expected Shipping:</th>
+					<td>
+						<div class="newShipdate"><strong>{shipdate}</strong></div>
+					</td>
+
+				</tr>
+
+
+
+					{if logged_in_group_id != 13}
+						<tr>
+							<th scope="row"  style="vertical-align:middle">Quantity:</th>
+							<td><input type="number" name="quantity" class="form-control" placeholder="00" aria-label="Quantity"></td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td><input type="hidden" name="price" value="{adjPrice}">
+								<input type="hidden" name="item_options[label_description]" value="{description}" />
+								<input type="hidden" name="item_options[customer_number]" value="{exp:stash:get name='customer_number'}" />
+								<input type="hidden" name="item_options[purchased_price]" value="{adjPrice}" />
+								<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse='{exp:stash:warehouse}' entry_id = '{entry_id}' display='no'}" />
+							<button class="btn btn-primary rounding-0" type="submit"><i class="fas fa-cart-plus"></i> Add to Cart</button></td>
+						</tr>
+					{/if}
+				{/if}
+				{if logged_in_group_id == '1'}
+				<tr>
+					<th>Class:</th>
+					<td>{class}</td>
+				</tr>
+				<tr>
+					<th>Buyer:</th>
+					<td>{buyer}</td>
+				</tr>
+				<tr>
+					<th>Mfg Lead:</th>
+					<td>{manufactuers_lead_time} days</td>
+				</tr>
+
+
+
+				{/if}
+			</table>
+
+
+		{/exp:cartthrob:add_to_cart_form}
+		{if logged_in}
+			<p>If ordered today, the expected ship date for this product from {if '{exp:stash:warehouse}' == 'MAIN'}Ohio{if:else}{exp:stash:warehouse}{/if} is: <span class="newShipdate">{shipdate}</span>.</p>
+			<p><hr></p>
+
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from.<br> ** If there is no available inventory at your preferred warehouse, you can select that it ship from another.<br>
+	** If you see a number in parenthesis &mdash; for example: 0 NC <strong>(3)</strong> &mdash; that quantity is on its way to the warehouse and will be available to ship once it arrives.</p>
+
+	{/if}
+
+	{!--{if logged_in}<p>{price} vs. {adjPrice}</p>{/if}--}
+
+
+	</div>
+</div> <!-- Close row -->
+
+
+
+
+{/exp:channel:entries}
+{layout:set name="sidebar"}
+{par-1-oem-prosearch-box}
+<br>&nbsp;<br>
+{par-1-keltec-prosearch-box}
+
+
+{!--{if logged_in && logged_in_group_id != 12}
+			{embed="embeds/search_by_oem" searchpage="shop"}
+			{embed="embeds/shop-search-options" searchpage="shop"}
+		{if:else}
+			{embed="embeds/search_by_oem" searchpage="search"}
+			{embed="embeds/shop-search-options" searchpage="search"}
+		{/if}--}
+
+
+		{par_filter_cross_reference}
+
+{/layout:set} 

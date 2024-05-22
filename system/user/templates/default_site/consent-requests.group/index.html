@@ -1,0 +1,84 @@
+{layout="layouts/_main_html_layout"}
+
+{exp:channel:entries channel="site_pages_legal" disable="" url_title="consent-requests"}
+
+
+
+<div class="container-fluid dashboard-header bg-dkblue">
+    <div class="row padding-two-percent">
+        <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+                <h4 class="text-right text-white">{title}</h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="container p-1 p-md-5">
+    <div class="row">
+        <div class="col-12">
+            {body_copy}
+        </div>
+    </div>
+</div>
+
+{/exp:channel:entries}
+<div class="container p-1 p-md-5">
+    <div class="row">
+        <div class="col-12 offset-0 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+
+		<div class="row mb-5">
+			<div class="col-md-12">
+				<h3>Strictly Necessary</h3>
+			</div>
+			<div class="col-md-9">
+			  	These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work. These cookies do not store any personally identifiable information.
+			</div>
+			<div class="col-md-3 text-right">
+				<strong class="text-primary">Always On</strong>
+				
+			</div>
+	  	</div>
+
+
+
+
+{exp:consent:form consent='analytics-cookies' return='consent-requests'}
+
+	{consents}
+      	<div class="row mb-5">
+			<div class="col-md-12">
+				<h3>{consent_title}</h3>
+			</div>
+			<div class="col-md-9">
+			  	
+			  		{consent_request}
+			</div>
+			<div class="col-md-3 text-right">
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="checkbox" id="{consent_short_name}" name="{consent_short_name}" value="y" {if consent_granted}checked{/if}>
+				  <label class="form-check-label" for="{consent_short_name}">Allow</label>
+				</div>
+				
+			</div>
+	  	</div>
+	{/consents}
+		<div class="row mb-5">
+			<div class="col-md-12 text-right">
+				<input type="submit" name="submit" value="Submit" class="btn-btn-primary btn-lg rounded-0">
+			</div>
+		</div>
+{/exp:consent:form}
+
+
+        </div>
+    </div>
+</div>
+
+
+
+

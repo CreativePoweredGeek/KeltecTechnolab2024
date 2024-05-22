@@ -1,0 +1,24 @@
+<?php
+  
+ee()->load->helper('cookie');
+$username = get_cookie('custno');
+
+//dbg $username = 'TAS05';
+
+//LIVE 
+$rootfolder = 'keltecinc';
+//DEV $rootfolder = 'keltec';
+require_once('/home/'.$rootfolder.'/public_html/system/user/functions/RDIFunctions/DBFunctions.php');
+
+//PROCESS HTML POST
+//END POST PROCESSING
+
+//VALIDATIONS
+$getVars = $_GET;
+$getVars['ccustno'] = $username;
+
+$result = ExecutePost('GetOrders',$getVars);
+print_r($result);
+
+
+?>

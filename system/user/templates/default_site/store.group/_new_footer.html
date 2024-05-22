@@ -1,0 +1,75 @@
+	<!-- Footer
+	================================================== -->
+
+	{par_page_footer}
+	
+	<!-- Modal -->
+<div class="modal fade" id="progress" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="progress" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-transparent text-center" style="border-width: 0px;">
+        <div class="modal-body">
+	        <div class="lds-roller mr-auto ml-auto"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	        <p class="lead text-white mt-5">Please wait while your order processes.</p>
+        </div>
+        
+    </div>
+  </div>
+</div>
+	
+	{par_memberLogin}
+	
+{par_search}
+
+<script type="text/javascript">
+$('#fob').change(function(){
+    var index = this.selectedIndex;
+    $('input[name="order_fedex_collect_number"]').prop('required', function(){
+        return index == 0;
+    });
+});
+$('#fob').change(function(){
+    var index = this.selectedIndex;
+    $('input[name="order_ups_collect_number"]').prop('required', function(){
+        return index == 1;
+    });
+});	
+</script>
+
+
+
+	{!-- this form is used for hidden ajax submissions by CartThrob. D--}
+	<div style="display:none" id="hidden_save_customer_info_form_wrapper">
+		{!-- Data input in other forms is copied to this form, and submitted 
+			if debug is turned on in the javascript file, this form should be automatically shown.
+			--}
+		{exp:cartthrob:save_customer_info_form return="" id="hidden_save_customer_info_form" }
+			<div class="cart_data">
+
+			</div>
+		<input type="submit" name="Submit" /> 
+		{/exp:cartthrob:save_customer_info_form}
+	</div>
+
+{!-- if you've set the google analytics code in the backend, this will output the google analytics tag --}
+{if '{exp:cartthrob:view_setting store_google_code="yes"}'!=''}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{exp:cartthrob:view_setting store_google_code="yes"}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+{/if}
+
+
+
+
+
+</body>
+</html>

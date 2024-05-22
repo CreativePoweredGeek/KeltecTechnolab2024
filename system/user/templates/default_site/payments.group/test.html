@@ -1,0 +1,14 @@
+{preload_replace:customerId="{exp:member:custom_profile_data}{customer_number}{/exp:member:custom_profile_data}"}
+<? include_once('/home/keltecinc/public_html/system/user/functions/test.php') ?>
+
+<?php $myvar = "KELTEC"; ?>
+
+<?php if($myvar == '{customerId}') { echo 'Matched!'; } else { echo 'NOT Matched!'; } ?>
+
+<p>{customerId} & 
+{logged_in_username} <--- This is being called from inside the EE template.</p>
+
+<p><?php $username = ee()->session->userdata('username'); 
+		echo $username;
+	?></p>
+	

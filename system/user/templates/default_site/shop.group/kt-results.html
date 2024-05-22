@@ -1,0 +1,119 @@
+{layout="layouts/_shop_layout"}
+{par_user_stash_variables}
+{if logged_in}
+{if logged_in_group_id == "12" || logged_in_group_id == "13"}
+{redirect="{site_url}{language_code}/search"}
+{/if}
+{/if}
+{layout:set name="template"}shop{/layout:set}
+{layout:set name="title"}Search Results{/layout:set}
+{layout:set name="page_title"}Search Results{/layout:set}
+{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+
+{layout:set name="productslist"}
+
+<div class="alert alert-success" role="alert">
+  Your Search of <b>{if pro_search_keywords}{pro_search_keywords}{/if}</b> returned the following results.
+</div>
+
+<table class="table table-striped">
+<thead class="bg-dkblue text-white">
+		<tr>
+			<th>#</th>
+			<th></th>
+			<th>Item</th>
+			<th>Description</th>
+			<th>Weight</th>
+
+			<th>Price</th>
+
+			<th></th>
+			<th style="line-height: .8rem;">Available Inventory**<br>
+				<small>by warehouse</small>
+			</th>
+			<th>Order</th>
+		</tr>
+	</thead>
+	<tbody>
+
+
+		{exp:pro_search:results
+			channel='products' //only show entries from the addon store
+			collection="products" 
+			keywords:mode="all"
+			keywords:loose="right"
+			keywords:score="1"
+			limit='12' // limiting results to only 4 per page
+			query="{segment_3}"
+			paginate="bottom" // show pagniation at the bottom of the results
+		}
+{preload_replace:priceNew="{embed='embeds/customPrice_new' title='{title}' price_code='{exp:stash:price_code}' customer='{exp:stash:customer_number}' price='{price}' price3='{price_3}' class='{class}' max_product_discount='{max_product_discount}' parse='inline'}"}
+
+{if price != '0'}
+	<tr>
+		<td style="vertical-align:middle">{absolute_count}.</td>
+
+		
+			<td style="padding:0px;">
+				{if photo!=""}
+				<img src="{photo:sm:resize width='60' height='60'}" class="img-fluid" alt = "Photo of the Keltec Technolab {title}">
+				{if:else}
+				<img src="{site_url}assets/product_images/_thumbs/{class}.jpg" class="img-fluid" alt = "A representative photo of the Keltec Technolab {title}">
+				
+				{/if}
+			</td>
+
+		<td style="vertical-align:middle">
+			{exp:search_hilite}{title} {if photo !=""} <i class="far fa-image"></i>{/if}{/exp:search_hilite}</td>
+		<td style="vertical-align:middle">{exp:keltec:catbyclass class="{class}"}<br>
+
+		<span style="font-size: 9pt;">{description}</span> {if class == 'DR'}{par_krad_po}{/if}</td>
+		<td style="vertical-align:middle">{if '{weight}' != 0}{weight} lbs.{/if}</td>
+		<td style="vertical-align:middle">{if logged_in}<strong>${priceNew}</strong>{!-- / <span class="small"><del>{price}</del></span> --}{if:else}Login for Pricing{/if}</td>
+		<td style="vertical-align:middle"><a href="{path='{language_code}/products/item/{url_title}'}" class="btn btn-outline-primary rounded-0 btn-sm">Details</a></td>
+
+			{exp:cartthrob:add_to_cart_form
+				entry_id="{entry_id}"
+				allow_user_price="yes"
+				return="{current_url}"}
+
+				<td>{par_inventory_drop}</td>
+				<td style="vertical-align:middle" width="15%">
+					<input type="hidden" name="price" value="{priceNew}">
+					{!--<input type="hidden" name="price" value="{par_custom_price}">
+					<input type="hidden" name="item_options[purchased_price]" value="{par_custom_price}" />--}
+					<input type="hidden" name="item_options[label_description]" value="{description}" />
+					<input type="hidden" name="item_options[purchased_price]" value="{priceNew}" />
+					<input type="hidden" name="item_options[customer_number]" value="{exp:stash:customer_number}" />
+					<input type="hidden" name="item_options[expected_ship]" value="{exp:keltec_shipping:estimated_date_alt warehouse="{exp:stash:warehouse}" entry_id = "{entry_id}" display="n"}" />
+					<div class="input-group">
+						{if logged_in AND logged_in_group_id != 13}
+							<input type="number" name="quantity" class="form-control" maxlength="2" size="2" placeholder="00" aria-label="Quantity" aria-describedby="button-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary rounding-0" type="submit" id="button-addon2">
+									<i class="fas fa-cart-plus"></i> {add_{language_code}}
+								</button>
+							</div>
+						{/if}
+					</div>
+				</td>
+			{/exp:cartthrob:add_to_cart_form}
+	</tr>
+{/if}
+	{if count == total_results}
+		</tbody>
+	</table>
+
+	<p><hr></p>
+	<!--<p class="small">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>-->
+
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from.<br> ** If there is no available inventory at your preferred warehouse, you can select that it ship from another.<br>
+	** If you see a number in parenthesis &mdash; for example: 0 NC <strong>(3)</strong> &mdash; that quantity is on its way to the warehouse and will be available to ship once it arrives.</p>
+
+	{/if}
+	{par_paginate}
+
+
+{/exp:pro_search:results}
+
+{/layout:set}

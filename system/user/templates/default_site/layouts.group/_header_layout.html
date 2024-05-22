@@ -1,0 +1,21 @@
+{layout="layouts/_main_html_layout"}
+<header id="header">
+	<div class="page_header_wrapper bg-dkblue">
+		<div class="container py-5">
+			<div class="row align-items-center">
+				<div class="col-6 offset-3 col-sm-4 offset-sm-4 col-lg-2 offset-lg-0 px-md-5 px-lg-4 mb-3 divider">
+					<a href="{site_url}"><img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="img-fluid brand-logo" alt="Keltec Technolab"></a>
+				</div>
+				<div class="col-12 col-lg-10 ms-1 ms-md-4">
+					<h1 class="text-white text-center text-lg-left">{layout:page_title}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+{!--{exp:kt_tools:check_user_logged_in}{logged_in_member_id}{/exp:kt_tools:check_user_logged_in}--}
+{par_summary_collapse}
+
+
+
+{layout:contents}

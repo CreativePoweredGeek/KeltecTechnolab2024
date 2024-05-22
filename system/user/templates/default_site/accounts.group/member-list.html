@@ -1,0 +1,44 @@
+{layout="layouts/_dashboard_single_full_col"}
+{par_user_stash_variables}
+{layout:set name="title"}Accounts List{/layout:set}
+	{layout:set name="page_title"}Accounts List{/layout:set}
+    {layout:set name="pageTitle"}Accounts List{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+
+
+
+
+
+<div class="col">
+    <table class="table table-striped">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th></th>
+						<th>Company</th>
+						<th>Contact</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{exp:visitor:memberlist member_group="5"}
+                        <tr>
+                            <td>{count}</td>
+                            <td>{member_customer_number}</td>
+                            <td>{member_company}</td>
+                            <td>{member_firstname} {member_lastname}</td>
+                            <td>{member_city} {member_state}</td>
+                            <td><a href="{path=accounts/dashboard}/{visitor:member_id}">View Profile</a></td>
+                        </tr>
+                    {/exp:visitor:memberlist}
+                </tbody>
+	</table>
+
+
+
+
+</div>

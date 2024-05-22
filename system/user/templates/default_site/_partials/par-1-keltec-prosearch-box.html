@@ -1,0 +1,24 @@
+<div class="card border-dark bg-light">
+    <div class="card-header bg-dkblue text-white">
+        Keltec Part# Search
+    </div>
+    <div class="card-body">
+        {exp:pro_search:form 
+            required="keywords"
+            collection="products" 
+            result_page="shop/kt-results"
+        }
+        <fieldset>
+            <div class="input-group input-group-lg">
+                <input type="search" name="keywords" placeholder="Enter a Keltec Part #" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary rounded-0" type="submit" value="submit" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+            </div>
+            {if pro_search_keywords_missing}<em>Keywords are required</em>{/if}
+        </fieldset>
+        {/exp:pro_search:form}
+    </div>
+</div> 

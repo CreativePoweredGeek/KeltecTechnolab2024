@@ -1,0 +1,39 @@
+{preload_replace:language_code="en"}
+<div class="card bg-light mb-3 rounded-0 border border-primary">
+	{exp:channel:entries channel="misc_content" disable="" url_title="search-for-products" dynamic="no"}
+	    <div class="card-header bg-dkblue text-white rounded-0 text-center">
+			    <b>Search by OEM#</b>
+		</div>
+		<div class="card-body rounded-0">
+
+      <p class="card-text">Enter your OEM# or keyword in the field below.</p>
+    {/exp:channel:entries}
+
+   {exp:search:simple_form
+	    channel="oem_lookup"
+	    result_page = "{embed:searchpage}/oem-results"
+	    no_result_page = "{embed:searchpage}/noresults"
+	    search_in="entries"
+	    status="open"
+		results="10" 
+	    where="exact"
+	}
+
+		<div class="input-group input-group-lg">
+		    <label for="keywords" class="sr-only">{search_en}:</label>
+		    <input type="text" class="form-control rounded-0 border border-primary" name="keywords" id="keywords" value="" aria-label="Input your search here" required>
+		    <div class="input-group-append">
+
+		      <button class="btn btn-primary rounded-0" type="submit" value="submit" aria-haspopup="true" aria-expanded="false">
+		      	<i class="fas fa-search"></i>
+		      </button>
+
+		    </div>
+		  </div>
+
+	{/exp:search:simple_form}
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">You Searched: {exp:search:keywords}</small>
+    </div>
+  </div>

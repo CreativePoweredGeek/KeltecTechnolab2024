@@ -1,0 +1,20 @@
+{if '{embed:price_code}' == "3"}
+
+{exp:kt_pricing:evaluate_price
+	customerID="{embed:customer}"
+	KTproduct="{embed:title}"
+	pPrice="{embed:price_3}"
+	pClass="{embed:class}"
+	pMAXdiscount="{embed:max_product_discount}" parse="last"
+}
+
+{if:else}
+{exp:kt_pricing:evaluate_price
+	customerID="{embed:customer}"
+	KTproduct="{embed:title}"
+	pPrice="{embed:price}"
+	pClass="{embed:class}"
+	pMAXdiscount="{embed:max_product_discount}" parse="last"
+}
+
+{/if}

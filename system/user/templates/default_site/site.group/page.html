@@ -1,0 +1,13 @@
+{layout="layouts/_single_column_layout"}
+
+{exp:channel:entries channel="miscellaneous_pages"}
+
+    {layout:set name="page_title"}{title}{/layout:set}
+    {layout:set name="title"}{title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+    <div class="col-md-10 offset-md-1">
+        {{language_code}_rich_text_block}
+    </div>
+{/exp:channel:entries}

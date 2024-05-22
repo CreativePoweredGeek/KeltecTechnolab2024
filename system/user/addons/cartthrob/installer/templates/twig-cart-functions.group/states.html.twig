@@ -1,0 +1,8 @@
+<select name="state">
+{% for state in exp.cartthrob.states %}
+    <option value="{{ state.abbrev }}">{{ state.state }}</option>
+{% endfor %}
+</select>
+
+<br />Outputs a list of US States
+<br />http://cartthrob.com/docs/tags_detail/states/

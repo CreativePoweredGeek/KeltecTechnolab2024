@@ -1,0 +1,58 @@
+{% extends "_layouts/main.twig" %}
+
+{% set selectedTab = 'main' %}
+
+{% set content %}
+
+        <div id="zenbu-main" class="table-list-wrap">
+
+            {% include "main/_filterForm.twig" %}
+
+            <div class="resultArea">
+
+                {% include "main/results.twig" %}
+
+            </div>
+
+        </div>
+
+        <div class="zenbu-modals">        
+            {% include "modals/displaySettings.twig" %}
+            {% include "modals/permissions.twig" %}
+            {% include "modals/saveSearch.twig" %}
+            {% include "modals/savedSearchesManager.twig" %}
+        </div>
+
+        <script>
+            var languageStrings = {{language_array|json_encode}};
+            var debugMode = {{ debug_mode }};
+            var startingChannelId = {{ starting_channel_id }};
+            var startingRows = {{ filters.rows ? filters.rows|json_encode : [["title", "contains", ""]]|json_encode }};
+            var startingLimit = {{ starting_limit }};
+            var startingOrderBy = "{{ starting_order_by }}";
+            var startingSort = "{{ starting_sort }}";
+            var startingPage = {{ page }};
+            var memberGroups = {{ member_groups|json_encode }};
+            var limitDropdownOptions = {{ limit_dropdown_options|json_encode }};
+        </script>
+
+    <style>
+        .section-header__title {
+            visibility: hidden;
+        }
+
+        .section-header__title:before {
+            content: "{{ "entry_manager"|t }}";
+            visibility: visible;
+        }
+
+        .breadcrumb {
+            display: none;
+        }
+    </style>
+
+{% endset %}
+
+{% set hookContent %}
+    {{hook_zenbu_main_content_end|default('')}}
+{% endset %}

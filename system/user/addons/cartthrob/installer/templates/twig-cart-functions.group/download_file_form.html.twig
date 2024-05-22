@@ -1,0 +1,7 @@
+{% set download_form = exp.cartthrob.download_file_form({file:"{theme_folder_url}../user/cartthrob/images/cartthrob_logo_bg.jpg"}) %}
+{{ download_form.form_open | raw }}
+	<input type="submit" value="submit" />
+{{ download_form.form_close | raw }}
+
+<br />Outputs a form used for downloading files in a more secure fashion than a standard link
+<br />http://cartthrob.com/docs/tags_detail/download_file_form/

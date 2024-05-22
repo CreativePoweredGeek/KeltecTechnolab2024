@@ -1,0 +1,16 @@
+{% extends "modals/index.twig" %}
+
+{% set modalName = 'saveSearch' %}
+
+{% set modalTitle = 'Save this search'|t %}
+
+{% set modalContent %}
+<div class="col-group">
+    <div class="col w-12">
+        <input type="text" name="saved_search_label" placeholder="Name this search" v-model="label">
+    </div>
+    <div class="col w-4">
+        <button type="submit" class="btn" @click="saveSearch(label)">Save</button>
+    </div>
+</div>
+{% endset %}

@@ -1,0 +1,12 @@
+{% for product in exp.channel.entries({channel:"products", limit:10}) %}
+title: {{ product.title }}<br />
+	{% for size in product.product_size %}
+		{{ size.option_name }}-{{ size.option_value }}-{{ size.price }}<br />
+    {% endfor %}
+<hr />
+{% endfor %}
+
+
+<br />Generates a select box based on the contents of a CartThrob Price Modifiers custom fieldtype
+<br />NOTE: example requires "products" channel and "product_color" price modifier field
+http://cartthrob.com/docs/tags_detail/price_modifiers/

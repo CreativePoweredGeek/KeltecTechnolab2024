@@ -1,0 +1,22 @@
+{layout="layouts/_dashboard_shell"}
+<div class="container-fluid">
+    <div class="row padding-two-percent">
+        <div class="col-8">
+            <h3>{layout:pageTitle}</h3>
+        </div>
+        <div class="col-4 text-right">
+            {layout:rightButton}
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row padding-two-percent">
+        {exp:query sql="SELECT member_id FROM exp_member_data_field_24 WHERE m_field_id_24 = '{layout:un}'"}
+    
+		   <p class="col-12">{member_id}</p>
+		
+		{/exp:query}
+
+    </div>
+</div>

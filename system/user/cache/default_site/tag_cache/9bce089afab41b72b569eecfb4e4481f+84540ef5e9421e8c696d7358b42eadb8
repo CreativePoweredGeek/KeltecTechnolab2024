@@ -1,0 +1,156 @@
+a:3:{s:4:"time";i:1709478095;s:3:"ttl";i:0;s:4:"data";s:4665:"{layout:set name="title"}Home{/layout:set}
+	{layout:set name="page_title"}Home{/layout:set}
+	{layout:set name="seo_description"}KELTEC Technolab offers OEM quality air compressor replacement parts, as well as air treatment accessories; dryers, compressor oil, coalescors{/layout:set}
+	{layout:set name="seo_canonical"}https://keltecinc.loc{/layout:set}
+
+		<div class="item-wrapper" style="margin-bottom:48px;">
+			<div class="main-head-wrap">
+				<div class="row">
+					<div class="col-md-8 offset-md-3">
+						<h2></h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{!-- ra:00000000000006560000000000000000 --}
+
+				
+					<div class="section">
+						<div class="row">
+				
+				
+				
+					
+						<h1 class="col-12 text-left">KELTEC Products Cover All Major Brands of OEM and Replacement Filters</h1>
+					
+				
+				
+				
+				
+				
+
+				
+			
+
+				
+				
+				
+				
+				
+					
+						<div class="col-md-3 pb-3"><img src="https://keltecinc.loc/assets/images/general/KELTEC_PRODUCTS-GROUP_2024.jpg" loading="lazy" class="img-fluid" alt="" title=""></div>
+					
+				
+				
+				
+
+				
+			
+
+				
+				
+				
+				
+					
+						<div class="col-md-8"><p>KELTEC Technolab specializes in designing, developing, and manufacturing an extensive selection of filtration solutions for compressed air and gas in a variety of industrial settings. Our product lineup is diverse, encompassing Compressed Air, Gas and Vacuum Filtration, Air/Oil Separators, Compressor Oil, Panel/HVAC Filtration, Replacement Dessicant, as well as Refrigerated Air Dryers.</p>
+
+ <p>KELTEC Technolab guarantees that its filters will meet or exceed the specifications and performance of the OEM, and further, that customers replacing OEM filters with KELTEC Technolab filters will experience no filter-related difficulty.</p></div>
+					
+				
+				
+				
+				
+
+				
+			
+
+				
+				
+					
+							</div>
+						</div>
+					
+
+					
+						<div class="section-divider ">
+							<div class="row">
+					
+				
+				
+				
+				
+				
+				
+
+				
+			
+
+				
+				
+				
+					
+						<h3 class="col-12 text-center">Our online ordering system provides accurate ship-dates!</h3>
+					
+				
+				
+				
+				
+				
+
+				</div></div>
+			{!-- ra:00000000000006550000000000000000 --}
+{layout:set name="carousel"}
+	
+		
+		<div class="carousel-item active"  data-interval="7000">
+	    	<img src="https://keltecinc.loc/assets/images/general/laser-etched.gif" class="d-block w-100" alt="...">
+			<div class="kt-carousel-caption">
+				<div class=" align-items-center">
+					<p class="col-md-6 offset-md-3">
+						<img src="https://keltecinc.loc/assets/images/keltec-technolab-color.png" class="col-12 col-md-10 brand-logo" alt=""style="margin-bottom:12px;">
+					</p>
+					<h5 class="lead-head text-dkblue d-none d-sm-block">Welcome to the largest manufacturer of performance air-oil separators in North America. </h5>
+					<p class="lead text-center d-none d-sm-block">
+						<a href="https://keltecinc.loc/products" class="btn btn-outline-primary btn-lg rounded-0">{products_en}</a>
+					</p>
+	      		</div>
+	    	</div>
+		</div>
+		
+	
+		
+		<div class="carousel-item"  data-interval="7000">
+	    	<img src="https://keltecinc.loc/assets/images/general/s-air.gif" class="d-block w-100" alt="...">
+			<div class="kt-carousel-caption">
+				<div class=" align-items-center">
+					<p class="col-md-6 offset-md-3">
+						<img src="https://keltecinc.loc/assets/images/keltec-technolab-color.png" class="col-12 col-md-10 brand-logo" alt=""style="margin-bottom:12px;">
+					</p>
+					<h5 class="lead-head text-dkblue d-none d-sm-block">We are committed to exceeding and improving upon the specifications of the OEM.</h5>
+					<p class="lead text-center d-none d-sm-block">
+						<a href="https://keltecinc.loc/products" class="btn btn-outline-primary btn-lg rounded-0">{products_en}</a>
+					</p>
+	      		</div>
+	    	</div>
+		</div>
+		
+	
+		
+		<div class="carousel-item"  data-interval="7000">
+	    	<img src="https://keltecinc.loc/assets/images/general/dryers.gif" class="d-block w-100" alt="...">
+			<div class="kt-carousel-caption">
+				<div class=" align-items-center">
+					<p class="col-md-6 offset-md-3">
+						<img src="https://keltecinc.loc/assets/images/keltec-technolab-color.png" class="col-12 col-md-10 brand-logo" alt=""style="margin-bottom:12px;">
+					</p>
+					<h5 class="lead-head text-dkblue d-none d-sm-block">KELTEC Refrigerated Dryers actively remove condensate to achieve extremely dry compressed air. </h5>
+					<p class="lead text-center d-none d-sm-block">
+						<a href="https://keltecinc.loc/products" class="btn btn-outline-primary btn-lg rounded-0">{products_en}</a>
+					</p>
+	      		</div>
+	    	</div>
+		</div>
+		
+	
+{/layout:set}";}

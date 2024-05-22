@@ -1,0 +1,20 @@
+{exp:channel:form channel="rma_portal" return="accounts/view-return/{segment_3}/success" 
+            include_jquery="yes" 
+            error_handling="inline" 
+            entry_id="{segment_3}"
+            status="REQUEST PENDING|REQUEST MORE INFORMATION|DENY RETURN|PROCESS RETURN"
+        }
+            
+           <div class="input-group col-md-8">
+            {status_menu}
+                <select name="status" class="custom-select" id="inputGroupSelect04">
+                        {select_options}
+                    </select>
+           {/status_menu}
+            <div class="input-group-append">
+                <button type="submit" class="submit_button btn btn-primary" name="submit">Submit</button>
+            </div>
+            </div>
+            
+           
+        {/exp:channel:form}

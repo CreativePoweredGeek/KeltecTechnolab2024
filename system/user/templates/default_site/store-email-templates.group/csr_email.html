@@ -1,0 +1,69 @@
+{preload_replace:template_group="store"}
+
+{exp:mx_email_from_template 
+	to="rkern@labelchain.io" 
+	cc="" 
+	bcc="" 
+	from="weborders@keltecinc.com" 
+	subject="A Customer Has Placed a New Order"}
+	   	   
+	   
+<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+	<tr>
+		<td><img src="{site_url}assets/images/keltec-technolab-color.png" width="150px" height=""></td>
+		<td style="text-align:right;font-size:18px;font-family:arial, sans-serif;"><b>A new order has been placed.</b></td>
+	</tr>
+	<tr>
+		<td style="font-size:12px;color:#000000;font-family:arial, sans-serif;">
+			<p>2300 E. Enterprise Pkwy.<br>
+			Twinsburg, OH 44087<br>
+			USA<br>
+			Telephone: 330-425-3100</p>
+		</td>
+		<td style="font-size:14px;color:#000000;font-family:arial, sans-serif;">
+			
+		</td>
+	</tr>
+</table>
+
+<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+	<tr>
+		<td>
+			<h3>Order Subtotal: {embed:cart_total}</h3>
+			<p>Hello {embed:csrname},<br>
+				One of your customers just placed a Web Order. You can view the order information at the link below.</p>
+
+		</td>
+	</tr>
+	<tr>	
+		<td style="padding:24px 0px;">	
+			
+			<p>
+   {!-- encrypting a link to this invoice so it can be stored and shared --}
+   <a target="_blank" 
+		href="{site_url}store/invoice/{exp:cartthrob:view_encrypted_string string='{embed:order_id}'}"
+		style="padding:8px 14px; background-color: #4EACE9;color:#ffffff;">
+			View invoice &raquo; </a> 
+		   
+</p>			
+		</td>
+	</tr>
+</table>	   
+
+<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+	<tr>
+		<td>
+			<hr>
+		</td>
+	</tr>
+	<tr>
+		<td style="font-size:12px;color:#000000;font-family:arial, sans-serif;">
+			This email is intended for KELTEC Technolab CSR's and Administrators as a notice of when a customer places an order in the KELTEC Technolab online store. 
+			
+		
+		</td>
+	</tr>
+</table>
+   
+
+{/exp:mx_email_from_template}

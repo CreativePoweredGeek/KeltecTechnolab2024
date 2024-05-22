@@ -1,0 +1,39 @@
+{layout="_layouts/_member_list_layout"}
+{exp:member:custom_profile_data}
+    {layout:set name="customerId"}{if customer_number == ""}{username}{if:else}{customer_number}{/if}{/layout:set}
+    {layout:set name="paycode"}{pay_code}{/layout:set}
+    {layout:set name="country"}{country}{/layout:set}
+	{layout:set name="user"}{username}{/layout:set}
+{/exp:member:custom_profile_data}
+{layout:set name="css"}{/layout:set}
+{layout:set name="js"}{/layout:set}
+{layout:set name="pageTitle"}Customer List for {screen_name}{/layout:set}
+{layout:set name="rightButton"}{/layout:set}
+
+{layout:set name="tabledata"}
+
+		{exp:query paginate="bottom" limit="10" sql="SELECT * FROM exp_members WHERE username LIKE '%{segment_3}%'"}
+
+            {if no_results}<p>No Data Found</p></tbody></table>{/if}
+			{exp:member:custom_profile_data member_id="{member_id}"}
+                <tr><td>{customer_number}</td>
+            	<td>{company}</td>
+                <td>{city}, {state}</td>
+                <td>{first_name} {last_name}</td>
+                <td><a href="{site_url}accounts/orders/{username}">Orders</a></td>
+                <!--<td><a href="{site_url}accounts/returns/{username}">RMAs</a></td>-->
+                <td>
+					<button data-id='{member_id}' class='userinfo'>Info</button>
+					<!--<a href="{site_url}accounts/dashboard/{member_id}/{username}">Profile</a>--></td></tr>
+            {/exp:member:custom_profile_data}
+
+			{if '{count}' == '{total_results}'}
+                    </tbody>
+                </table>
+                    {paginate}
+                        <p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+                    {/paginate}
+            {/if}
+     {/exp:query}
+
+{/layout:set}

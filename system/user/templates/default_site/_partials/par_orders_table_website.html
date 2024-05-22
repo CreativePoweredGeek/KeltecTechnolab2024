@@ -1,0 +1,88 @@
+		{!--{if segment_3 !=""}
+			{exp:channel:entries channel="orders" search:customer_number="={segment_3}" status="order placed|sales order issued|shipped" parse="inward"}
+		{if:else}--}
+			{!-- Changed the query to use the logged in user ID rather than search on Customer number. 06/06/20 3:45pm --}
+			{exp:channel:entries
+			channel="orders"
+			search:customer_number="={customer}"
+			status="not open|close"
+			orderby="date" sort="desc" limit="200"
+			parse="inward"}
+		{!--{/if}--}
+				{if no_results}
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>No Orders Yet</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				{/if}
+
+				<tr{if status == 'Shipped'} class="table-success" {if:elseif status == 'Partial Shipped'} class="table-partialshipped"{/if}>
+
+					<td>{if so_number !=""}
+
+					<a href="{path='accounts/order-detail/{entry_id}'}" class="">{so_number}</a>
+
+					{if:else}--{/if}</td>
+					<td style="line-height:1">{entry_date format="%n/%d/%Y"}<br><small>{entry_date format="%g:%i:%s %a"}</small></td>
+					<td>{customer_po}</td>
+					<td><span class="badge badge-pill
+					{if status == 'Shipped'}
+						badge-success
+					{if:elseif status == 'Partial Shipped'}
+						badge-partialshipped
+					{if:elseif status == 'Sales Order Issued'}
+						badge-info
+					{if:else}
+						badge-secondary
+					{/if}">{if status == 'Closed'}Credit Card Transaction failed. <a href="">Try Again</a> {if:else}{status}{/if}</span></td>
+					<td>{order_subtotal}</td>
+
+					<td>{order_shipping_instruction:label}</td>
+
+					{!--<td>{if status == 'Shipped'}
+
+						{if:elseif status == "Payment - Failed"}
+							<a href="">Try Again</a>
+						{if:elseif order_transaction_id ~ "/^\d+$/"}
+							{order_transaction_id}
+						{if:elseif order_transaction_id == 'OFFLINE PAYMENTS' && status != 'Shipped'}
+
+							<!--<a href="{site_url}store/payment/{entry_id}">Pay Now</a>-->
+						{if:else}
+							<!--<a href="{site_url}store/payment/{entry_id}">Pay Now</a>-->
+						{/if}
+					</td> --}
+					<td>{shipping_method}</td>
+					<td>
+						{exp:keltec_shipping:tracking_links shipvia="{shipping_method}" tracking="{order_tracking_number}"}
+					</td>
+					<td>
+						{!--{if order_tracking_number}{if:else}{embed="embeds/expected_ship" order_id="{entry_id}"}{/if}--}
+						{if order_shipping_instruction:label == "Complete"}
+							{order_items orderby="expected_ship" sort="desc" limit="1"}
+							{expected_ship format="%m/%d/%Y"}
+							{/order_items}
+						{if:else}
+
+							{order_items orderby="expected_ship" sort="asc"}
+							{expected_ship format="%m/%d/%Y"}<br>
+							{/order_items}
+
+						{/if}
+					</td>
+					<td class="text-right">
+						<a target="_blank" class="btn btn-outline-primary rounded-0 btn-sm" href="{path=store/invoice}/{exp:cartthrob:view_encrypted_string string='{entry_id}'}"><i class="fas fa-file-invoice"></i></a>
+						<a href="{path='accounts/order-detail/{entry_id}'}" class="btn btn-outline-primary rounded-0 btn-sm"><i class="fas fa-eye"></i></a>
+						{par_edit_this_link}
+					</td>
+				</tr>
+
+{/exp:channel:entries}

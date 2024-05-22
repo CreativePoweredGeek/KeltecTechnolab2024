@@ -1,0 +1,143 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:"View Cart" } %}
+
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+{!-- since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements--}
+<div class="container">
+    {!-- twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows --}
+    <div class="row">
+
+        {!-- twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up --}
+        <div class="span3">
+            <div class="bs-docs-sidenav">
+                {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+                {% set cart_items = exp.cartthrob.cart_items_info({limit:"1", order_by:"entry_id", sort:"desc"})  %}
+                {% for entry in cart_items %}
+                    {% include('ee::default_site.' ~template_group~ '._also_purchased') with {entry_id:entry.entry_id} %}
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="span9">
+            <section id="shopping-cart">
+                <h1>Shopping Cart</h1>
+                {% if exp.cartthrob.total_items_count() == '0' %}
+                    <p>You have no items in your cart. <a href="{{ exp.path(template_group) }}">Continue shopping.</a></p>
+                {% endif %}
+
+                {% set update_cart_form = exp.cartthrob.update_cart_form({
+                    class:"form-horizontal",
+                    id:"update_cart_form",
+                    return:template_group~"/"~template})
+                %}
+
+                {{ update_cart_form.form_open | raw }}
+
+                {% for item in exp.cartthrob.cart_items_info() %}
+                <div class="row">
+                    <div class="span5">
+                        <h3>{{ item.title }}</h3>
+                        <h4>{{ item.item_price }} {% if item.quantity > '1' %}<small> x {{ item.quantity }} = {{ item.item_subtotal }}</small>{% endif %}</h4>
+
+                        {% if item.no_tax !="1" %}<small>Price including tax {{ item.price_plus_tax_numeric }} x {{ item.quantity }} = {{ item.item_subtotal_plus_tax }}</small>{% endif %}
+                        {% if item.is_package != 0 %}fdsa
+                        {!-- Since the item is a package, you can offer a method of updating the item options
+                        for each item in the package. --}
+                        <h4>Packaged Items</h4>
+                        {package}
+                        <h5>{sub:title} - {sub:entry_id} <small>{sub:price}</small></h5>
+
+                        {exp:cartthrob:item_options row_id="{sub:row_id}"}
+                        {if options_exist}
+                        {if allow_selection}
+                        <div class="control-group">
+                            <label class="control-label" for="{option_field}">{option_label}</label>
+                            <div class="controls">
+                                {select}
+                                <option {selected} value="{option_value}">
+                                    {option_name}{if option_price_numeric != 0} +{option_price}{/if}
+                                </option>
+                                {/select}
+                            </div>
+                        </div>
+                        {if:else}
+                        {options}{if selected}<h6>{option_label}: {option_name} {if option_price_numeric != 0} +{option_price}{/if}</h6>{/if}{/options}
+                        {/if}
+                        {/if}
+                        {/exp:cartthrob:item_options}
+                        {/package}
+
+                        {% else %}
+                            {% for option in exp.cartthrob.item_options({row_id:item.row_id}) %}
+                                {% if option.dynamic %}
+                                    <label class="control-label" for="{option.option_field}">{{ option.option_label }}</label>
+                                    <div class="controls"><input type="text" name="item_options[{{ item.row_id }}][{{ option.option_field }}]" value="{{ option.option_value }}"></div>
+                                {% else %}
+                                    {% if option.options_exist %}
+                                        <div class="control-group">
+                                            <label class="control-label" for="{{ option.option_field }}_{{ item.row_id }}">{{ option.option_label }}</label>
+                                            <div class="controls">
+                                                <select class="input-medium"
+                                                        name="item_options[{{ item.row_id }}][{{ option.option_field }}]"
+                                                        id="{{ option.option_field }}_{{ item.row_id }}"
+                                                >
+                                                    {% for option_item in option.options %}
+                                                        <option value="{{ option_item.option_value }}"
+                                                                {% if item.selected_options[option.option_field] == option_item.option_value %}
+                                                                    selected="selected"
+                                                                {% endif %}
+                                                        >
+                                                            {{ option_item.option_name }}{% if option_item.price != '' and option_item.price != 0 %} +${{ option_item.price }}{% endif %}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="control-group">
+                            <label for="product_quantity_{{ item.row_id }}" class="control-label">Quantity</label>
+                            <div class="controls">
+                                <input type="text" id="product_quantity_{{ item.row_id }}" placeholder="1" name="quantity[{{ item.row_id }}]" size="8"  value="{{ item.quantity }}" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="checkbox" for="delete_this_{{ item.row_id }}">
+                                    <input type="checkbox" id="delete_this_{{ item.row_id }}" value="yes" name="delete[{{ item.row_id }}]">
+                                    <span class="label">Remove this item?</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="span2">
+
+                    </div>
+                </div>
+                {% if loop.last %}
+                <div class="control-group">
+                    <div class="form-actions">
+                        <button type="submit" value="{{ exp.path(template_group ~ '/view_cart/') }}" name="return" class="btn">Update</button>
+                        <button type="submit" value="{{ exp.path(template_group ~ '/checkout/') }}" name="return" class="btn btn-primary">Proceed to Checkout</button>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ update_cart_form.form_close | raw }}
+            </section>
+        </div>
+    </div>
+</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

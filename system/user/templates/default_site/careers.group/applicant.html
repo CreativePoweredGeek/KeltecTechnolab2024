@@ -1,0 +1,45 @@
+{layout="layouts/_single_column_layout"}
+
+
+	{layout:set name="title"}Applications{/layout:set}
+	{layout:set name="page_title"}Applicant{/layout:set}
+	{layout:set name="seo_description"}{default_seo_description_{language_code}}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+	
+	
+	
+{exp:channel:entries channel="job_applications"}	
+	
+	
+	<div class="col-4">
+		<div class="card">
+		  <div class="card-body">
+		    <h5 class="card-title">{title}</h5>
+		    <h6 class="card-subtitle mb-2 text-muted">{interested_position_types}</h6>
+		    <p class="card-text">
+			    <strong>em: </strong>{applicants_email}<br>
+				<strong>ph: </strong>{applicants_phone}
+		    </p>
+		    <p><strong>Comments: </strong><br>{comments}</p>
+		    
+		    <a href="{resume_upload}" class="card-link">Resume</a>
+			<p class="card-text"><small class="text-muted">{entry_date format="%F %d %Y"}</small></p>
+		  </div>
+		</div>	
+	</div>
+	
+	
+{/exp:channel:entries}
+
+
+	
+	
+	
+	
+	{layout:set name="sidebar"}
+		<h4>Sign up for our Mailing List</h4>
+		{par_mailinglist_ac_form}
+	
+	
+	{/layout:set}

@@ -1,0 +1,71 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+{embed="store/_new_header" template_group="{template_group}" template="{template}" title="Checkout" pagetitle="Checkout"}
+<div class="container">
+	<div class="row">
+        <div class="col-md-12">
+            <h2 class="checkouthd">Step 2: Select a Shipping Option</h2>
+           
+            <div class="row">
+                <div class="col-md-4 offset-md-2">
+                    <h4>Ship To:</h4>
+                        {if segment_3 == 'self'}
+                            {exp:cartthrob:customer_info}
+                                <p class="lead">
+                                    <b>{customer_company}</b> <br>
+                                    
+                                    {customer_address}<br>{customer_city}, {customer_state}<br>
+                                    {customer_zip}<br>
+                                    {customer_country_code}</p>
+                            {/exp:cartthrob:customer_info}
+                            <p><a href="{site_url}{language_code}/store/checkout-shipping" class="btn btn-outline-primary rounded-0">Change</a></p>
+                        {if:else}
+                            {exp:channel:entries 
+                                channel="customer_shipping_addresses" 
+                                entry_id="{segment_3}"
+                                dynamic="no" 
+                            }
+                            <p class="lead">
+                                <b>{title}</b><br>
+                                {cs_address_1}<br>{cs_city}, {cs_state} {cs_zip}<br>
+                                {cs_country}</p>
+                                <p><b>ATTN:</b> {contact_first_name} {contact_last_name} <br>
+                                <b>Phone:</b> {cs_phone}</p>
+                            <a href="{site_url}{language_code}/store/checkout-shipping" class="btn btn-outline-primary rounded-0">Change</a>
+                            {/exp:channel:entries}
+                        {/if}
+
+                </div>
+                <div class="col-md-4">
+                    <h4>Select a Shipping Method: {exp:stash:get name="ups_collect"}</h4>
+                    
+                    <div class="list-group">
+                        <a href="{site_url}{language_code}/store/checkout/{segment_3}/kt" class="list-group-item list-group-item-action bg-warning">Use KELTEC Shipping</a>
+                        {exp:member:custom_profile_data}
+                        {if ups_collect_number != ""}
+                        <a href="{site_url}{language_code}/store/checkout/{segment_3}/ups" class="list-group-item list-group-item-action">
+                            Use My UPS Collect Number - {ups_collect_number}
+                        </a>
+                        {/if}
+                        {if fedex_collect_number != ""}
+                        <a href="{site_url}{language_code}/store/checkout/{segment_3}/ups" class="list-group-item list-group-item-action">
+                            Use My FedEx Collect Number - {fedex_collect_number}
+                        </a>
+                        {/if}
+                    {/exp:member:custom_profile_data}
+                </div>
+                        <p class="text-muted" style="margin-top:24px;">NOTE: If you have your own UPS or FedEx Collect number you would like use and it is not listed above, 
+                        go to the <a href="{site_url}en/accounts/dashboard">Dashboard</a> and add it to your "Shipping Preferences" and then return here.</p>
+                    
+    
+
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+
+{embed="store/_new_footer" template_group="{template_group}" template="{template}"}

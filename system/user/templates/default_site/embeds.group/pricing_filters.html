@@ -1,0 +1,66 @@
+{embed="embeds/pricing_filters" 
+	customerID="" 
+	KTproduct="" 
+	pPrice="" 
+	pClass="" 
+	pMAXdiscount="" 
+}
+	
+{exp:channel:entries 
+	channel="customer_contract_pricing" 
+	disable="pagination|categories|category_fields|member_data" 
+	search:customer_number="{embed:customerID}"
+	search:keltec_number="{embed:KTproduct}"
+}
+	{if no_results}
+		{!-- SEARCH FOR DISCOUNTS --}
+		
+	{/if}
+	
+	{!-- PRESENT CUSTOM PRICE --}
+		{price}
+		
+{/exp:channel:entries}		
+		
+
+{!-- SEARCH FOR CLASS DISCOUNTS --}		
+{exp:channel:entries 
+	channel="customer_discounts" 
+	disable="pagination|categories|category_fields|member_data" 
+	search:customer_number="={embed:customerID}"
+	search:class="={embed:pClass}"
+}
+		
+	
+	{if discount > pMAXdiscount}
+		{!--Calculate pMAXdiscount--}
+	
+	{if:else}
+		{!--Calculate discount--}
+	
+	{/if}
+{/exp:channel:entries}
+
+
+
+
+
+
+
+
+
+{!-- SEARCH FOR BLANKET DISCOUNTS --}		
+{exp:channel:entries 
+	channel="customer_discounts" 
+	disable="pagination|categories|category_fields|member_data" 
+	search:customer_number="={embed:customerID}"
+	search:class="BLANKET"
+}
+
+
+
+
+
+
+{/exp:channel:entries}
+

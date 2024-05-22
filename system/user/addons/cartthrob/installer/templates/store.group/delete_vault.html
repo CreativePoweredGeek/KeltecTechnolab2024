@@ -1,0 +1,59 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+
+
+{embed="{template_group}/_header" title="Create a Payment Method" template_group="{template_group}" template="{template}" }
+
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+{embed="{template_group}/_navbar" template_group="{template_group}" template="{template}"}
+
+{embed="{template_group}/_subhead" template_group="{template_group}" template="{template}"}
+
+{!-- since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements--}
+<div class="container">
+  {!-- twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows --}
+  <div class="row">
+
+    {!-- twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up --}
+    <div class="span3">
+      <div class="bs-docs-sidenav">
+        {embed="{template_group}/_leftnav" template_group="{template_group}" template="{template}"}
+        {embed="{template_group}/_also_purchased" template_group="{template_group}" template="{template}"}
+      </div>
+
+    </div>
+
+    <div class="span9">
+      <section id="about-us">
+        <div class="row">
+          <div class="span6">
+            <h1>Delete a Payment Method</h1>
+            {exp:cartthrob:delete_vault_form
+              error_handling="inline"
+              class="form-horizontal"
+              vault_id="{segment_3}"
+              return="{template_group}/vaults/deleted"
+            }
+
+            {name} <br />
+            {vault_gateway} <br />
+            {token} <br />
+
+            <div class="control-group">
+              <div class="form-actions">
+                {!-- do not add a name attribute to your submit button if you want it to work with stripe payment gateway --}
+                <input type="submit" id="delete_vault_bttn" class="btn btn-success"  value="Delete Payment Method" />
+              </div>
+            </div>
+            {/exp:cartthrob:delete_vault_form}
+
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+{embed="{template_group}/_footer" template="{template}" template_group="{template_group}"}

@@ -1,0 +1,46 @@
+{preload_replace:headline="YOUR SALES ORDER HAS BEEN ISSUED"}
+ 	<table width="600" cellpadding="5" cellspacing="0">
+		<tr>
+			<td>
+				<img src="{site_url}assets/images/keltec-technolab-color.png" width="200px" height="">
+
+			</td>
+		</tr>
+	</table>
+	{exp:cartthrob:submitted_order_info}
+		<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+		<tr>
+			<td><img src="{site_url}assets/images/keltec-technolab-color.png" width="150px" height=""></td>
+			<td style="text-align:right;font-size:18px;font-family:arial, sans-serif;"><b>{headline}</b></td>
+		</tr>
+		<tr>
+			<td style="font-size:12px;color:#000000;font-family:arial, sans-serif;">
+				<p>2300 E. Enterprise Pkwy.<br>
+				Twinsburg, OH 44087<br>
+				USA<br>
+				Telephone: 330-425-3100</p>
+			</td>
+			<td style="font-size:14px;color:#000000;font-family:arial, sans-serif;">
+				<p style="text-align:right;"><b>Sales Order:</b> {so_number}</p>
+				<p style="text-align:right;"><b>Customer Number:</b> {member_customer_number}</p>
+			</td>
+		</tr>
+	</table>
+
+
+ 	<table width="600" cellpadding="5" cellspacing="0">
+		<tr>
+			<td>
+				<h2>Your Sales Order Number has been issued: {so_number}</h2>
+			</td>
+		<tr>
+	
+	
+	
+	
+	</table>
+
+
+
+
+	{/exp:cartthrob:submitted_order_info}

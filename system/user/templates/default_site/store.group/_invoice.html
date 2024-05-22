@@ -1,0 +1,297 @@
+{par_user_stash_variables}
+{preload_replace:headline="THANK YOU FOR YOUR ORDER"}
+{!--This template is embedded so that we can decrypt and pass the invoice ID to it so that it can be viewed offline --}
+{exp:channel:entries channel="orders" limit="1" status="not none" dynamic="no" entry_id="{embed:entry_id}" parse_inward="yes" show_future_entries="yes" disable="categories|category_fields|member_data|pagination"}
+{if no_results}This invoice could not be found{/if}
+<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+		<tr>
+			<td><img src="{site_url}assets/images/keltec-technolab-color.png" width="150px" height=""></td>
+			<td style="text-align:right;font-size:18px;font-family:arial, sans-serif;"><b>{headline}</b></td>
+		</tr>
+		<tr>
+			<td style="font-size:12px;color:#000000;font-family:arial, sans-serif;">
+				<p>2300 E. Enterprise Pkwy.<br>
+				Twinsburg, OH 44087<br>
+				USA<br>
+				Telephone: 330-425-3100</p>
+			</td>
+			<td style="font-size:14px;color:#000000;font-family:arial, sans-serif;">
+				<p style="text-align:right;"><b>Sales Order:</b> {if so_number != ""}{so_number}{if:else}UNASSIGNED{/if}</p>
+				<p style="text-align:right;"><b>Customer Number:</b> {customer_number}</p>
+			</td>
+		</tr>
+	</table>
+
+
+{!-- invoice template  Add your store information somewhere on this invoice! --}
+		<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+			<tr>
+				<td valign="top" align="left" style="font-size:12px;color:#000000;font-family:arial, sans-serif;"><br>
+					
+					<table cellspacing="0" cellpadding="2" bgcolor="#000000" width="100%">
+						<tr>
+							<td><span style="color:#ffffff;font-size:14px;">Order Data</span></td>
+						</tr>
+					</table>
+					
+					<hr>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<tr>
+							<td width="50%" valign="top">
+								<span style="font-size:14px; font-weight:bold; ">Billing</span><br>
+								<p><span style="font-size:12px; ">   
+									{order_billing_company}<br>
+									{order_billing_address}<br>
+									{if order_billing_address2}{order_billing_address2}<br>{/if}
+									{order_billing_city}, {order_billing_state} {order_billing_zip}<br>
+									{if order_country_code}{order_country_code}<br>{/if}
+									<b>Contact:</b> {order_billing_first_name} {order_billing_last_name}<br>
+									<b>Email: </b>{if order_billing_email}{order_billing_email}{if:else}{order_customer_email}{/if}<br>
+									<b>Telephone: </b>{if order_billing_phone}{order_billing_phone}{if:else}{order_customer_phone}{/if}
+								</span></p>
+							</td>
+							<td valign="top" width="50%">
+								<span style="font-size:14px; font-weight:bold;">Shipping</span><br>
+								<p><span style="font-size:12px; ">   
+									{if order_shipping_address}
+										{order_shipping_company}<br>
+										{order_shipping_address}<br>
+										{if order_shipping_address2}{order_shipping_address2}<br>{/if}
+										{order_shipping_city}, {order_shipping_state} {order_shipping_zip}<br>
+										{if order_shipping_country_code}{order_shipping_country_code}<br>{/if}
+										<b>Contact:</b> {order_shipping_first_name} {order_shipping_last_name}<br>
+										<b>Email: </b>{order_shipping_email}<br>
+										<b>Telephone: </b>{order_shipping_phone}
+									{if:else}
+										{order_billing_company}<br>
+										{order_billing_address}<br>
+										{if order_billing_address2}{order_billing_address2}<br>{/if}
+										{order_billing_city}, {order_billing_state} {order_billing_zip}<br>
+										{if order_country_code}{order_country_code}<br>{/if}
+										<b>Contact:</b> {order_billing_first_name} {order_billing_last_name}<br>
+										<b>Email: </b>{if order_billing_email}{order_billing_email}{if:else}{order_customer_email}{/if}<br>
+										<b>Telephone: </b>{if order_billing_phone}{order_billing_phone}{if:else}{order_customer_phone}{/if}
+									{/if}
+								</span></p>
+							</td>
+						</tr>
+					</table>
+					<hr>
+
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top" width="50%">
+								<span style="font-size:12px;font-weight:bold;">Order Date: </span> 
+								<span style="font-size:12px;">{entry_date format="%M %d %Y"}</span>
+							</td>
+							<td valign="top" width="50%">
+								<span style="font-size:12px;font-weight:bold;">PO Number: </span> 
+								<span style="font-size:12px;">{customer_po}</span>
+							</td>
+						</tr>
+					</table>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">Order By: </span> 
+								<span style="font-size:12px;">WebCustomer</span>
+							</td>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">Terms: </span> 
+								<span style="font-size:12px;">
+									{customer_pay_code}
+								</span>
+							</td>
+						</tr>
+					</table>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">Salesperson: </span> 
+								<span style="font-size:12px;">
+								{order_csr}
+								</span>
+							</td>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">Ship Via: </span> 
+								<span style="font-size:12px;">{shipping_method}</span>
+							</td>
+						</tr>
+					</table>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">Expected Ship Date:</span> 
+								<span style="font-size:12px;">{embed="embeds/expected_ship" order_id="{embed:entry_id}"}</span>
+							</td>
+							<td valign="top" width="50%">
+								<span style="font-size:12px; font-weight:bold;">FOB: </span> 
+								<span style="font-size:12px;">{fob}</span>
+							</td>
+						</tr>
+					</table>
+					
+					<hr>
+					<p>Total number of purchased items: {order_items:total_results}.</p>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<thead style="background-color:#666666">
+							<tr>
+								<td></td>
+								<td><span style="font-size:12px;font-weight:bold;color:#ffffff;">ID</span></td>
+								<td><span style="font-size:12px;font-weight:bold;color:#ffffff;">Description</span></td>
+								<td align="left"><span style="font-size:12px;font-weight:bold;color:#ffffff;">Ship</span></td>
+								<td align="left"><span style="font-size:12px;font-weight:bold;color:#ffffff;">Whse</span></td>
+								<td align="center"><span style="font-size:12px;font-weight:bold;color:#ffffff;">Qty</span></td>
+								<td align="center">&nbsp;</td>
+								
+								<td align="right"><span style="font-size:12px;font-weight:bold;color:#ffffff;">Price</span></td>
+								<td align="right"><span style="font-size:12px;font-weight:bold;color:#ffffff;">Item Total</span></td>
+								<td align="center">&nbsp;</td>
+							</tr>
+						</thead>
+						<tbody>
+							{exp:cartthrob:order_items order_id="{entry_id}" orderby="requested_warehouse"}
+								<tr class="{item:switch="odd|even"}">
+									<td><span style="font-size:12px;">{item:count}.</span></td>
+									<td><span style="font-size:12px;">{item:title}</span></td>
+									<td><span style="font-size:12px;">
+										{item:label_description}
+										
+										</span></td>
+									<td align="left"><span style="font-size:12px;">{item:expected_ship format="%m/%d/%y"}</span></td>
+									<td align="left"><span style="font-size:12px;">{if '{item:requested_warehouse}' == 'MAIN'}OH{if:else}{item:requested_warehouse}{/if}</span></td>
+									<td align="center"><span style="font-size:12px;">{item:quantity}</span></td>
+									<td align="center">&nbsp;</td>
+									<td align="right"><span style="font-size:12px;">{item:price}</span></td>
+									<td align="right">
+										<span style="font-size:12px;">
+											{item:subtotal}
+										</span>
+									</td>
+									<td align="right">
+										{if item:product_download_url}
+										<span style="font-size:12px;"><a href="{exp:cartthrob:get_download_link field='product_download_url' entry_id='{item:entry_id}'}">Download</a></span>
+										{/if}
+									</td>
+								</tr>
+							{/exp:cartthrob:order_items}
+							<tr>
+								<td><span style="font-size:12px;">&nbsp;</span></td>
+								<td colspan="3">&nbsp;</td>
+								<td><span style="font-size:12px;">&nbsp;</span></td>
+								<td><span style="font-size:12px;">&nbsp;</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<hr>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<tr>
+							<td align="right">
+								<table cellspacing="0" cellpadding="2">
+									<tr>
+										<td valign="top" align="right"><span style="font-size:12px;">Shipping:</span></td>
+										<td valign="top" align="right"></td>
+										<td valign="top" align="right"><span style="font-size:12px;">{if order_shipping == "0.00"}TBD{if:else}{order_shipping}{/if}</span></td>
+									</tr>
+									
+									<tr>
+										<td valign="top" align="right">&nbsp;</td>
+										<td valign="top" align="right"></td>
+										<td valign="top" align="right"><span style="font-size:12px;"></span></td>
+									</tr>
+									<tr>
+										<td valign="top" align="right"><span style="font-size:14px;font-weight:bold;">Subtotal:</span></td>
+										<td valign="top" align="right"></td>
+										<td valign="top" align="right"><span style="font-size:14px;font-weight:bold;">{order_total}</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+<!-- COMMENTS -->
+	<table width="600" cellpadding="5" cellspacing="0" style="margin-left:auto;margin-right:auto;">
+		<tr>
+			<td style="font-size:12px;color:#000000;font-family:arial, sans-serif;">	
+				<hr>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top">
+								<span style="font-size:12px;"><b>REMARKS:</b> CUSTOMER SERVICE NOTES</span>
+							</td>
+						</tr>
+					</table>		
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top">
+								<span style="font-size:12px;">MADE TO ORDER PARTS AND SPECIALS ARE NON-RETURNABLE AND CAN NOT
+BE CANCELLED ONCE PRODUCTION HAS STARTED</span>
+							</td>
+						</tr>
+					</table>
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top">
+								<span style="font-size:12px;">RETURNS MADE WITHOUT AN AUTHORIZED RMA NUMBER WILL BE
+REFUSED</span>
+							</td>
+						</tr>
+					</table> 
+					<table cellspacing="0" cellpadding="2" width="100%">
+						<tr>
+							<td valign="top">
+								<span style="font-size:12px;">All invoices are subject to KELTEC Technolab "<a href="{site_url}en/site/sales-order-terms-conditions" target="_blank">Terms and Conditions</a>"</span>
+							</td>
+						</tr>
+					</table>
+					
+					{if order_ups_collect_number !=""}
+						<table cellspacing="0" cellpadding="2" width="100%">
+							<tr>
+								<td valign="top">
+									<span style="font-size:12px;"><b>UPS COLLECT:</b> {order_ups_collect_number}</span>
+								</td>
+							</tr>
+						</table>
+					{/if}
+					{if order_fedex_collect_number !=""}
+						<table cellspacing="0" cellpadding="2" width="100%">
+							<tr>
+								<td valign="top">
+									<span style="font-size:12px;"><b>FEDEX COLLECT:</b> {order_fedex_collect_number}</span>
+								</td>
+							</tr>
+						</table>
+
+					{/if}
+					{if order_shipping_instruction !=""}
+						<table cellspacing="0" cellpadding="2" width="100%">
+							<tr>
+								<td valign="top">
+									<span style="font-size:12px;"><b>SHIP ORDER:</b> {order_shipping_instruction}</span>
+								</td>
+							</tr>
+						</table>
+
+					{/if}
+					{if other_shipping_notes !=""}
+						<table cellspacing="0" cellpadding="2" width="100%">
+							<tr>
+								<td valign="top">
+									<span style="font-size:12px;"><b>OTHER SHIPPING COMMENTS:</b><br>
+									{other_shipping_notes}
+									</span>
+								</td>
+							</tr>
+						</table>
+
+					{/if}
+
+
+			</td>
+		</tr>
+	</table>
+	{/exp:channel:entries}

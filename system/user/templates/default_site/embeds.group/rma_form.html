@@ -1,0 +1,83 @@
+<fieldset>
+    <legend>Return Authorization Form - {exp:stash:get name="customer_number"}</legend>
+    {exp:channel:form channel="rma_portal" return="accounts/create-return/success" include_jquery="yes" error_handling="inline"}
+  
+ {if global_errors:count > 0 OR field_errors:count > 0}
+        <ul class="errors">
+            {global_errors}
+            <li>{error}</li>
+            {/global_errors}
+            {field_errors}
+            <li>{error}</li>
+            {/field_errors}
+        </ul>
+    {/if}
+
+
+    <input type="hidden" value="{current_time format='%Y%m%d%H%i%s}" 
+        class="form-control" name="title" id="title" aria-describedby="" placeholder="">
+    <input type="hidden" name="url_title" value="{current_time format='%Y%m%d%H%i%s}">
+    <input type="hidden" name="customer_number"  value="{exp:stash:get name='customer_number'}">
+    <input type="hidden" name="rma_number" value="TBA">
+   <div class="row"><div class="col"> 
+   <div class="form-group">
+        <label for="customer_contact_email">*Customer Contact Email:</label><div class="error">{error:customer_contact_email}</div>
+        <input type="text" class="form-control" name="customer_contact_email" value="{email}" id="customer_contact_email" placeholder="" required>
+    </div>
+</div><div class="col">
+    <div class="form-group">
+        <label for="customer_contact_phone_number">*Customer Contact Phone Number:</label><div class="error">{error:customer_contact_phone_number}</div>
+        <input type="text" class="form-control" name="customer_contact_phone_number" id="customer_contact_phone_number" placeholder="" required>
+    </div>
+ </div></div>  
+   
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">*Reason for the Return:</label><div class="error">{error:return_type}</div>
+        <select name="return_type" id="return_type" class="form-control" required>
+            <option value="">--- Select a reason ---</option>
+        {options:return_type}
+            <option value="{option_value}"{selected}>{option_name}</option>
+        {/options:return_type}
+        </select>
+    </div>
+ 
+
+<div class="row"><div class="col">
+    <div class="form-group">
+        <label for="exampleInputEmail1">*KELTEC Invoice Number:</label><div class="error">{error:keltec_invoice_number}</div>
+        <input type="text" class="form-control" name="keltec_invoice_number" id="keltec_invoice_number" placeholder="" required>
+    </div>
+</div><div class="col">
+    <div class="form-group">
+        <label for="exampleInputEmail1">*Customer PO:</label><div class="error">{error:customer_po}</div>
+        <input type="text" class="form-control" name="customer_po" id="customer_po" placeholder="" required>
+    </div>
+</div></div> 
+
+    <div class="form-group">
+        <label for="part_numbers_and_quantity">*Part Numbers and Quantity:</label><div class="error">{error:part_numbers_and_quantity}</div>
+            {field:part_numbers_and_quantity}
+    </div>
+   <div class="form-group">
+        <label for="description_of_issue">*Description of the Issue:</label><div class="error">{error:description_of_issue}</div>
+        <textarea class="form-control" id="description_of_issue" name="description_of_issue" rows="3" required></textarea>
+    </div>  
+    
+    
+    <div class="form-group">
+         <label for="product_images">Product Images:</label>
+         {field:rma_photos}
+  
+        <input type="hidden" name="rma_photos" value="1" />
+
+    </div>
+
+   
+   <button type="submit" name="submit" class="btn btn-outline-primary rounded-0">Submit Return Request</button>
+
+
+
+
+
+{/exp:channel:form}
+</fieldset>

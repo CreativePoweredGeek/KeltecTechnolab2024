@@ -1,0 +1,132 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:"View Cart" } %}
+
+</head>
+<body>
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+{# since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements #}
+<div class="container">
+    {# twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows #}
+    <div class="row">
+
+        {# twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up #}
+        <div class="span3">
+            <div class="bs-docs-sidenav">
+                {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+                {% set cart_items = exp.cartthrob.cart_items_info({limit:"1", order_by:"entry_id", sort:"desc"})  %}
+                {% for entry in cart_items %}
+                    {% include('ee::default_site.' ~template_group~ '._also_purchased') with {entry_id:entry.entry_id} %}
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="span9">
+            <section id="checkout-section">
+                {% if exp.cartthrob.total_items_count() > '0' %}
+                <h1>Checkout</h1>
+
+                <p>{{ exp.cartthrob.view_setting({store_shipping_estimate:"yes"}) }}</p>
+                {# see  http://cartthrob.com/docs/tags/global_form_settings/index.html#inline-errors #}
+            {% set checkout_form = exp.cartthrob.checkout_form({
+                    error_handling:"inline",
+                    class:"form-horizontal",
+                    required:"first_name|last_name",
+                    return:template_group ~ "/order_info"})
+                %}
+                    {{ checkout_form.form_open | raw }}
+                <div class="alert alert-info">
+                    <span class="help-block">*All fields are required</span>
+                </div>
+
+                {#-- the next part handles inline errors. the error_handling=inline parameter is set
+                so standard error messages will not be shown #}
+
+                {% if checkout_form.errors_exist %}
+                <div class="control-group">
+                    {# not a fan of inline JS, but the if_errors conditional works only inside the checkout form so if you want to use JS, you'll need to use inline JS. #}
+                    <script type="text/javascript">
+                        jQuery(document).ready(function($){
+                            {% for error in checkout_form.errors %}
+                                {% if error.field_error %}
+                                $("#{{ error.field }}").closest(".control-group").addClass("error");
+                                $("#{{ error.field }}").after('<span class="help-inline">{{ error.error }}</span>');
+                                {% endif %}
+                            {% endfor %}
+                                });
+                    </script>
+                    {% for error in checkout_form.field_errors %}
+                    {% if error.first_error %}
+                    <div class="alert alert-error">
+                        <strong>Alert</strong> There are <span class="badge badge-warning">{{ checkout_form.field_errors_count }}</span> error(s). Please correct the errors listed below
+                    </div>
+                    {% endif %}
+
+                    <p>
+                        <span class="label label-important">{{ error.field }}</span>
+                        {{ error.error }}
+                    </p>
+                    {% endfor %}
+
+                </div>
+                {% endif %}
+                    {% if exp.cartthrob.view_setting({allow_gateway_selection:"yes"}) == '1' %}
+
+                    {# note: stripe payment gateway does not work well with this gateway switching method
+                    stripe adds its own JS after the form close, and even when changing the gateway, this JS
+                    is not removed, which can lead to erroneous error messages. #}
+                    <div class="control-group">
+                        <label for="gateway" class="control-label">Select a payment method</label>
+                        <div class="controls">
+                            {% set customer = exp.cartthrob.customer_info %}
+                            {{ exp.cartthrob.gateway_select({id:"gateway", selected:customer.gateway }) | raw }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if global.logged_in_member_id == 0 %}
+                        <fieldset>
+                            <legend>Member Registration</legend>
+                            <div class="control-group">
+                                <label for="gateway" class="control-label">Username</label>
+                                <div class="controls">
+                                    <input type="text" value="{{ customer.username }}" name="username" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="gateway" class="control-label">Password</label>
+                                <div class="controls">
+                                    <input type="password" value="" name="password" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    {% endif %}
+
+                <div id="checkout_form_gateway_fields">
+                    {{ exp.cartthrob.gateway_fields() | raw}}
+                </div>
+                <div class="control-group">
+                    <div class="form-actions">
+                        {# do not add a name attribute to your submit button if you want it to work with stripe payment gateway #}
+                        <input type="submit" id="checkout_complete" class="btn btn-success"  value="Complete Checkout" />
+                    </div>
+                </div>
+
+                    {{ checkout_form.form_close | raw }}
+                {% else %}
+                <h1>Checkout</h1>
+                <p>You have no items in your cart. </p>
+                <a href="{path={template_group}}" class="btn btn-primary btn-small">Continue shopping.</a>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

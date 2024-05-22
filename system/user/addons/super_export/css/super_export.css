@@ -1,0 +1,15 @@
+.mb-10 {margin-bottom: 10px;}
+.text--left {text-align: left;}
+.copy-clipboard, .export-wrapper {border: 1px solid #ccc; padding: 10px;}
+.cf {clear: both;}
+/*.remove-pointer-events {pointer-events: none; }*/
+.m-close-custom {color: var(--ee-text-secondary); position: absolute; right: 30px; text-decoration: none; top: 20px;}
+.m-close-custom:before {content: "\f00d"; font-size: 24px; line-height: 1; font-family: 'Font Awesome 5 Free'; font-weight: 900;}
+.m-close-custom:hover {color: var(--ee-text-tertiary);}
+.export-wrapper {position: relative;}
+.export-wrapper .spinner {width: 40px; position: absolute; top: 0; right: 0;}
+
+/*.se-relataionships .filter-bar__item:first-child {margin: 0; }*/
+/*.se-relataionships .filter-bar__item:last-child {display: none; }*/
+
+.app-overlay---open-1{display: block; animation-name: fadeIn; animation-duration: .5s; animation-timing-function: ease-in-out; animation-delay: 0; animation-direction: alternate; animation-iteration-count: 1; animation-fill-mode: none; animation-play-state: running;}

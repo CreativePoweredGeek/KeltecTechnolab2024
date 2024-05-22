@@ -1,0 +1,56 @@
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="{{ global.site_url }}">{{ exp.cartthrob.view_setting({store_name:'yes'}) }}</a>
+            <div class="nav-collapse collapse" style="height: 0px" >
+                <ul class="nav">
+                    <li {% if segment_2 == "" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group) }}">Store</a>
+                    </li>
+                    <li {% if segment_2 == "about" %}class="active" {% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group ~ '/about') }}">About Us</a>
+                    </li>
+                    <li  {% if segment_2 == "contact" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group ~ '/contact') }}">Contact</a>
+                    </li>
+                    <li  {% if segment_2 == "donate" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group ~ '/donate') }}">Donate</a>
+                    </li>
+                    <li  {% if segment_2 == "view_cart" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{path='twig-store/view_cart'}"><i class="icon-shopping-cart icon-white"></i>
+                            Cart ({{ exp.cartthrob.total_items_count }}) <span class="cart_total">{{ exp.cartthrob.cart_total }}</span>
+                        </a>
+                    </li>
+                    <li  {% if segment_2 == "checkout" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path('twig-store/checkout') }}">
+                            <i class="icon-barcode icon-white" ></i> Checkout
+                        </a>
+                    </li>{{ global.logged_in_member_id != 0 }}
+                    {% if global.logged_in_member_id == 0 %}
+                    <li  {% if segment_2 == "register" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group ~ '/register') }}"><i class="icon-user icon-white" ></i> Create an Account</a>
+                    </li>
+                    <li  {% if segment_2 == "login" %}class="active"{% else %}class=''{% endif %} >
+                        <a href="#login" role="button" data-toggle="modal" id="login_loader"><i class="icon-ok icon-white" ></i> Login</a>
+                    </li>
+                    {% endif %}
+                    {%if global.logged_in_member_id != 0 %}
+                    <li  {% if segment_2 == "account"%}class="active"{% else %}class=''{% endif %} >
+                        <a href="{{ exp.path(template_group ~ '/account') }}"><i class="icon-user icon-white" ></i> Welcome {{ global.screen_name }}</a>
+                    </li>
+                    <li class=''><a href="{{ exp.path('LOGOUT') }}"><i class="icon-remove icon-white" ></i> Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

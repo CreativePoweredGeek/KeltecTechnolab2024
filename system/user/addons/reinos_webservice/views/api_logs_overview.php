@@ -1,0 +1,14 @@
+
+<div class="box">
+    <div class="tbl-ctrls">
+        <fieldset class="tbl-search right">
+            <a class="btn tn action " href="<?=ee('CP/URL', 'addons/settings/'.REINOS_WEBSERVICE_MAP.'/api_logs_delete')?>">Delete logs</a>
+        </fieldset>
+        <h1>Log viewer</h1>
+        <?=ee('CP/Alert')->get(REINOS_WEBSERVICE_MAP.'_delete_logs')?>
+        <?=ee('View')->make('_shared/table')->render($table); ?>
+        <?php if(isset($pagination)):?>
+            <?=$pagination?>
+        <?php endif;?>
+    </div>
+</div>

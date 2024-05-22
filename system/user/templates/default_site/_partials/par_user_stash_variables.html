@@ -1,0 +1,11 @@
+{exp:member:custom_profile_data}
+    {exp:cookie:set name="custno" value="{customer_number}" expire="3628800"}
+    {exp:stash:set name="customer_number" scope="user" save="yes"}{customer_number}{/exp:stash:set}
+    {exp:stash:set name="company" scope="user" save="yes"}{company}{/exp:stash:set}
+    {exp:stash:set name="country" scope="user" save="yes"}{country}{/exp:stash:set}
+    {exp:cookie:set name="price_code" value="{price_code}" expire="3628800"}
+    {exp:stash:set name="warehouse" scope="user" save="yes"}{preferred_warehouse}{/exp:stash:set}
+    {exp:stash:set name="paycode" scope="user" save="yes"}{pay_code}{/exp:stash:set}
+{/exp:member:custom_profile_data}
+
+{exp:stash:set name="price_code" scope="user" save="yes"}{exp:kt_tools:get_member_field_value fieldid="17"}{/exp:stash:set}

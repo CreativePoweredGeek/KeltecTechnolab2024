@@ -1,0 +1,10 @@
+{#
+//    ----------------------------------------
+//      Section
+//    ----------------------------------------
+#}
+{% if channel.channel_title is defined %}
+	{{channel.channel_title}}
+{% else %}
+	<i class="fa fa-exclamation-triangle" title="Channel not found. Please check your database data."></i>
+{% endif %}

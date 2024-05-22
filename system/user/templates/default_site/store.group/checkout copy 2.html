@@ -1,0 +1,129 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+
+{embed="store/_new_header" template_group="{template_group}" template="{template}" title="Checkout" pagetitle="Checkout"}
+
+
+<!-- Order List -->
+<div class="container mb-5">
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-striped table-condensed border-0">
+		            <thead class="bg-dkblue text-white">
+			            <tr>
+				            <th>#</th>
+				            <th>Product</th>
+				            <th>Item Description</th>
+				            <th>Warehouse</th>
+				            <th>Expected Ship Date</th>
+				            <th>Price ea.</th>
+				            <th>Qty.</th>
+				            <th>Subtotal</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            {exp:cartthrob:cart_items_info}
+						   <tr>
+							   	<td>{count}</td>
+							   	<td><strong>{title}</strong></td>
+							   	<td>{description}</td> 
+							   	
+							   	<td>
+								   	{exp:cartthrob:item_options entry_id="{entry_id}" row_id="{row_id}" field="requested_warehouse"}
+										{if option_value != ""}
+											{if option_value=="MAIN"}OHIO{if:else}{option_value}{/if}
+										{if:else}
+											{if '{exp:stash:warehouse}'=="MAIN"}OHIO{if:else}{option_value}{/if}
+											
+										{/if}
+									{/exp:cartthrob:item_options} 
+								</td> 
+								<td> 
+									{exp:cartthrob:item_options entry_id="{entry_id}" row_id="{row_id}" field="expected_ship"}
+										{if option_value != ""}
+											{option_value  format="%m/%d/%Y"}
+										
+										{/if}
+									{/exp:cartthrob:item_options}
+								</td>
+								
+								
+							   	<td>{price}</td> 
+							    <td>{quantity}</td>
+							   	<td>{item_subtotal}</td> 
+						   </tr>
+						
+						{/exp:cartthrob:cart_items_info}
+			            <tr>
+				             <td></td><td></td> <td></td><td></td> <td></td><td></td>
+				            <td>
+					            <strong>Subtotal</strong>
+				            </td>
+				            <td>
+								<strong>{exp:cartthrob:cart_subtotal}</strong>
+							</td>
+			            </tr>
+		            </tbody>
+		         </table>
+				
+			</div>
+			<div class="col-12">
+				<a href="{site_url}{language_code}/store/view-cart" class="btn btn-primary rounded-0">Return to Cart</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+{if logged_in}
+	{if "{exp:cartthrob:total_items_count}" > 0}
+{exp:cartthrob:checkout_form 
+	error_handling="inline" 
+	class=""
+	required="first_name";
+	gateway="offline_payments"
+	create_user="no" group_id="5" 
+	allow_user_shipping="y"
+	return="{template_group}/order_info"}
+
+
+
+<section class="container" id="checkout-section">
+	<div class="row">
+		<div class="col-md-4">
+			{par_shipping_instructions}
+		</div>
+		<div class="col-md-8">
+			{!--custom fields here --}
+			<div id="checkout_form_gateway_fields">
+				{gateway_fields}
+			</div>
+		</div>
+	</div>
+	<p class="pt-5 pb-5"><hr></p>
+	<div class="row float-right">
+		<div class="control-group">
+		    <div class="form-actions">
+				{!-- do not add a name attribute to your submit button if you want it to work with stripe payment gateway --}
+				<!--<input type="submit" id="checkout_complete" class="btn btn-success" value="Complete Checkout" data-toggle="modal" data-target="#progress"/>-->
+				 <input type="submit" id="checkout_complete" class="btn btn-success btn-lg"  value="Complete Checkout"/> 
+			</div>
+		</div>
+	</div>
+</section>
+{/exp:cartthrob:checkout_form}           
+
+	{/if}
+{/if}
+
+{if logged_out}
+	<div class="alert alert-warning" role="alert">
+		<h5>You must be logged in to place an order.</h5>
+		If you are a current KELTEC Technolab customer, please <a href="#" data-toggle="modal" data-target="#memberLogin">login</a> to complete your order. If you are not currently a KELTEC Technolab customer, please call 1-800-289-7377 to speak with a Customer Sales Representative (CSR) and setup an account. You can then return to this page once logged in and complete your order.
+	</div>
+{/if}
+
+		
+
+{embed="store/_new_footer" template_group="{template_group}" template="{template}"}

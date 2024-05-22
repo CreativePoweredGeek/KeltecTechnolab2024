@@ -1,0 +1,35 @@
+{% set template_group = 'twig-cart-functions' %}
+
+<h2>Standard Checkout</h2>
+{% set checkout_form = exp.cartthrob.checkout_form({
+    class:'form-horizontal',
+    return: template_group ~ "/order_info" })
+%}
+{{ checkout_form.form_open | raw }}
+	{{ exp.cartthrob.gateway_fields() | raw }}
+
+	<input type="submit" value="Submit" />
+{{ checkout_form.form_close | raw }}
+
+<h2>Create User During Checkout</h2>
+{% set checkout_form = exp.cartthrob.checkout_form({
+    class:'form-horizontal',
+    create_user: "yes",
+    group_id:6,
+    return: template_group ~ "/order_info" })
+%}
+
+{{ checkout_form.form_open|raw }}
+            Username: <input type="text" class="required" name="username" value="" /> <br />
+            Email Address: <input type="text" class="required" name="email_address" value="" /><br />
+            Screen Name: <input type="text" name="screen_name" value="" /><br />
+            Password: <input type="password" name="password"  value="" /><br />
+            Confirm Password: <input type="password" name="password_confirm" value="" />
+
+	{{ exp.cartthrob.gateway_fields() | raw}}
+
+	<input type="submit" value="Submit" />
+{{ checkout_form.form_close | raw }}
+
+<br />Generates a checkout form
+<br />http://cartthrob.com/docs/tags_detail/checkout_form/

@@ -1,0 +1,10 @@
+<!-- This page will email an inventory file to a customer. It uses MX_Mail Plugin and a custom plugin to make the query & math quicker.  It is accessed via a cronjob -->
+{exp:mx_email_from_template to='sales@bhindustrial.com' from='weborders@keltecinc.com' subject='Inventory List for {current_time format="%m/%d/%Y"}'}
+<p>Attached is your inventory file for {current_time format="%m/%d/%Y"}. Use it wisely.</p>
+	{csv:file}
+		product,totalInventory
+		{exp:kt_exports:inventoryTotalList}
+	{/csv:file}
+{/exp:mx_email_from_template}
+
+<!--curl -q -o /dev/null https://keltecinc.com/exports/email-sum-inventory -->

@@ -1,0 +1,52 @@
+{layout="layouts/_dashboard_layout_one_col"}
+{layout:set name="css"}
+	<link href="{path='css/_ee_channel_form_css'}" type="text/css" rel="stylesheet" media="screen">
+{/layout:set}
+{layout:set name="rightButton"}
+	{if segment_3 !=""}
+        <a href="{path='accounts/dashboard/{segment_3}'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {if:else}
+         <a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+    {/if}
+{/layout:set}
+{if segment_3 != ""}
+	{exp:visitor:details member_id="{segment_3}"}
+{if:else}
+	{exp:visitor:details}
+{/if}
+{layout:set name="companyID"}{visitor:member_customer_number}{/layout:set}
+{layout:set name="companyName"}{visitor:member_company}{/layout:set}
+
+    {layout:set name="title"}Edit Custom Pricing{/layout:set}
+    {layout:set name="page_title"}{visitor:member_firstname} {visitor:member_lastname}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{layout:set name="sales_rep"}{sales_rep}{item:label}{/sales_rep}{/layout:set}
+	{layout:set name="sales_rep_id"}{sales_rep}{item:value}{/sales_rep}{/layout:set}
+	{layout:set name="membergroupid"}{member_group_id}{/layout:set}
+
+
+{/exp:visitor:details}
+
+{if segment_5 == "success"}
+    <div class="col-12">
+        <div class="alert alert-success" role="alert">
+            Update Successful! <a href="{path='accounts/dashboard/{segment_3}'}">Return to Profile</a>
+        </div>
+    </div>
+{/if}
+
+
+<div class="col-12">
+
+    <p>To add a new ship to, click the green "+" button. To delete a ship to, click the red trashcan. To rearrange, click and drag the "hamburger" to the left of the name.</p>
+    {exp:channel:form channel="visitor" entry_id="{segment_4}" return="accounts/edit_custom_pricing/{segment_3}/{segment_4}/success"}
+        <fieldset>
+            <div class="form-group">
+                <label for="member_ship_to_addresses">Manage your Ship To Addresses:</label>
+                {field:custom_pricing}
+            </div> 
+            <button type="submit" name="submit" class="btn btn-outline-primary btn-lg rounded-0">Submit</button>
+        </fieldset>
+    {/exp:channel:form}
+</div>

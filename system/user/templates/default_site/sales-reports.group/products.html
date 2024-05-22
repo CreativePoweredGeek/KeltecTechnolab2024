@@ -1,0 +1,58 @@
+{layout="layouts/_main_html_layout"}
+{if logged_in}
+<div class="w-100 bg-dkblue py-5 mb-5">
+	<div class="container">
+    <div class="row">
+		<div class="col-12">
+        <h1 class="text-white">Products Purchased</h3>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-12">
+    <table class="table table-striped table-hover align-items-bottom">
+       <thead class="table-dark">
+        <tr>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Total Units<br>Purchased</th>
+            <th>Current<br>List Price</th>
+            <th>Average<br>Purchased Price</th>
+            <th>Total Purchased Value</th>
+         </tr>
+        </thead>
+        <tbody>
+{exp:query sql="
+SELECT title, entry_id,  
+SUM(quantity) as total, 
+SUM(price) as ttlprice, 
+AVG(price) as avgprice 
+FROM exp_cartthrob_order_items 
+GROUP BY title 
+ORDER BY total DESC" limit="25" paginate="bottom"}
+
+<tr>
+    <td><a href="">{title}</a></td>
+    <td>{exp:keltec:get_item_value field="description" entry_id="{entry_id}"}</td>
+    <td>{total}</td>
+    <td>${exp:keltec:get_item_value field="price" entry_id="{entry_id}"}</td>
+    <td>${avgprice:number_format decimals='2'}</td>
+    <td>${ttlprice:number_format decimals='2'}</td>
+</tr>
+{if count == total_results} 
+</tbody>
+</table>
+{paginate}
+<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+{/paginate}
+{/if}
+
+{/exp:query}
+
+
+</div>
+</div>
+</div>
+{/if}

@@ -1,0 +1,19 @@
+{layout="layouts/_page_w_sidebar"}
+{preload_replace:language_code="en"}
+{exp:channel:entries channel="global_content" url_title="main" dynamic="no" disable="categories|category_fields|member_data|pagination|relationships" limit="1" cache="yes" refresh="60"}
+  	{par_global_content_lo_vars}
+{/exp:channel:entries}
+{exp:channel:entries channel="site_pages" url_title="{last_segment}" disable="categories|member_data|pagination|relationships" limit="1" cache="yes" refresh="60"}
+{layout:set name="title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+{layout:set name="page_title"}{page_title}{page_title:{language_code}}{/page_title}{/layout:set}
+{layout:set name="seo_description"}{seo_page_description}{seo_page_description:{language_code}}{/seo_page_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+	{if {language_code}_rich_text_block}
+		{{language_code}_rich_text_block}
+	{/if}
+	{par_main_fluid_setup}
+{/exp:channel:entries}
+{layout:set name="sidebar"}
+	{par_filter_application_selector}
+	{par_filter_cross_reference}
+{/layout:set}

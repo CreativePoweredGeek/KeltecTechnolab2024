@@ -1,0 +1,26 @@
+<?php $json = '['; ?>
+{exp:query sql="SELECT title, price, quantity, extra FROM exp_cartthrob_order_items WHERE order_id = '{segment_3}'"}
+{if no_results}
+	No Results
+{/if}
+
+<?php
+$json .=
+'
+{
+  "product": "{title}",
+  "price": {price},
+  "quantity": {quantity}, ';
+$items = array(unserialize(base64_decode('{extra}')));
+foreach($items as $item){
+    $json .= '"requested_warehouse": '.$item['requested_warehouse'].', ';
+    $json .= '"expected_ship": '.$item['expected_ship'].', ';
+    $json .= '"label_description": '.$item['label_description'];
+}
+$json .= '}';
+?>
+{/exp:query}
+
+<?php $json .= ']';
+echo $json;
+?>

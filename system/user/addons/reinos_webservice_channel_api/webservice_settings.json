@@ -1,0 +1,117 @@
+{
+    "name" : "channel",
+    "label": "Channel",
+	"version" : "2.0.0",
+    "auth": true,
+    "public": false,
+    "enabled": true,
+    "methods": [
+        {
+            "method": "create_channel",
+            "name": "Create a Channel",
+            "clear_cache" : true,
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "read_channel",
+            "name": "Read a channel",
+            "cachable" : true,
+            "free_api": true,
+            "soap": [
+                {
+                    "name": "data",
+                    "type": "tns:ObjectList"
+                }
+            ]
+        },
+        {
+            "method": "update_channel",
+            "name": "Update a channel",
+            "clear_cache" : true,
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "delete_channel",
+            "name": "Delete a channel",
+            "clear_cache" : true,
+            "soap": [
+                {
+                    "name": "id",
+                    "type": "xsd:string"
+                }
+            ]
+        },
+        {
+            "method": "search_channel",
+            "name": "Search a channel",
+            "cachable" : true,
+            "free_api": true,
+            "soap": [
+                {
+                    "name": "data",
+                    "type": "tns:ObjectList"
+                }
+            ]
+        }
+    ],
+	"test":
+	{
+		"enabled": true,
+		"create_channel": [
+			{
+				"name": "channel_title",
+				"type": "form_input",
+				"value": "Test Channel"
+			},
+			{
+				"name": "channel_name",
+				"type": "form_input",
+				"value": "test_channel"
+			}
+		],
+		"read_channel": [
+			{
+				"name": "channel_id",
+				"type": "form_input"
+			}
+		],
+		"update_channel": [
+			{
+				"name": "channel_id",
+				"type": "form_input"
+			},
+			{
+				"name": "channel_title",
+				"type": "form_input",
+				"value": "Test Channel"
+			},
+			{
+				"name": "channel_name",
+				"type": "form_input",
+				"value": "test_channel"
+			}
+		],
+		"delete_channel": [
+			{
+				"name": "channel_id",
+				"type": "form_input"
+			}
+		],
+		"search_channel": [
+			{
+				"name": "channel_id",
+				"type": "form_input"
+			}
+		]
+	}
+}

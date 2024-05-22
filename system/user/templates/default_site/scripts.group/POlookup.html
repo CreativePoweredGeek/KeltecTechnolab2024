@@ -1,0 +1,10 @@
+{exp:query sql="
+SELECT *
+FROM exp_channel_data_field_179
+JOIN exp_channel_titles
+ON  exp_channel_data_field_179.entry_id=exp_channel_titles.entry_id
+WHERE exp_channel_data_field_179.field_id_179 = '{segment_3}' AND exp_channel_titles.author_id = '{logged_in_member_id}'"
+}
+    <div class="alert alert-warning mt-2 p-2" role="alert">You have already used this PO Number.</div>
+    {if no_results} {/if}
+{/exp:query}

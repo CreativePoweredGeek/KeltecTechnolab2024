@@ -1,0 +1,6 @@
+<select name="fob" class="form-control" id="fob" required>
+	<option value="">--- Please make a selection ---</option>
+{exp:channel:entries channel="shipping_fob_list" disable="categories|category_fields|pagination|trackbacks" dynamic="no" orderby="title" sort="asc"}
+	<option value="{fob_code}" {if default == "1"}selected{/if}>{title}</option>
+{/exp:channel:entries}
+</select>

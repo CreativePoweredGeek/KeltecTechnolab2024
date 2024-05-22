@@ -1,0 +1,123 @@
+{layout="layouts/_order_main"}
+{layout:set name="css"}
+<link href="{site_url}assets/vendors/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+{/layout:set}
+{layout:set name="js"}
+<script src="{site_url}assets/vendors/datatables/jquery.dataTables.min.js"></script>
+<script src="{site_url}assets/vendors/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+	$(document).ready(function() {
+    $('#orders').DataTable( {
+	   "order": [[ 0, "desc" ]],
+	   "lengthChange": false
+    });
+} );
+</script>
+{/layout:set}
+{if logged_in_group_id == "9"}
+	{layout:set name="pageTitle"}Online Orders{/layout:set}
+{if:else}
+	{layout:set name="pageTitle"}Orders for {screen_name} Accounts{/layout:set}
+{/if}
+
+{if logged_in_group_id !="5"}
+	{layout:set name="rightButton"}{/layout:set}
+{if:else}
+	{layout:set name="rightButton"}
+		<a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+	{/layout:set}
+{/if}
+
+{!--{exp:channel:entries channel="orders" status="Order Placed" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="count_placed"}{count}{/layout:set}
+{/exp:channel:entries}
+{exp:channel:entries channel="orders" status="Sales Order Issued" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="so_placed"}{count}{/layout:set}
+{/exp:channel:entries}
+{exp:channel:entries channel="orders" status="shipped" search:customer_number="={exp:stash:get name='customer_number'}" parse="inward"}
+	{layout:set name="shipped"}{count}{/layout:set}
+{/exp:channel:entries}
+{exp:kt_tools:create_csr_customer_select_list un="{logged_in_username}"}--}
+	<table id="orders" class="table table-striped table-hover" style="width:100%">
+		<thead class="thead-dark">
+			<tr>
+				<th></th>
+				<th>Customer</th>
+				<th>SO#</th>
+			<th>PO</th>
+				<th>Order Date</th>
+				<th>Status</th>
+				<th>Subtotal</th>
+
+				<th>Shipping</th>
+
+				<th>Ship Via</th>
+				<th>Tracking</th>
+				<th>Est. Ship Date</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+
+		{if logged_in_group_id == "9"}
+			{exp:channel:entries channel="orders" status="not open|close" disable="categories|category_fields|member_data" limit="250"}
+		{if:elseif logged_in_group_id == "1"}
+			{exp:channel:entries channel="orders" status="not open|close" disable="categories|category_fields|member_data" limit="250"}
+		{if:elseif logged_in_group_id == "8"}
+			{exp:channel:entries channel="orders" search:csr_username="={logged_in_username}" status="not open|close" disable="categories|category_fields|member_data" limit="250"}
+		{if:else}
+
+		{/if}
+				{if no_results}
+				<tr><td colspan="6">No Orders Yet {logged_in_group_id}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
+				{/if}
+
+				<tr>
+					<td>{csr_username}</td>
+					<td>{customer_number}</td>
+					<td>{so_number}</td>
+					<td>{customer_po}</td>
+					<td style="line-height:1">{entry_date format="%n/%d/%Y"}<br><small>{entry_date format="%g:%i:%s %a"}</small></td>
+					<td><span class="badge badge-pill
+					{if status == 'Shipped'}badge-success{if:else}badge-secondary{/if}">{status}</span></td>
+					<td>{order_subtotal}</td>
+
+					<td>{order_shipping_instruction:label}</td>
+
+
+					<td>{shipping_method}</td>
+					<td>
+						{exp:keltec_shipping:tracking_links shipvia="{shipping_method}" tracking="{order_tracking_number}"}
+					</td>
+					<td>
+						{embed="embeds/expected_ship" order_id="{entry_id}"}
+					</td>
+					<td>
+						<a target="_blank" class="btn btn-outline-primary rounded-0 btn-sm" href="{path=store/invoice}/{exp:cartthrob:view_encrypted_string string='{entry_id}'}">Invoice</a>
+						<a href="{path='accounts/order-detail/{entry_id}'}" class="btn btn-outline-primary rounded-0 btn-sm">View</a>
+						{par_edit_this_link}
+					</td>
+				</tr>
+
+{/exp:channel:entries}
+		</tbody>
+		<tfoot class="thead-dark">
+		<tr>
+				<th></th>
+				<th>Customer</th>
+				<th>SO#</th>
+				<th></th>
+				<th>Order Date</th>
+				<th>Status</th>
+				<th>Subtotal</th>
+
+				<th>Shipping</th>
+
+				<th>Ship Via</th>
+				<th>Tracking</th>
+				<th>Est. Ship Date</th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>

@@ -1,0 +1,56 @@
+{% for product in exp.cartthrob.also_purchased({entry_id:entry_id, limit:7}) %}
+    {% if loop.first %}
+    <h5>Customers Also Purchased</h5>
+    <ul  class="nav nav-tabs nav-stacked">
+    {% endif %}
+    <li>
+        <a href="{entry_id_path='{embed:template_group}/product_detail'}">
+            <i class="icon-chevron-right pull-right"></i>
+            {{ product.title }}
+            <strong>
+                {% if product.product_price %}
+                    ${{ product.product_price }}
+                {% elseif packages_price %}
+                    {{ packages_price }}
+                {% endif %}
+            </strong>
+            {% if product.no_tax !="Yes" %}
+                {% if product.product_price.plus_tax !=""%}<small><br>(inc tax: {{ product.product_price.plus_tax }})</small>{% endif %}
+            {% elseif packages_price %}
+            <br>{packages_price:plus_tax}
+            {% endif %}
+        </a>
+    </li>
+    {% if loop.last %}
+    </ul>
+    {% endif %}
+{% endfor %}
+
+{% for entry in exp.channel.entries({entry_id: entry_id}) %}
+    {% for rel in entry.product_related_1 %}
+        {% if loop.first %}
+        <h5>You Might Also Like</h5>
+        <ul  class="nav nav-tabs nav-stacked">
+        {% endif %}
+    <li>
+        {% if rel.product_price != '' %}
+        <a href="{{ exp.path(template_group ~ '/product_detail/'~ rel.entry_id) }}">
+            <i class="icon-chevron-right"></i>
+            {{ rel.title }}<br />
+            {{ rel.product_price }} &raquo;
+        </a>
+        {% elseif rel.packages_price != '' %}
+        <a href="{product_related_1:entry_id_path='{embed:template_group}/package_detail'}">
+            <i class="icon-chevron-right"></i>
+            {if product_related_1:packages_thumbnail}<img src="{product_related_1:packages_thumbnail}" />{/if}
+            {product_related_1:title}<br />
+            {product_related_1:packages_price} &raquo;
+        </a>
+        {% endif %}
+    </li>
+    {% if loop.last %}
+</ul>
+    {% endif %}
+{% endfor %}
+{!-- end new relationship syntax --}
+{% endfor %}

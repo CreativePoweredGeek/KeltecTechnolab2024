@@ -1,0 +1,77 @@
+<h3 class="mt-0">Shipping Instructions</h3>
+
+
+
+<div class="mb-4 pb-4 border-bottom">
+	<p class="mb-2">*This order should be shipped:</p>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="order_shipping_instruction" id="order_shipping_instruction" value="complete" checked>
+  <label class="form-check-label" for="order_shipping_instruction">Complete</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="order_shipping_instruction" id="order_shipping_instruction2" value="partial">
+  <label class="form-check-label" for="order_shipping_instruction2">Partial</label>
+</div>
+</div>
+
+<div class="custom-control custom-switch mb-4 border-bottom">
+  <input type="checkbox" class="custom-control-input" name="ImageVar1" id="ImageVar1">
+  <label class="custom-control-label" for="ImageVar1">Click here to Dropship</label>
+</div>
+
+<div class="form-group">
+	<label for="customer_ups_collect">*ShipVia</label>
+	{embed="embeds/shipping_method_select"}
+</div>
+
+<div class="form-group">
+	<label for="customer_ups_collect">*F.O.B.</label>
+	{embed="embeds/shipping_fob_select_list"}
+</div>
+
+{!-- Customer COLLECT #s --}
+
+{exp:member:custom_profile_data}
+<div class="form-group">
+	<label for="customer_fedex_collect">Customer FedEx Collect #</label>
+	<input type="text" class="border border-secondary rounded-0 form-control ship" maxlength="40" id="order_fedex_collect_number" name="order_fedex_collect_number"
+	value="{fedex_collect_number}" placeholder="">
+</div>
+<div class="form-group">
+	<label for="customer_ups_collect">Customer UPS Collect #</label>
+	<input type="text" class="border border-secondary rounded-0 form-control ship" maxlength="40" id="order_ups_collect_number" name="order_ups_collect_number"
+	value="{ups_collect_number}" placeholder="">
+</div>
+
+<input type="hidden" name="customer_pay_code" value="{pay_code}">
+
+
+
+
+
+<div class="form-group">
+	<label for="customer_ups_collect" class="mb-0">Additional Shipping Notes:</label>
+	<small id="emailHelp" class="form-text text-muted">Please enter preferred carrier or specific shipping instructions here</small>
+	<textarea class="border border-secondary rounded-0 form-control" id="other_shipping_notes" name="other_shipping_notes" rows="8">
+{if '{fedex_collect_number}' !=""}FEDEX Collect: {fedex_collect_number}<br>{/if}{if '{ups_collect_number}' !=""}UPS Collect: <br>{ups_collect_number}{/if}{general_shipping_notes::attr_safe}
+{/exp:member:custom_profile_data}
+-----------
+{exp:channel:entries channel="misc_content" entry_id="136234"}{{language_code}_basic_text}{/exp:channel:entries}
+
+	</textarea>
+
+
+</div>
+
+
+<div class="form-group">
+	<label for="customer_po">*Customer PO Number</label>
+	<input type="text" class="border border-secondary rounded-0 form-control" id="customer_po" maxlength="20" name="customer_po" value="" placeholder="" required>
+	<div id="uname_response" ></div>
+</div>
+
+
+
+
+
+

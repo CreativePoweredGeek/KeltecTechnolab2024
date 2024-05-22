@@ -1,0 +1,67 @@
+{preload_replace:country="{exp:ip_geolocator:country_code}"}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dkblue fixed-top keltec">
+  
+  	<a class="navbar-brand" href="tel:+13304253100">+1 (330) 425-3100</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{site_url}"> Go To Website</a>
+      </li>
+      {if logged_in_group_id=="8"}
+      <li class="nav-item{if segment_1 == ''} bg-brightblue{/if}">
+        <a class="nav-link" href="{site_url}csr/customers"> Customer List</a>
+      </li>
+      <li class="nav-item{if segment_1 == ''} bg-brightblue{/if}">
+        <a class="nav-link" href="{site_url}csr/orders"> Customer Orders</a>
+      </li>
+     {/if}
+     {if logged_in_group_id == 1 OR logged_in_group_id == 9}
+      <li class="nav-item{if segment_1 == ''} bg-brightblue{/if}">
+        <a class="nav-link" href="{site_url}member/memberlist"> Customer List</a>
+      </li>
+     {/if}
+
+    </ul>
+    <ul class="navbar-nav ml-auto">
+
+
+    {if logged_in}
+		<li class="nav-item dropdown bg-brightblue">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{screen_name}
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+				{if logged_in_group_id == "8"}
+					<a class="dropdown-item" href="{path='csr/orders'}"><i class="fas fa-shopping-cart"></i> Customer Orders</a>
+					<a class="dropdown-item" href="{site_url}csr/customers"><i class="fas fa-users"></i> Customer List</a>
+
+          <a class="dropdown-item" href="{site_url}admin.php" target="_blank"><i class="fas fa-tachometer-alt"></i> Site Control Panel</a>
+				{/if}
+				{if logged_in_group_id == 1 OR logged_in_group_id == 9}
+          <a class="dropdown-item" href="{path='accounts/csr-customer-orders'}"><i class="fas fa-shopping-cart"></i> Customer Orders</a>
+					<a class="dropdown-item" href="{path='member/memberlist'}"><i class="fas fa-users"></i> Customer List</a>
+          <a class="dropdown-item" href="{site_url}managers/logged-in-customers"><i class="fas fa-users"></i> Online Customers</a>
+					<a class="dropdown-item" href="{site_url}admin.php" target="_blank"><i class="fas fa-tachometer-alt"></i> Site Control Panel</a>
+				{/if}
+					<a class="dropdown-item" href="{path='accounts/returns'}"><i class="fas fa-undo-alt"></i> Returns</a>
+					<a class="dropdown-item" href="https://docs.google.com/presentation/d/1-Gl2HPq9OfSodYShQtCuo3Mw3QycwH-m5cJj9D6UYrg/edit?usp=sharing"
+			target="_blank"><i class="fas fa-book"></i> Site User Guide</a>
+			<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="{path='logout'}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+			</div>
+		</li>
+    {if:else}
+        <li class="nav-item bg-brightblue">
+        	<a class="nav-link standout" href="#" data-toggle="modal" data-target="#memberLogin">{member_login_en}</a>
+        </li>
+
+
+      {/if}
+    </ul>
+  </div>
+</nav>

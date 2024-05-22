@@ -1,0 +1,9 @@
+{exp:channel:entries channel="purchased_items" search:purchased_order_id="=136213" dynamic="no"}
+	
+		{exp:kt_tools:reduce_warehouse_inventory 
+		product_id="{purchased_id}" 
+		quantity="{purchased_quantity}" 
+		warehouse="{requested_warehouse}"
+	}
+
+{/exp:channel:entries}

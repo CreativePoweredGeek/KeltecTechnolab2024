@@ -1,0 +1,10 @@
+<div class="dropdown">
+	<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{select_a_manufacturer_{language_code}}
+	</button>
+	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		{exp:channel:entries channel="manufacturer_brands" orderby="title" sort="asc" dynamic="no"}
+			<a class="dropdown-item text-black" href="{par_site_url_lang}filter-application-guide/manufacturers/{url_title}">{title}</a>
+		{/exp:channel:entries}
+	</div>
+</div>

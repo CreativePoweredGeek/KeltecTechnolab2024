@@ -1,0 +1,126 @@
+{layout="layouts/_main_html_layout"}
+
+
+{!-- Header --}
+<div class="container-fluid dashboard-header bg-dkblue">
+    <div class="row padding-two-percent">
+        <div class="col-6 col-md-2 align-self-center">
+            <a href="{site_url}">
+			     <img src="{site_url}assets/images/keltec-technolab-rev2c.png" class="col-12 col-md-10" alt="Keltec Technolab">
+			</a>
+        </div>
+        <div class="col-6 col-md-10 align-self-center">
+                <h4 class="text-right text-white">{exp:stash:get name="company"}</h4>
+        </div>
+    </div>
+</div>
+
+{if logged_in}
+
+{!--{exp:query sql="SELECT * FROM exp_sessions WHERE member_id = '{logged_in_member_id}'"}
+		{if no_results}{/if} 
+		{redirect='logout'}
+{/exp:query}--}
+
+	{if logged_in_group_id == 5}
+
+	
+
+		{par_user_stash_variables}
+			<div class="container-fluid p-5 mb-5">
+			    <div class="row padding-two-percent">
+					<div class="col-12">
+						<h3 class="text-center">You are now logged in.</h3>
+						<p class="text-center">Select a place to start.</p>
+					</div>
+			        <div class="col-md-4 align-self-center">
+
+						<p><a href="{site_url}/payments" class="btn btn-primary btn-block btn-lg my-2">Pay Open Invoices <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-discover"></i> <i class="fab fa-cc-amex"></i></a></p>
+						<p><a href="{site_url}filter-cross-reference-guide" class="btn btn-outline-primary btn-block my-2">Filter Cross Reference</a></p>
+						<p><a href="{site_url}shop" class="btn btn-outline-primary btn-block my-2">Shop</a></p>
+						<p><a href="{site_url}accounts/dashboard" class="btn btn-outline-primary btn-block my-2">Your Dashboard</a></p>
+						<p><a href="{site_url}accounts/orders" class="btn btn-outline-primary btn-block my-2">Your Orders</a></p>
+			        </div>
+					<div class="col-md-4 p-1">
+						{par-1-oem-prosearch-box}
+					</div>
+					<div class="col-md-4 p-1">
+						{par-1-keltec-prosearch-box}
+					</div>
+			    </div>
+			</div>
+	{if:elseif logged_in_group_id == 8 || logged_in_group_id == 9}
+		{par_user_stash_variables}
+			<div class="container-fluid p-5 mb-5">
+			    <div class="row padding-two-percent">
+			        <div class="col-md-4 mx-auto align-self-center">
+						<h3 class="text-center">You are now logged in.</h3>
+						<p class="text-center">Select a place to start.</p>
+						<p><a href="{site_url}accounts/csr-customer-orders" class="btn btn-outline-primary btn-block my-2">Customer Orders</a></p>
+						<p><a href="{site_url}accounts/customer-list" class="btn btn-outline-primary btn-block my-2">Customer List</a></p>
+						<p><a href="{site_url}filter-cross-reference-guide" class="btn btn-outline-primary btn-block my-2">Filter Cross Reference</a></p>
+
+			        </div>
+			    </div>
+			</div>
+
+	{if:else}
+	{par_user_stash_variables}
+		<div class="container-fluid p-5 mb-5">
+			    <div class="row padding-two-percent">
+			        <div class="col-md-4 mx-auto align-self-center">
+						<h3 class="text-center">You are now logged in.</h3>
+						<p class="text-center">Select a place to start.</p>
+						<p><a href="{site_url}" class="btn btn-outline-primary btn-block my-2">Go to the Site</a></p>
+						<p><a href="{site_url}filter-cross-reference-guide" class="btn btn-outline-primary btn-block my-2">Filter Cross Reference</a></p>
+					{if logged_in_group_id == 1} 
+					<p><a href="#" 
+						onClick="MyWindow=window.open('https://keltecinc.com/exports/complete-export-beta1filters','MyWindow','width=300,height=300'); return false;"
+						class="btn btn-outline-primary btn-block my-2">Beta1 Filers Manual Export</a></p>
+
+					{/if}
+					
+					
+					</div>
+			    </div>
+			</div>
+	{/if}
+{/if}
+{if logged_out}
+{!--{exp:cookie:delete name='custno'}--}
+	<div class="container mt-5 mb-5 p-5">
+		<div class="row">
+			<div class="col-sm-6 col-md-3 ml-auto mr-auto">
+				{if segment_3 == 'user_logged_in'}
+					<div class="alert alert-danger" role="alert">
+					  Someone is currently logged in with your credentials.
+					</div>
+				{if:else}
+				<p>Please note: At the current time we are only allowing a single login per customer at a time.</p>
+				{/if}
+				<div id="usernote"></div>
+				{exp:member:login_form action="{site_url}accounts/login" return='{current_url}'}
+					
+				<div class="form-group">
+					    <label for="username">Customer Number:</label>
+					    <input type="text" class="form-control rounded-0" 
+						name="username" value="" id="username" required>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+					    <input type="password" name="password" value="" class="form-control rounded-0" id="password" required>
+					</div>
+					{if auto_login}
+						<p>
+							<input type="checkbox" name="auto_login" value="1" checked/> Auto-login on future visits
+						</p>
+					{/if}
+					<button type="submit" name="submit" class="btn btn-primary rounded-0">Submit</button>
+					<p class="text-right mt-3"><a href="{path='member/forgot_password'}">Forgot your password?</a></p>
+				{/exp:member:login_form}
+			</div>
+		</div>
+	</div>
+	
+{/if}
+

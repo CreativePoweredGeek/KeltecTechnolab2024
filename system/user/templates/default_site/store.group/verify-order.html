@@ -1,0 +1,118 @@
+{preload_replace:template_group="store"}
+{preload_replace:template="index"}
+
+{embed="store/_new_header" template_group="{template_group}" template="{template}" title="View Cart" pagetitle="Verify your Order"}
+{par_user_stash_variables}
+
+
+
+{exp:cartthrob:update_cart_form return="{language_code}/store/checkout-shipping"}
+<div class="container">
+	<div class="row">
+        <div class="col-12">
+			<div class="alert alert-warning p-2 p-md-5" role="alert">
+				  {exp:channel:entries channel="misc_content" url_title="multiple-warehouse-orders" disable="categories|category_fields|member_data|pagination"}
+				  	{{language_code}_basic_text}
+				  {/exp:channel:entries}
+			</div>
+		
+    	 <table class="table table-striped">
+            <thead class="bg-dkblue text-white">
+                <tr>
+                    <th></th>
+                    <th>{item_{language_code}}</th>
+					<th>{description_{language_code}}</th>
+					<th>{price_{language_code}}*</th>
+					<th>Warehouse</th>
+                    <th>{quantity_{language_code}}</th>
+                    <th>Item Subtotal</th>
+					
+				</tr>
+            </thead>
+        <tbody>
+    		
+				{exp:cartthrob:cart_items_info}
+            
+                <tr>
+                    <td>{count}.</td>
+                    <td><b><a href="{site_url}products/item/{title:url_slug}" target="_blank">{title}</a></b></td>
+                    <td>
+	                    {embed="embeds/get_description" entry_id="{entry_id}"}
+	                </td>
+                    <td>{if logged_in}{price}{if:else}{login_for_pricing_{language_code}}{/if}</td>
+                    <td>
+                    {exp:cartthrob:item_options entry_id="{entry_id}" row_id="{row_id}" field="requested_warehouse" }
+	                   {option_value}
+					{/exp:cartthrob:item_options}
+					</td>
+                    <td>{quantity}</td>
+					<td>{item_subtotal}</td>   
+                </tr>
+				{/exp:cartthrob:cart_items_info}
+
+			
+	    		<tr>
+		    		<td></td><td></td><td></td><td></td><td></td>
+		    		<td></td>
+		    		<td><b>{exp:cartthrob:cart_subtotal}</b></td>
+	    		</tr>
+	    	
+	    	</tbody>
+        </table>
+        </div>
+	</div>
+</div>
+<div class="container mt-4 pt-4 border-top">
+    <div class="row">
+        <div class="col-6">
+			<a href="{site_url}{language_code}/store/view-cart" class="btn btn-primary rounded-0">Edit Cart</a> 
+		</div>
+		<div class="col-6 text-right">
+            <input type="submit" class="btn btn-success rounded-0" value="{checkout_{language_code}} - Shipping >" />
+        </div>
+    </div>
+</div>
+{/exp:cartthrob:update_cart_form}       
+         
+         
+         <div class="container mt-4 pt-4 border-top">
+            <div class="row">
+                
+                <div class="col-12 mt-5">
+	                <p class="small">* The price you see here is reflective of your final price after all custom pricing, and discounts available to you have been applied.</p>
+	
+	<p class="small">** By default, the preferred warehouse that is identified in your profile ({exp:stash:get name="warehouse"}) is where your order will ship from. If there is no available inventory at your preferred warehouse, you can select that it ship from another.</p>
+                </div>
+            </div>
+	    </div>	
+			
+
+
+
+<div class="container border-top p-5 mt-5">
+	<div class="row">
+		<div class="col-12">
+			{exp:channel:entries channel="misc_content" entry_id="136234"}
+				<h4>{title}</h4>
+				<p>{{language_code}_basic_text}</p>
+			{/exp:channel:entries}
+			
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{embed="store/_new_footer" template_group="{template_group}" template="{template}"}

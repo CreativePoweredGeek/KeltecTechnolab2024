@@ -1,0 +1,20 @@
+{!--Filter Application Selector
+		<div class="card application rounded-0">
+			{exp:channel:entries channel="misc_content" url_title="filter-application-guide" dynamic="no" disable="categories|category_fields|member_data|pagination"}
+				{if {language_code}_title != ""}<h3 class="card-title text-white text-uppercase">{{language_code}_title}</h3>{/if}
+				<p class="text-white">{{language_code}_basic_text}</p>
+			{/exp:channel:entries}	
+			
+			<div class="dropdown">
+	<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{select_a_manufacturer_{language_code}}
+	</button>
+	<p class="">
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			{exp:channel:entries channel="manufacturers" orderby="title" sort="asc" dynamic="no" disable="categories|category_fields|member_data|pagination|custom_fields"}
+				<a class="dropdown-item text-black" href="{par_site_url_lang}filter-application-guide/manufacturers/{entry_id}">{title}</a>
+			{/exp:channel:entries}
+		</div>
+	</p>
+</div>
+</div> --}

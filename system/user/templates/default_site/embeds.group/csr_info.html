@@ -1,0 +1,6 @@
+{embed:csr}
+{!--{exp:query sql="SELECT member_id as csrid FROM exp_members WHERE username = '{embed:csr}'"}
+{exp:member:custom_profile_data member_id="'{csrid}'"}
+{first_name} {last_name}
+{/exp:member:custom_profile_data}
+{/exp:query}--}

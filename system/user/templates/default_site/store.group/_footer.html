@@ -1,0 +1,81 @@
+	<!-- Footer
+	================================================== -->
+	{par_page_footer}
+
+	{!-- this form is used for hidden ajax submissions by CartThrob. D--}
+	<div style="display:none" id="hidden_save_customer_info_form_wrapper">
+		{!-- Data input in other forms is copied to this form, and submitted
+			if debug is turned on in the javascript file, this form should be automatically shown.
+			--}
+		{exp:cartthrob:save_customer_info_form return="" id="hidden_save_customer_info_form" }
+			<div class="cart_data">
+
+			</div>
+		<input type="submit" name="Submit" />
+		{/exp:cartthrob:save_customer_info_form}
+	</div>
+
+{!-- if you've set the google analytics code in the backend, this will output the google analytics tag --}
+{if '{exp:cartthrob:view_setting store_google_code="yes"}'!=''}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{exp:cartthrob:view_setting store_google_code="yes"}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+{/if}
+<script>
+
+var ImageVars = { ImageVar1: '-------------- D R O P S H I P -------------' + '\n \n' }
+
+var mytextbox = document.getElementById('other_shipping_notes');
+
+var inputs = document.getElementsByTagName("input");
+for(var i = 0; i < inputs.length; i++) {
+    if(inputs[i].type === "checkbox" && inputs[i].name.indexOf('ImageVar') > -1) {
+        inputs[i].onchange = function(){
+            if(this.checked){
+               mytextbox.value = ImageVars[this.name] + mytextbox.value.replace(/<br ?\/?>/g, "\n");
+            }else{
+                mytextbox.value = mytextbox.value.replace(ImageVars[this.name], "");
+            }
+        }
+    }
+}
+</script>
+<script>
+	jQuery(function(){
+
+   $("#customer_po").keyup(function(){
+
+      var ponum = $(this).val().trim();
+
+      if(ponum != ''){
+
+         jQuery.ajax({
+            url: "https://keltecinc.com/scripts/POlookup/" + ponum,
+            type: "get",
+            success: function(data){
+                $('#uname_response').html(data);
+             }
+         });
+      }else{
+         $("#uname_response").html("");
+      }
+
+    });
+
+ });
+
+	</script>
+
+
+
+</body>
+</html>

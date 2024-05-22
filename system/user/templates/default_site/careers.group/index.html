@@ -1,0 +1,65 @@
+{layout="layouts/_page_w_sidebar"}
+
+{exp:channel:entries channel="careers" url_title="careers"}
+	{layout:set name="title"}{{language_code}_title}{/layout:set}
+	{layout:set name="page_title"}{{language_code}_title}{/layout:set}
+	{layout:set name="seo_description"}{if {language_code}_seo_description != ""}{{language_code}_seo_description}{if:else}{default_seo_description_{language_code}}{/if}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+	{par_edit_this}
+	{if feature_photo}
+		<img src="{feature_photo}" class="card-img-top" alt="{{language_code}_title}">
+	{/if}
+	{par_fluid_setup}
+
+{/exp:channel:entries}
+
+{exp:channel:entries channel="jobs"}
+{if no_results}
+	<div class="alert alert-primary" role="alert">
+		We currently do not have any jobs listed.  You can still submit your resume by using the link to the right.
+	</div>
+
+{/if}
+
+<div class="card text-center" style="margin-bottom:48px;">
+  <div class="card-header bg-dkblue text-white">
+    {position_type}
+  </div>
+  <div class="card-body bg-lightgrey">
+    <h5 class="card-title">{{language_code}_title}</h5>
+    <p class="card-text">{if {language_code}_rich_text_block}{{language_code}_rich_text_block:limit characters='120'}{if:else}{en_rich_text_block:limit characters='120'}{/if}</p>
+    <a href="{site_url}{language_code}/careers/posting/{url_title}" class="btn btn-primary">Learn More & Apply</a>
+  </div>
+  <div class="card-footer bg-dkblue text-white">
+    Posted: {entry_date format="%m/%d/%Y"}
+  </div>
+</div>
+
+
+{/exp:channel:entries}	
+	
+	
+	
+	
+	{layout:set name="sidebar"}
+		
+		<div class="card application rounded-0 text-white">
+			<div class="card-body">
+				{exp:channel:entries channel="misc_content" disable="categories|category_fields|pagination|trackbacks" dynamic="no" url_title="submit-your-application-sidebar"}
+				<h3>{{language_code}_title}</h3>
+				<p>{{language_code}_basic_text}</p>
+				{button}
+				<p><a href="{site_url}{language_code}{button:link}" class="btn btn-primary btn-lg btn-block">{button:{language_code}_text}</a></p>
+				{/button}
+				{/exp:channel:entries}
+			</div>
+		</div>
+		
+		<p>&nbsp;</p><p>&nbsp;</p>
+		<h4>Sign up for our Mailing List</h4>
+		{par_mailinglist_ac_form}
+	
+	
+	{/layout:set}

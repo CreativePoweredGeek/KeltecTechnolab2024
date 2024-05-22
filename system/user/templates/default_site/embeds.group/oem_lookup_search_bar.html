@@ -1,0 +1,48 @@
+<div class="row no-gutters bg-secondary">
+	<div class="col-md-3 p-2">
+		<div class="input-group">
+		  	<select class="form-control form-control-lg rounded-0" onchange="if(this.selectedIndex!=0) self.location=this.options[this.selectedIndex].value" id="inputGroupSelect04" aria-label="Example select with button addon">
+			<option value="{site_url}filter-cross-reference-guide/manufacturers" selected>All Manufacturers</option>
+			{exp:query sql="
+			SELECT DISTINCT exp_channel_data_field_222.field_id_222 AS oem
+			FROM exp_channel_data_field_222
+			JOIN exp_channel_titles
+			ON exp_channel_data_field_222.entry_id = exp_channel_titles.entry_id
+			WHERE exp_channel_titles.status = 'open' AND exp_channel_titles.channel_id = '47' ORDER BY oem asc"}
+				<option value="{site_url}filter-cross-reference-guide/manufacturers/{oem:url_encode}">{oem}</option>
+			{/exp:query}
+			</select>
+		</div>
+	</div>
+	<div class="col-md-9 p-2">
+		{exp:search:simple_form
+	    channel="oem_lookup"
+	    result_page = "filter-cross-reference-guide/results"
+	    no_result_page = "filter-cross-reference-guide/noresults"
+	    search_in="everywhere"
+	    where="all"
+	}
+
+		<div class="input-group">
+		    <label for="keywords" class="sr-only">{search_{language_code}}:</label>
+		    <input type="text" class="form-control form-control-lg rounded-0 border border-primary" name="keywords" id="keywords" value="" placeholder="OEM, KELTEC or Air Supply Number" aria-label="Input your search here" required>
+
+
+		      <button class="btn btn-primary btn-sm rounded-0" type="submit" value="submit" aria-haspopup="true" aria-expanded="false">
+		      	<i class="fas fa-search"></i>
+		      </button>
+
+
+		  </div>
+	{/exp:search:simple_form}
+
+	</div>
+
+	<!--<div class="col-md-3 p-2 text-right">
+		{!--{if segment_2 == "manufacturers"}
+		<a href="{site_url}{language_code}/exports/fcg-export/{segment_3}" class="btn btn-primary btn-sm rounded-0">Export .xls</a>
+		{if:else}
+		<a href="{site_url}{language_code}/exports/fcg-export" class="btn btn-primary btn-sm rounded-0">Export .xls</a>
+		{/if}--}
+	</div>-->
+</div>

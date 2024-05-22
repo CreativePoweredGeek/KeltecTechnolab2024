@@ -1,0 +1,35 @@
+{layout="payments/_RDI_template_layout"}
+
+<!-- This will set the Customer ID of the logged in user for you as an EE variable you can use in any of your scripts -->
+{preload_replace:customerId="{exp:member:custom_profile_data}{customer_number}{/exp:member:custom_profile_data}"}
+
+
+{layout:set name="rightButton"}
+      {!-- <a href="{path='accounts/returns'}" class="btn btn-primary rounded-0">Returns</a> --}
+		 <a href="{path='accounts/dashboard'}" class="btn btn-primary rounded-0">Dashboard</a>
+		 <a href="{path='accounts/orders'}" class="btn btn-primary rounded-0">Orders</a>
+{/layout:set}
+{layout:set name="title"}Your Invoices{/layout:set}
+{layout:set name="css"}
+	{!-- To insert a stylesheet in the head of the page, place it here.  It will go just before the site stylesheet--}
+{/layout:set}
+{layout:set name="headjs"}
+	{!-- To insert javascript in the head of the page, place it here. It will go just before the closing head tag--}
+{/layout:set}
+{layout:set name="footjs"}
+	{!-- To insert javascript in the foot of the page, place it here. It will go just before the closing head tag--}
+{/layout:set}
+
+{!-- NOTE: --}
+{!-- The "Layout Sets" above will inject content into specific areas of the "_RDI_template_layout" Simply place the content you want in the page between the opening and closing tags. --}
+{!-- The content below will be injected by default into the body of the page.--}
+
+
+
+
+{!-- Call the Customer ID at any time with the EE Variable {customerId} --}
+
+<h1><? echo "Hello" ?> {customerId}</h1>
+<p>You will only see the customerId variable if you are logged in. I can create nearly any set of system variables for you in this manner.</p>
+
+

@@ -1,0 +1,34 @@
+{if logged_out}
+
+<div class="card application rounded-0 text-white">
+			{exp:channel:entries channel="misc_content" url_title="filter-cross-reference-guide" dynamic="no"}
+				{if {language_code}_title != ""}<h3 class="card-title text-white text-uppercase">{{language_code}_title}</h3>{/if}
+				<p class="text-white">{{language_code}_basic_text}</p>
+			{/exp:channel:entries}	
+			{exp:channel:entries channel="cross_reference_guide" dynamic="no" limit="1"}	
+				<p class="text-center"><a href="{cross_reference_upload}" class="btn btn-primary btn-lg rounded-0" target="_blank">{download_pdf_{language_code}}.</a></p>
+				<p class="text-center">{last_updated_{language_code}}: {entry_date format="%m/%d/%Y"}</p>
+				
+			
+			{/exp:channel:entries}
+		</div>
+		
+{/if}
+
+{if logged_in}
+
+<div class="card application rounded-0 text-white">
+			{exp:channel:entries channel="misc_content" url_title="filter-cross-reference-guide" dynamic="no"}
+				{if {language_code}_title != ""}<h3 class="card-title text-white text-uppercase">{{language_code}_title}</h3>{/if}
+				<p class="text-white">Our Pricing Guide is now filterable by OEM. Download the entire Pricing guide or just the manufacturer you need.</p>
+			{/exp:channel:entries}	
+			{exp:channel:entries channel="cross_reference_guide" dynamic="no" limit="1"}	
+				
+				
+				{if logged_in}<p class="text-center"><a href="{site_url}{language_code}/filter-cross-reference-guide" class="btn btn-primary btn-lg rounded-0" target="_blank">Pricing Guide</a></p>{/if}
+			
+			{/exp:channel:entries}
+		</div>
+		
+
+{/if}

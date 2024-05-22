@@ -1,0 +1,10 @@
+<?php
+  $entries = array();
+  {exp:channel:entries channel="orders" search:order_id="='{last_segment}'"}
+    $entries[] = array('title' => '{title}', 'quantity' => '{quantity}');
+  {/exp:channel:entries}
+
+  header('Content-type: application/json');
+  echo json_encode($entries);
+  exit;
+?>

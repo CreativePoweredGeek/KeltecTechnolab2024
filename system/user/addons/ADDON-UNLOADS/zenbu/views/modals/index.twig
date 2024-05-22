@@ -1,0 +1,44 @@
+<div class="modal-wrap modal-{{modalName}}">
+	<div class="modal">
+		<div class="col-group">
+			<div class="col w-16">
+				<a class="m-close" href="#" {% if closeButtonAttributes %}{{closeButtonAttributes}}{% endif %}
+                ></a>
+				<div class="box">
+
+                    {% if modalTitle %}
+                        <h1>
+							{{modalTitle}}
+							<modal-save-status></modal-save-status>
+						</h1>
+                    {% endif %}
+
+
+
+                    <div class="settings">
+                        {% if modalAlert %}
+                                <div class="alert inline {{modalAlertType is defined ? modalAlertType : ''}}">
+                                    {{modalAlert}}
+                                </div>
+                        {% endif %}
+
+                        <div class="txt-wrap">
+                            {% block modalContent %}
+                                {{modalContent}}
+                            {% endblock %}
+                        </div>
+
+                        {% if modalButtons %}
+                            <fieldset class="form-ctrls">
+                                {{modalButtons}}
+                                {# <input class="btn" type="submit" value="Confirm, and Remove"> #}
+                            </fieldset>
+                        {% endif %}
+
+                    </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

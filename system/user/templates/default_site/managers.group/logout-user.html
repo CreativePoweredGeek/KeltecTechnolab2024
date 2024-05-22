@@ -1,0 +1,8 @@
+{if (logged_in_group_id == '1' OR logged_in_group_id == '8' OR logged_in_group_id == '9')}
+
+{exp:query sql="SELECT member_id FROM exp_sessions WHERE member_id = '{segment_3}'"}
+ 	{exp:keltecuser:logout}{member_id}{/exp:keltecuser:logout}
+{/exp:query}
+{if:else}
+<p>You do not have access to this page</p>
+{/if}

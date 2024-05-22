@@ -1,0 +1,35 @@
+<!-- Left nav
+================================================== -->
+		<div class="list-group rounded-0 bg-light">
+		{!--}						
+			<a href="{path="{embed:template_group}/{exp:cartthrob:view_setting store_checkout_page='yes'}"}" class="list-group-item list-group-item-action rounded-0 bg-transparent">
+				<strong>Total</strong>
+				<div class="cart_total" style="float:right;">{if logged_in}{exp:cartthrob:cart_total}{/if}</div>
+			</a>
+		--}
+		
+			<a href="{path="{embed:template_group}/{exp:cartthrob:view_setting store_checkout_page='yes'}"}" class="list-group-item list-group-item-action rounded-0 bg-transparent">
+				<strong>Subtotal</strong>
+				<div class="cart_subtotal" style="float:right;">{if logged_in}{exp:cartthrob:cart_subtotal}{/if}</div>
+			</a>
+		
+		{if segment_4 == "ups" OR segment_4 == "fedex"}
+        {if:else}
+			<a href="{path="{embed:template_group}/{exp:cartthrob:view_setting store_checkout_page='yes'}"}" class="list-group-item list-group-item-action rounded-0 bg-transparent">
+				<strong>Shipping</strong>
+				<div class="cart_shipping" style="float:right;">TBD{!-- {if logged_in}{exp:cartthrob:cart_shipping}{/if} --}</div>
+			</a>
+		{/if}
+		
+		
+		<!--	<a href="{path="{embed:template_group}/{exp:cartthrob:view_setting store_checkout_page='yes'}"}" class="list-group-item list-group-item-action rounded-0 bg-transparent">
+				<strong>Tax</strong>
+				<div class="cart_tax" style="float:right;">{if logged_in}{exp:cartthrob:cart_tax}{/if}</div>
+			</a> 
+		
+		
+			<a href="{path="{embed:template_group}/{exp:cartthrob:view_setting store_checkout_page='yes'}"}" class="list-group-item list-group-item-action rounded-0 bg-transparent">
+				<strong>Discount</strong>
+				<div class="cart_discount" style="float:right;">{if logged_in}{exp:cartthrob:cart_discount}{/if}</div>
+			</a> -->
+		</div>

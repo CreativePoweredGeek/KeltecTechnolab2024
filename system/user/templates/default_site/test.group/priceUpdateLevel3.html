@@ -1,0 +1,64 @@
+<?php
+exit();
+$fileName = '../uploads/level3pricing3.csv';
+$count = 0;
+if(file_exists($fileName))
+{		
+		//echo 'Found File';
+		$file = fopen($fileName,'r');
+			
+			while(!feof($file))
+			{ 
+				$name = fgets($file);
+				
+				if(!empty($name)) {
+					$count++;
+					$line = explode(',', $name, 2);
+					$product = trim($line[0]);
+					$price = trim($line[1], '"');
+					$price = $var = floatval(preg_replace('/[^\d.]/', '', $price));
+					
+					//echo $product.'<br>';
+					
+					$sql="SELECT entry_id FROM exp_channel_titles WHERE title = ? AND channel_id = ?";
+					$result = ee()->db->query($sql, array($product, 37));
+					
+					
+					if($result->num_rows() == 0) {
+						echo $product.'<br>';
+					} else {
+						
+					
+						$row = $result->row();
+						$date = strtotime("now");
+						$table='exp_channel_data_field_214';
+						ee()->db->update(
+							$table,
+								array(
+									'field_id_214'  => $price
+								),
+								array(
+									'entry_id' => $row->entry_id
+								)
+						);
+						ee()->db->update(
+							'exp_channel_titles',
+								array(
+									'edit_date' => $date
+								),
+								array(
+									'entry_id' => $row->entry_id
+								)
+						);
+						
+						//echo $date.'<br>';
+						// mysqli_free_result($result);
+					
+						
+					}
+				}
+			}
+}
+		echo '<p>Update Complete</p>';
+
+?>

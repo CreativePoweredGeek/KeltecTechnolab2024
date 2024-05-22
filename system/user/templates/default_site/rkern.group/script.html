@@ -1,0 +1,8 @@
+{if logged_in_member_id == '1'}
+{!--this CLOSES any products that are open and have a price of '0' 
+{exp:admintools:close_products_price_0}--}
+
+
+{if:else}
+	{redirect="{site_url}"}
+{/if}

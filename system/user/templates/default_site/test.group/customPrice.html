@@ -1,0 +1,37 @@
+<?php
+exit();
+$fileName = '../uploads-hfeuh48gsvwe8ycgeyhbr/pricing-updates-4-19-1.csv';
+$count = 0;
+if(file_exists($fileName))
+{
+
+		$file = fopen($fileName,'r');
+
+			while(!feof($file))
+			{
+
+				$name = fgets($file);
+
+				if(!empty($name)) {
+					$count++;
+					$line = explode(',', $name, 2);
+					$product = trim($line[0]);
+					$price = trim($line[1], '"');
+
+				?>
+					{exp:query sql="SELECT * FROM exp_channel_titles WHERE channel_id = '37' AND title = '<?php echo $product ?>'"}
+						{exp:kt_tools:update_price entry_id="{entry_id}" price="<?php echo str_replace( ',', '', $price ); ?>" date="{current_time}" title="<?php echo $product ?>"}
+						{if no_results} <?php echo $product.'<br>' ?> {/if}
+					{/exp:query}
+
+
+		<?php
+				echo '<p>'.$count.' - '.$product.'</p>';
+				} // CLOSE if(!empty($name))
+
+			}
+		}
+echo '<p>Update Complete</p>';
+
+?>
+

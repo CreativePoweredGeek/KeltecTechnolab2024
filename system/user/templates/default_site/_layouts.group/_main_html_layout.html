@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="{language_code}">
+	<head>
+		{par_GA_tracking}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="alternate" hreflang="en" href="{site_url}en/{current_path}" />
+		<link rel="alternate" hreflang="es" href="{site_url}es/{current_path}" />
+		<link rel="alternate" hreflang="pt" href="{site_url}pt/{current_path}" />
+		<meta name="description" content="{if layout:seo_description}{layout:seo_description}{/if}">
+		<title>{if layout:title}{layout:title} | {/if}{site_name}</title>
+		<link rel="canonical" href="{if layout:seo_canonical}{layout:seo_canonical}{/if}">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+		{if segment_1 == 'shop'}
+	    	{!-- CT uses jQuery form for ajax form submissions --}
+			<script type="text/javascript" src="{theme_folder_url}../user/cartthrob/scripts/jquery.form.js"></script>
+
+			{!-- CT sample templates  form for ajax form submissions --}
+			<script type="text/javascript" src="{path='shop/cart.js'}" ></script>
+			{!-- CT template CSS files --}
+			<link rel="stylesheet" type="text/css" media="all" href="{site_url}shop/main.css"/>
+	    {/if}
+		<!-- Bootstrap core CSS -->
+		<link href="{site_url}assets/vendors/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <!-- Custom styles for this template -->
+			{layout:css}
+		<link href="{site_url}assets/css/stylesheet.css" rel="stylesheet">
+    </head>
+
+{if segment_2 != 'update-email'}
+<body>
+{par_menu}
+{if:else}
+    <body style="padding-top:0px;">
+{/if}
+
+{layout:contents}
+{par_page_footer}
+
+<script src="{site_url}assets/vendors/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>
+{par_ac_tracking}
+
+{if segment_2 == "checkout"}
+	{!-- this form is used for hidden ajax submissions by CartThrob. D--}
+	<div style="display:none" id="hidden_save_customer_info_form_wrapper">
+		{!-- Data input in other forms is copied to this form, and submitted
+			if debug is turned on in the javascript file, this form should be automatically shown.
+			--}
+		{exp:cartthrob:save_customer_info_form return="" id="hidden_save_customer_info_form" }
+			<div class="cart_data">
+
+			</div>
+		<input type="submit" name="Submit" />
+		{/exp:cartthrob:save_customer_info_form}
+	</div>
+{/if}
+<script>
+   $(function () {
+      $('[data-toggle="popover"]').popover()
+   })
+   $('.popover-dismiss').popover({
+      trigger: 'focus'
+   })
+</script>
+      </body>
+</html>

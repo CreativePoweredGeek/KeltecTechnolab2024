@@ -1,0 +1,100 @@
+{% set template_group = 'twig-store' %}
+{% set template = 'index' %}
+
+{% include('ee::default_site.' ~template_group~ '._header') with {title:"Shopping Cart" } %}
+
+</head>
+<body>
+{% include('ee::default_site.' ~template_group~ '._navbar') %}
+{% include('ee::default_site.' ~template_group~ '._subhead') %}
+
+{# since we're using twitter bootstrap, the main content area is designated "container", or some other specific classes depending on your requirements #}
+<div class="container">
+{# twitter bootstrap breaks up content into rows. The main section of this template is all one row. Rows can also be broken up into more rows #}
+    <div class="row">
+
+        {# twitter bootstrap breaks up (by default) pages into a 12 column grid. span3, span9 designate how much space these sections will take up #}
+        <div class="span3">
+            <div class="bs-docs-sidenav">
+                {% include('ee::default_site.' ~template_group~ '._left_nav') %}
+            </div>
+        </div>
+
+        <div class="span9">
+            <section id="main">
+                {% for entry in exp.channel.entries({channel: 'products', limit:30}) %}
+                    {% if loop.first %}<h2>Available Products</h2><ul class="thumbnails"><div class='row'>{% endif %}
+                    {% if loop.index % 3 == 0 %}<div class='row'>{% endif %}
+                        <li class="span3">
+
+                            <div class="thumbnail">
+                                {% if entry.product_thumbnail %}
+                                <a class='' href="{{ exp.path(template_group ~ '/product_detail/'~ entry.entry_id) }}"><img src="http://placehold.it/300x200" /></a>
+                                {% else %}
+                                <a class='' href="{{ exp.path(template_group ~ '/product_detail/'~ entry.entry_id) }}"><img src="http://placehold.it/300x200" alt=""></a>
+                                {% endif %}
+                                <div class="caption">
+                                    <h3>{{ entry.title }}</h3>
+                                    <p>
+                                    {% if entry.product_original_price and entry.product_original_price.numeric() > entry.product_price.numeric() %}
+                                        <h4>{{ entry.product_price }} <small><strong>Sale Price</strong> <i class="icon-tags"></i></small></h4>
+                                        <div class="alert alert-info">
+                                            <del><small>Regular Price: <strong>{{ entry.product_original_price }}</strong></small></del>
+                                        </div>
+                                    {% else %}
+                                        <h4>{{ entry.product_price }} <small><strong>Regular Price</strong></small></h4>
+                                    {% endif %}
+
+                                    {{ entry.product_price.numeric() }}
+
+                                    </p>
+                                    <a class='btn btn-primary btn-mini' href="{{ exp.path(template_group ~ '/product_detail/'~ entry.entry_id) }}">Learn more &raquo;</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% if loop.index % 3 == 0 %}</div>{% endif %}
+                    {% if loop.last %}</ul><!-- end row -->{% endif %}
+
+                {% endfor %}
+
+                {% for entry in exp.channel.entries({channel: 'store_packages', limit:30}) %}
+                    {% if loop.first %}<h2>Available Packages</h2><ul class="thumbnails">{% endif %}
+                    {switch="<div class='row'>||"}
+
+                        <li class="span3">
+
+                            <div class="thumbnail">
+                                {if packages_images}
+                                <a href="{entry_id_path='{template_group}/package_detail'}"><img src="{packages_images}" /></a>
+                                {if:else}
+                                <a class='' href="{entry_id_path='{template_group}/package_detail'}"><img src="http://placehold.it/300x200" alt=""></a>
+                                {/if}
+                                <div class="caption">
+                                    <h3>{title}</h3>
+                                    {if packages_images}
+                                    <a href="{entry_id_path='{template_group}/package_detail'}"><img src="{packages_images}" /></a>
+                                    {/if}
+
+                                    <h4>{packages_packages:price} <small><strong>Regular Price</strong></small></h4>
+
+                                    <small>including tax: {packages_packages:plus_tax}</small>
+
+                                    <p><strong>Package Features: </strong><br />
+                                        {packages_packages}
+                                        - {title}<br />
+                                        {/packages_packages}
+                                    </p>
+                                    <a class='btn btn-primary btn-mini'  href="{entry_id_path={template_group}/package_detail}">Learn more &raquo;</a></p>
+                                </div>
+                            </div>
+                        </li>
+                        {switch="||</div>"}
+
+                    {% if loop.last %}</ul><!-- end row -->{% endif %}
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+</div>
+
+{% include('ee::default_site.' ~template_group~ '._footer') %}

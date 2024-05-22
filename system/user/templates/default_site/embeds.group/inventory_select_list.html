@@ -1,0 +1,8 @@
+{exp:channel:entries channel="products" url_title="{embed:product}" dynamic="no"}
+	<select class="form-control" name="item_options[requested_warehouse]">
+		<option value="MAIN" {if '{embed:warehouse}' == "MAIN"}selected{/if}>Main | {inventory_main}</option>
+		<option value="NC" {if '{embed:warehouse}' == "NC"}selected{/if}>NC | {inventory_nc}</option>
+		<option value="TX" {if '{embed:warehouse}' == "TX"}selected{/if}>TX | {inventory_tx}</option>
+		<option value="CA" {if '{embed:warehouse}' == "CA"}selected{/if}>CA | {inventory_ca}</option>
+	</select>
+{/exp:channel:entries}

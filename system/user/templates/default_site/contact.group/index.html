@@ -1,0 +1,36 @@
+{layout="layouts/_contact_page_w_sidebar"}
+{exp:channel:entries channel="global_content" url_title="main" dynamic="no" disable="categories|member_data|pagination|relationships" limit="1" cache="yes" refresh="60"}
+  	{par_global_content_lo_vars}
+{/exp:channel:entries}
+{exp:channel:entries channel="site_pages" url_title="{last_segment}" disable="categories|member_data|pagination|relationships" limit="1" cache="yes" refresh="60"}
+{layout:set name="title"}{page_title}{page_title:en}{/page_title}{/layout:set}
+{layout:set name="page_title"}{page_title}{page_title:en}{/page_title}{/layout:set}
+{layout:set name="seo_description"}{seo_page_description}{seo_page_description:en}{/seo_page_description}{/layout:set}
+	{layout:set name="seo_canonical"}{current_url}{/layout:set}
+
+
+	{en_rich_text_block}
+	{par_ac_contact_form}
+{/exp:channel:entries}
+
+
+
+
+	{layout:set name="sidebar"}
+		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1tUiQpBLgb86yedhYeUhU7YGwYk_FQxiH&ehbc=2E312F" width="100%" height="800"></iframe>
+
+	{/layout:set}
+
+	{layout:set name="lowerregion-a"}
+		{exp:channel:categories category_group="3" style="linear"}
+			<div class="section-wrapper rounded-0">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 mb-4 border-bottom"><h3>{category_name}</h3></div>
+							{embed="embeds/_locations_by_category" categoryid="{category_id}"}
+					</div>
+				</div>
+			</div>
+
+		{/exp:channel:categories}
+	{/layout:set}

@@ -1,0 +1,18 @@
+{% set cart_form = exp.cartthrob.update_cart_form({return:"cart/index"}) %}
+{{ cart_form.form_open | raw }}
+{% for item in exp.cartthrob.cart_items_info() %}
+
+	{{ item.title }}<br />
+	<input type="text" name="quantity[{{ item.row_id }}]" size="2" value="{{ item.quantity }}" />
+	{# This deletes lets you select multiple row_ids #}
+	<input type="checkbox" name="delete[{{ item.row_id }}]"> Delete this item
+    {% if loop.last %}
+    	<br /><input type="submit" value="Update Cart" />
+	{% endif %}
+
+{% endfor %}
+{{ cart_form.form_close | raw }}
+
+<br />Outputs a form to update items in cart
+<br />NOTE: example requires that items be in cart
+<br />http://cartthrob.com/docs/tags_detail/update_cart_form/

@@ -1,0 +1,8 @@
+{% set also_purchased = exp.cartthrob.also_purchased({entry_id:"1", limit:"3"}) %}
+{% for product in also_purchased %}
+	You might also like: {{ product.entry_id }} <br />
+{% endfor %}
+
+<br />Outputs entry_ids based on customer's past purchases.
+<br />NOTE: example requires product with entry_id:1, and an existing order history
+<br />http://cartthrob.com/docs/tags_detail/also_purchased/

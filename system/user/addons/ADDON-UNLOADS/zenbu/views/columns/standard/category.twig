@@ -1,0 +1,8 @@
+{#
+//    ----------------------------------------
+//      Categories
+//    ----------------------------------------
+#}
+{% for category in categories %}
+    {{category.cat_name}}{{ not loop.last ? ', ' }}
+{% endfor %}
