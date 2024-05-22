@@ -1,0 +1,75 @@
+.merge-btn input[type="text"]{width: 90%;float:left;}
+.merge-btn .test-btn{display: inline-block; float: right; margin-top: -10px;}
+.inactive{font-weight: 600; color: #b71c1c;}
+table .active{font-weight: 600; color: #077f07;}
+
+.sl_setting_form  em.submenu-caret{display: block;position: absolute;top: 0;right: 0;width: 30px;height: 30px;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease; cursor: pointer;}
+.sl_setting_form  em.submenu-caret:before, .sl_setting_form  em.submenu-caret:after{content: '';position: absolute;top:50%;margin-top: -1px;left: calc(50% - 8px);width: 16px;height: 2px;background: #25394b;}
+.sl_setting_form  em.submenu-caret:after{transform: rotate(-90deg);-moz-transform: rotate(-90deg);-webkit-transform: rotate(-90deg);-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;}
+.sl_setting_form  em.submenu-caret.toggled:after{transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);}
+.sl_setting_form h2{cursor: pointer;}
+#sm-modal {top: 50%; -ms-transform: translateY(-50%); -webkit-transform: translateY(-50%); transform: translateY(-50%); position: fixed; }
+#sm-modal .my-model-wrapper {padding: 15px 10px 15px 10px; }
+#sm-modal .move-rigth {text-align: right; }
+.m-close-sm-export {color: #b5b5b5; position: absolute; right: 10px; top: 10px; text-decoration: none; } 
+.m-close-sm-export:before {content: '\f00d'; font-size: 24px; line-height: 1; font-family: 'FontAwesome', 'Font Awesome 5 Free'; } /* ee6*/
+
+form.export_form {padding: 0 10px 10px 10px;}
+.sm_import_success_data form {padding: 10px;}
+
+.se_channel_title h2 label.select_all_div {float: right; margin-right: 15px; }
+.d-fields {padding-left: 0px; padding-top: 10px; }
+.d-fields .se_boxes {font-size: 14px; line-height: 18px; margin: 0 auto; padding: 10px 15px; cursor: pointer; border: 1px solid transparent; margin-bottom: -1px; -webkit-transition: all 0.3s ease; -o-transition: all 0.3s ease; transition: all 0.3s ease; }
+.d-fields .se_boxes:nth-child(odd) {background-color: rgba(215, 226, 232, 0.63); }
+.d-fields .se_boxes:nth-child(even) {background-color: rgba(198, 212, 219, 0.82); }
+.se_default_fields .se_boxes {display: inline-block; width: 29.2%; border: 1px solid rgb(181, 196, 203, 0.90); }
+.d-fields .se_boxes span {/* display: none; */ opacity: 0; }
+.d-fields .se_boxes input[type="checkbox"] {padding-right: 5px; visibility: hidden; opacity: 0; position: absolute; }
+
+.d-fields .se_boxes.active {color: #1d2a32; }
+.d-fields .se_boxes.active:nth-child(odd) {background: #B4C3CB; border: 1px solid rgb(255, 255, 255); }
+.d-fields .se_boxes.active:nth-child(even) {background: #B4C3CB; border: 1px solid rgb(255, 255, 255); }
+.d-fields .se_boxes.active span {color: #1d2a32; display: inline; opacity: 1; }
+.se_channel_title {margin-bottom: 3px; margin-top: 20px; }
+.mt0 {margin-top: 0;}
+.add-border {border-bottom: 1px solid #eee !important;}
+
+.table-responsive {overflow: auto; margin: 0; float: left; width: 100%;}
+.call_another_import p {display: inline-block; margin: 0; vertical-align: middle; font-weight: bold;}
+.call_another_import p span {color: #d90000;}
+.call_another_import .main-img{margin-top: 2px;}
+.dataTables_paginate, .dataTables_filter{margin-bottom: 5px;}
+
+.mb10{margin-bottom: 10px;}
+
+/* start of ee6 for export form */
+.ee6_box .form-standard h2:first-child {
+    margin-top: 12px;
+}
+.ee6_box label.select_all_div{
+	display: flex;
+}
+.ee6_box .check_all
+{
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
+/* tabs related changes */
+.sidebar__section-title {
+    display: flex !important;
+    margin-bottom: 10px !important;
+    margin-top: 20px !important;
+    padding: 0px !important;
+    padding-bottom: 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    font-size: 85% !important;
+    border-bottom: 1px solid var(--ee-border) !important;
+    font-weight: 500 !important;
+}
+
+.secondary-sidebar .sidebar__link{
+	padding: 6px 12px !important;
+}
+/* end of ee */ 

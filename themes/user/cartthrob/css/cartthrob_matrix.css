@@ -1,0 +1,111 @@
+table.cartthrobMatrix th {
+  cursor: default;
+  position: relative;
+  white-space: nowrap;
+}
+table.cartthrobMatrix th span {
+  padding-right: 30px;
+}
+table.cartthrobMatrix th a.remove_column {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+}
+/*
+	CSS hack for getting the delete icon to show up in
+	price modifiers
+*/
+@-moz-document url-prefix() {
+	table.cartthrobMatrix th span{
+		float:left;
+	}
+	table.cartthrobMatrix th a.remove_column{
+		position:relative;
+		float: right;
+		top: 0;
+		right: 0;
+		padding:0;
+		margin: 0;
+	}
+}
+/* end FF CSS hack */
+
+table.cartthrobMatrix td {
+  padding-right: 18px;
+}
+table.cartthrobMatrix td.drag_handle {
+  padding: 0 8px;
+  width: 12px;
+  cursor: move;
+  background: transparent url(../images/ct_drag_handle.gif) no-repeat center;
+}
+table.cartthrobMatrix td.remove {
+  padding: 0 20px 0 6px;
+  width: 26px;
+}
+table.cartthrobMatrix td input[type=text],
+fieldset.col-group.last table.cartthrobMatrix td input[type=text] {
+  margin-bottom: 0;
+}
+div.cartthrobMatrixControls {
+  margin: 8px 0;
+  min-height: 26px;
+}
+ul.cartthrobMatrixButtons {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 4px 0;
+}
+ul.cartthrobMatrixButtons li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+ul.cartthrobMatrixPresets {
+  float: right;
+  margin: 0;
+}
+ul.cartthrobMatrixPresets li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ct_add_field,
+.ct_delete_field {
+    text-decoration: none;
+}
+.ico.settings.plus:before {
+    content: '\F067';
+    color: #22a456;
+}
+.ico.settings.minus:before {
+    content: '\F068';
+    color: #bc4848;
+}
+.ico.settings.plus:before,
+.ico.settings.minus:before {
+    line-height: 0;
+    margin-left: 2px;
+    position: relative;
+    top: 1px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    border: 1px solid #cdcdcd;
+}
+.ico.settings.close {
+  top: auto;right: auto;
+}
+.ico.settings.close:before {
+    content: '\f00d';
+    line-height: 0;
+    margin-left: 2px;
+    padding: 3px 6px;
+    color: gray;
+    border: none;
+    display: inline-block;
+}
+.ico.settings.close:hover:before {
+  color:#000;
+}

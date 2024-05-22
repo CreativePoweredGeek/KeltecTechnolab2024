@@ -1,0 +1,26 @@
+select {
+    background-color: #fff;
+    border: 1px solid;
+    border-color: #b3b3b3 #cdcdcd #cdcdcd #b3b3b3;
+    padding: 5px 5px 6px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+}
+
+.ct-static-btns {
+    text-align: right;
+    padding: 10px;
+}
+
+.orders.mainTable.padTable tbody td .toolbar-wrap .toolbar {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
